@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<!--  <suite name="Test Suite for New CMS">-->
+ <suite name="Test Suite for New CMS" thread-count="2" parallel="methods"> 
+<listeners>
+      <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+      <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+</listeners>
+<test name="Test Cases Story" >
+    <classes>
+        <class name="com.htdigital.qa.MTCMS.Dashboard"/>
+         <class name="com.htdigital.qa.NewCms.ElementsMT"/>
+        <class name="com.htdigital.qa.NewCms.VideoMT"/>
+        <class name="com.htdigital.qa.NewCms.PageManagerMT"/>
+    </classes>
+</test>
+</suite>
