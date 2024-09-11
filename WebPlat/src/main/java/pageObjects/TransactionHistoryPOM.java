@@ -17,6 +17,8 @@ import common.commonFunc;
 import net.bytebuddy.implementation.bytecode.ByteCodeAppender.Size;
 
 public class TransactionHistoryPOM extends commonFunc {
+	
+	public static boolean result;
 
 	public WebDriver driver;
 	public ExtentTest logger;
@@ -668,7 +670,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 	public void validate_pageTitle(String stepName, String actualPageTitle, String expectedPageTitle) {
-		compareString(expectedPageTitle, actualPageTitle, true);
+		compareString(expectedPageTitle, actualPageTitle);
 		softAssert(stepName, expectedPageTitle, actualPageTitle, true, logger);
 		hardAssert(stepName, expectedPageTitle, actualPageTitle, true, logger);
 	}

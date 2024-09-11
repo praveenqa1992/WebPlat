@@ -10,10 +10,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
+import common.commonFunc;
 import pageObjects.Login;
 import pageObjects.TransactionHistoryPOM;
 import utility.config;
@@ -31,7 +33,7 @@ public class TC1_VerifyLogin  extends testbase{
 
 
 	@Test
-	public void verifySignIn(WebDriver driver, ExtentTest logger ) throws InterruptedException, IOException  {
+	public void verifySignIn(WebDriver driver, ExtentTest logger) throws InterruptedException, IOException  {
 	
 		Login login = new Login (driver,logger);
 		testConfig = new config(logger);
@@ -45,7 +47,31 @@ public class TC1_VerifyLogin  extends testbase{
 		login.signin(user, pass);
 		Thread.sleep(5000);
 		login.dialogClose();
-	
+		
+		String actualTitle = driver.getTitle();
+
+/**********************************************************************************************************************************/		
+								/*** Success Assertion **/
+		
+		String expectedTitle = "Dashboard";
+		
+		commonFunc comm = new commonFunc();
+		boolean result = comm.compareString(expectedTitle, actualTitle);
+		
+		comm.softAssert("Verify page title", expectedTitle, actualTitle, result, logger);
+/**********************************************************************************************************************************/		
+
+		
+/**********************************************************************************************************************************/		
+								/*** Fail Assertion **/
+
+String expectedTitle1 = "Dashboard1";
+
+
+boolean result1 = comm.compareString(expectedTitle1, actualTitle);
+
+comm.softAssert("Verify page title", expectedTitle1, actualTitle, result1, logger);
+/**********************************************************************************************************************************/
 		
 	logger.log(LogStatus.INFO, "Step 2: logged in successfully ");
 

@@ -64,6 +64,8 @@ public class commonFunc {
 	public static HSSFSheet worksheet;
 	public static DataFormatter formatter= new DataFormatter();
 	private int elementWaitTime = 15;
+	public static String expectedValue;
+	public static String actualValue;
 
 
 
@@ -119,7 +121,7 @@ public class commonFunc {
 			logger.log(LogStatus.PASS, stepname,
 					"Expected value : " + expected + "</br>is equal to</br>actual value : " + actual);
 		} else {
-			logger.log(LogStatus.ERROR, stepname,
+			logger.log(LogStatus.FAIL, stepname,
 					"Expected value : " + expected + "</br>is not equal to</br>actual value : " + actual);
 		}
 	}
@@ -135,21 +137,35 @@ public class commonFunc {
 		}
 	}
 
-	public boolean compareString(String expected, String actual, boolean ignorecase) {
-		if (Boolean.TRUE.equals(ignorecase)) {
-			if (expected.trim().equalsIgnoreCase(actual.trim())) {
-				return true;
-			} else {
-				return false;
-			}
-
+//	public boolean compareString(String expected, String actual, boolean ignorecase) {
+//		if (Boolean.TRUE.equals(ignorecase)) {
+//			if (expected.trim().equalsIgnoreCase(actual.trim())) {
+//				return true;
+//			} else {
+//				return false;
+//			}
+//
+//		} else {
+//			if (expected.trim().equals(actual.trim())) {
+//				return true;
+//			} else {
+//				return false;
+//			}
+//		}
+//	}
+	
+	public boolean compareString(String expectedResult, String actualResult) {
+		this.expectedValue = expectedResult;
+		this.actualValue = actualResult;
+		
+		if(expectedValue.equals(actualResult)) {
+			
+			return true;
 		} else {
-			if (expected.trim().equals(actual.trim())) {
-				return true;
-			} else {
-				return false;
-			}
+			return false;
 		}
+		
+		
 	}
 
 	public void sendingKeys(WebElement we, String text, WebDriver driver) {
