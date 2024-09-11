@@ -3,15 +3,15 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="testRun.ReuAllTest">
+      <class name="testCases.TC001_TransactionHistoryTest">
         <methods>
           <include name="endMethod"/>
           <include name="startMethod"/>
           <include name="dumpParameters"/>
+          <include name="TC001_navigateToTxnHistoryPage"/>
           <include name="InitializeParameters"/>
-          <include name="okk"/>
         </methods>
-      </class> <!-- testRun.ReuAllTest -->
+      </class> <!-- testCases.TC001_TransactionHistoryTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
