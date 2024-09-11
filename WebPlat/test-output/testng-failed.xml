@@ -5,10 +5,10 @@
     <classes>
       <class name="testCases.TC001_TransactionHistoryTest">
         <methods>
+          <include name="TC005_generatedPagesAccordingToPageSize"/>
           <include name="endMethod"/>
           <include name="startMethod"/>
           <include name="dumpParameters"/>
-          <include name="TC001_navigateToTxnHistoryPage"/>
           <include name="InitializeParameters"/>
         </methods>
       </class> <!-- testCases.TC001_TransactionHistoryTest -->

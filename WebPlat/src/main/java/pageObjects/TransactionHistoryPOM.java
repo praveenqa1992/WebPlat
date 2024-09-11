@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -58,21 +59,21 @@ public class TransactionHistoryPOM extends commonFunc {
 
 //from calendar today's date => yes or not
 
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-4']/tbody/tr[2]/td[@class='ng-tns-c46-4 p-datepicker-today ng-star-inserted']")
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr[2]/td[@class='ng-tns-c46-14 p-datepicker-today ng-star-inserted']")
 	public WebElement fromCalender_Date_Today;
 //checkkkk list or not
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-4']/tbody/tr[2]/td[@class='ng-tns-c46-4 ng-star-inserted']")
-	public List<WebElement>  fromCalender_Dates_notToday;
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr[2]/td[@class='ng-tns-c46-14 ng-star-inserted']")
+	public List<WebElement> fromCalender_Dates_notToday;
 
 	// from calendar highlighted,enabled,disabled dates....
 
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-4']/tbody/tr[2]/td/span[@class='p-ripple p-element ng-tns-c46-4 p-disabled ng-star-inserted']")
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr[2]/td/span[@class='p-ripple p-element ng-tns-c46-14 p-disabled ng-star-inserted']")
 	public List<WebElement> fromCalender_Dates_disabled;
 
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-4']/tbody/tr[2]/td/span[@class='p-ripple p-element ng-tns-c46-4 ng-star-inserted']")
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr[2]/td/span[@class='p-ripple p-element ng-tns-c46-14 ng-star-inserted']")
 	public List<WebElement> fromCalender_Dates_enabled_notHighlited;
 
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-4']/tbody/tr[2]/td/span[@class='p-ripple p-element ng-tns-c46-4 p-highlight ng-star-inserted']")
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr[2]/td/span[@class='p-ripple p-element ng-tns-c46-14 p-highlight ng-star-inserted']")
 	public WebElement fromCalender_Date_enabled_Highlited;
 
 //	@FindBy(xpath="//chevronlefticon[@class='p-element p-icon-wrapper ng-tns-c46-10 ng-star-inserted']")
@@ -133,7 +134,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//div[@class='col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12 ng-star-inserted']")
 	public WebElement categoryTab;
 
-	@FindBy(xpath = "/div[@class='p-dropdown-trigger'][1]")
+	@FindBy(xpath = "//div[@class='p-dropdown-trigger'][1]")
 	public WebElement categoryDropdown;
 
 	@FindBy(xpath = "//span[text()='Select Service']")
@@ -154,7 +155,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//button[@id='nav-home-tab']")
 	public WebElement allTxnReportTab;
 
-	@FindBy(xpath = "//button[@id='nav-profile-tab']")
+	@FindBy(xpath = "//button[@id='nav-profile-tab']/img")
 	public WebElement telecomTab;
 
 	@FindBy(xpath = "//button[@id='nav-contact-tab'][1]")
@@ -218,54 +219,54 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-page p-paginator-element p-link p-highlight ng-star-inserted']")
 	public WebElement curentPageNumber;
-	
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-first p-paginator-element p-link p-disabled ng-star-inserted']")
-	public WebElement navigate_firstPageButton_enabledOrDesabled;
 
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-first p-paginator-element p-link p-disabled ng-star-inserted']//child::angledoublelefticon")
-	public WebElement navigate_firstPageButton;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-first p-paginator-element p-link ng-star-inserted']")
-	public WebElement e_navigate_firstPageButton_enabledOrDesabled;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-first p-paginator-element p-link ng-star-inserted']//child::angledoublelefticon")
-	public WebElement e_navigate_firstPageButton;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-prev p-paginator-element p-link p-disabled']//child::anglerighticon")
-	public WebElement navigate_previousPageButton_enabledOrDesabled;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-prev p-paginator-element p-link p-disabled']")
-	public WebElement navigate_previousPageButton;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-prev p-paginator-element p-link']//child::anglelefticon")
-	public WebElement e_navigate_previousPageButton_enabledOrDesabled;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-prev p-paginator-element p-link']")
-	public WebElement e_navigate_previousPageButton;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-next p-paginator-element p-link p-disabled']//child::anglerighticon")
-	public WebElement navigate_nextPageButton_enabledOrDesabled;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-next p-paginator-element p-link p-disabled']")
-	public WebElement navigate_nextPageButton;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-next p-paginator-element p-link']//child::anglerighticon")
-	public WebElement e_navigate_nextPageButton_enabledOrDesabled;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-next p-paginator-element p-link']")
-	public WebElement e_navigate_nextPageButton;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-last p-paginator-element p-link p-disabled ng-star-inserted']")
-	public WebElement navigate_lastPageButton_enabledOrDesabled;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-last p-paginator-element p-link p-disabled ng-star-inserted']//child::angledoublerighticon")
-	public WebElement navigate_lastPageButton;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-last p-paginator-element p-link ng-star-inserted']")
-	public WebElement e_navigate_lastPageButton_enabledOrDesabled;
-
-	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-last p-paginator-element p-link ng-star-inserted']//child::angledoublerighticon")
-	public WebElement e_navigate_lastPageButton;
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-first p-paginator-element p-link p-disabled ng-star-inserted']")
+//	public WebElement navigate_firstPageButton_enabledOrDesabled;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-first p-paginator-element p-link p-disabled ng-star-inserted']//child::angledoublelefticon")
+//	public WebElement navigate_firstPageButton;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-first p-paginator-element p-link ng-star-inserted']")
+//	public WebElement e_navigate_firstPageButton_enabledOrDesabled;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-first p-paginator-element p-link ng-star-inserted']//child::angledoublelefticon")
+//	public WebElement e_navigate_firstPageButton;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-prev p-paginator-element p-link p-disabled']//child::anglerighticon")
+//	public WebElement navigate_previousPageButton_enabledOrDesabled;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-prev p-paginator-element p-link p-disabled']")
+//	public WebElement navigate_previousPageButton;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-prev p-paginator-element p-link']//child::anglelefticon")
+//	public WebElement e_navigate_previousPageButton_enabledOrDesabled;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-prev p-paginator-element p-link']")
+//	public WebElement e_navigate_previousPageButton;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-next p-paginator-element p-link p-disabled']//child::anglerighticon")
+//	public WebElement navigate_nextPageButton_enabledOrDesabled;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-next p-paginator-element p-link p-disabled']")
+//	public WebElement navigate_nextPageButton;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-next p-paginator-element p-link']//child::anglerighticon")
+//	public WebElement e_navigate_nextPageButton_enabledOrDesabled;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-next p-paginator-element p-link']")
+//	public WebElement e_navigate_nextPageButton;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-last p-paginator-element p-link p-disabled ng-star-inserted']")
+//	public WebElement navigate_lastPageButton_enabledOrDesabled;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-last p-paginator-element p-link p-disabled ng-star-inserted']//child::angledoublerighticon")
+//	public WebElement navigate_lastPageButton;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-last p-paginator-element p-link ng-star-inserted']")
+//	public WebElement e_navigate_lastPageButton_enabledOrDesabled;
+//
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-last p-paginator-element p-link ng-star-inserted']//child::angledoublerighticon")
+//	public WebElement e_navigate_lastPageButton;
 
 	@FindBy(xpath = "//span[@class='p-element p-dropdown-label p-inputtext ng-star-inserted']")
 	public WebElement dataPerPageField;
@@ -288,8 +289,8 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//p-paginator[@class='p-element']")
 	public WebElement paginationWebElement;
 
-	@FindBy(xpath = "")
-	public WebElement a;
+	@FindBy(xpath = "//div[@class='p-paginator-first pr-0 p-paginator p-component ng-star-inserted']/button")
+	public List<WebElement> paginationsAllButtons;
 
 	@FindBy(xpath = "")
 	public WebElement qa;
@@ -307,63 +308,81 @@ public class TransactionHistoryPOM extends commonFunc {
 //1.module and tab click methods..........
 
 	public void click_reportsModule() {
+		scrollUp(driver);
 		waitForElementToAppear(reportsModule, driver, logger);
+//		scrollToWebElement(reportsModule, driver);
 		logger.log(LogStatus.INFO, "click_reportsModule");
 		click(reportsModule, driver, logger);
 
 	}
 
 	public void click_txnHistoryModule() {
+//		scrollUp(driver);
 		waitForElementToAppear(txnHistoryModule, driver, logger);
+		scrollToWebElement(txnHistoryModule, driver);
 		logger.log(LogStatus.INFO, "click_txnHistoryModule");
 		click(txnHistoryModule, driver, logger);
 
 	}
 
 	public void click_allTxnReportTab() {
+		scrollUp(driver);
 		waitForElementToAppear(allTxnReportTab, driver, logger);
+//		scrollToWebElement(allTxnReportTab, driver);
 		logger.log(LogStatus.INFO, "click_allTxnReportTab");
 		click(allTxnReportTab, driver, logger);
 
 	}
 
 	public void click_telecomTab() {
+		scrollUp(driver);
 		waitForElementToAppear(telecomTab, driver, logger);
+//		scrollToWebElement(telecomTab, driver);
 		logger.log(LogStatus.INFO, "click_telecomTab");
 		click(telecomTab, driver, logger);
 
 	}
 
 	public void click_dmtTab() {
+		scrollUp(driver);
 		waitForElementToAppear(dmtTab, driver, logger);
+//		scrollToWebElement(dmtTab, driver);
 		logger.log(LogStatus.INFO, "click_dmtTab");
 		click(dmtTab, driver, logger);
 
 	}
 
 	public void click_bbpsTab() {
+		scrollUp(driver);
 		waitForElementToAppear(bbpsTab, driver, logger);
+//		scrollToWebElement(bbpsTab, driver);
 		logger.log(LogStatus.INFO, "click_bbpsTab");
 		click(bbpsTab, driver, logger);
 
 	}
 
 	public void click_aepsTab() {
+		scrollUp(driver);
 		waitForElementToAppear(aepsTab, driver, logger);
+//		scrollToWebElement(aepsTab, driver);
 		logger.log(LogStatus.INFO, "click_aepsTab");
 		click(aepsTab, driver, logger);
 
 	}
 
 	public void click_microAtmTab() {
+		scrollUp(driver);
 		waitForElementToAppear(microAtmTab, driver, logger);
+//		scrollToWebElement(microAtmTab, driver);
 		logger.log(LogStatus.INFO, "click_microAtmTab");
 		click(microAtmTab, driver, logger);
 
 	}
 
 	public void click_exportFileIcon() {
+		scrollUp(driver);
 		waitForElementToAppear(exportFileIcon, driver, logger);
+		scrollToWebElement(exportFileIcon, driver);
 		logger.log(LogStatus.INFO, "click_telecomTab");
 		click(exportFileIcon, driver, logger);
 
@@ -371,7 +390,8 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	public void click_searchButton() {
 		waitForElementToAppear(searchButton, driver, logger);
-		logger.log(LogStatus.INFO, "click_exportFileIcon");
+		scrollToWebElement(searchButton, driver);
+		logger.log(LogStatus.INFO, "click_searchButton");
 		click(searchButton, driver, logger);
 
 	}
@@ -566,6 +586,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(fromCalenderIcon, driver, logger);
+		scrollToWebElement(fromCalenderIcon, driver);
 
 		logger.log(LogStatus.INFO, "click from calendar icon");
 		click(fromCalenderIcon, driver, logger);
@@ -595,8 +616,8 @@ public class TransactionHistoryPOM extends commonFunc {
 			}
 
 		}
-		logger.log(LogStatus.INFO, "selected from date-" + calendarDateValue + "\bselected from month -" + calendarMonth
-				+ "\bselected from year -" + calendarYear);
+		logger.log(LogStatus.INFO, "selected from date-" + calendarDateValue + "\nselected from month -" + calendarMonth
+				+ "\nselected from year -" + calendarYear);
 
 	}
 
@@ -610,6 +631,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(toCalenderIcon, driver, logger);
+		scrollToWebElement(toCalenderIcon, driver);
 
 		logger.log(LogStatus.INFO, "click to calendar icon");
 		click(toCalenderIcon, driver, logger);
@@ -640,22 +662,77 @@ public class TransactionHistoryPOM extends commonFunc {
 			}
 
 		}
-		logger.log(LogStatus.INFO, "selected to date-" + calendarDateValue + "\bselected to month -" + calendarMonth
-				+ "\bselected to year -" + calendarYear);
+		logger.log(LogStatus.INFO, "selected to date-" + calendarDateValue + "\nselected to month -" + calendarMonth
+				+ "\nselected to year -" + calendarYear);
 
 	}
 
-	public void validate_pageTitle(String stepName, String expectedPageTitle) {
-		String actualPageTitle = driver.getTitle();
+	public void validate_pageTitle(String stepName, String actualPageTitle, String expectedPageTitle) {
 		compareString(expectedPageTitle, actualPageTitle, true);
 		softAssert(stepName, expectedPageTitle, actualPageTitle, true, logger);
 		hardAssert(stepName, expectedPageTitle, actualPageTitle, true, logger);
 	}
 
-	public void changeDateIfTableHasNoData () {
+	
+	public Boolean isCategoryDropdownDisplayed() {
+
+		//approach 1...with common method.......		
 		
-	Boolean datainTable	= validateALLTxnReportTableHasData();
 		
+//		waitForPageLoaded(driver, logger);
+//
+//	    	logger.log(LogStatus.INFO,"checking category dropdown is displayed or not");
+//		  Boolean catDropDisp = isPresentAndDisplayed(categoryDropdown, driver, logger);
+//
+//		  return catDropDisp;
+//		
+		
+//approach 2..........		
+		Boolean catDropDisp;
+		
+		System.out.println("checking category tab is displayed or not");
+		logger.log(LogStatus.INFO,"checking category tab is displayed or not");
+	  
+		try {
+		catDropDisp = isPresentAndDisplayed(categoryTab, driver, logger);
+		highlightElement(categoryTab);
+		
+	  if(catDropDisp) {
+		  
+			System.out.println("category tab is displayed");
+			logger.log(LogStatus.INFO,"category tab is displayed");
+			catDropDisp=true;
+	  }
+	  else {
+		  
+			System.out.println("category tab is not displayed");
+			logger.log(LogStatus.INFO,"category tab is not displayed");
+			catDropDisp=false;
+	  }
+		}
+		catch (NoSuchElementException e) {
+			
+			System.out.println("category dropdown is not displayed");
+			System.out.println("NoSuchElementException -"+e);
+
+			logger.log(LogStatus.INFO,"category dropdown is not displayed");
+			catDropDisp=false;		
+			}
+		
+	  return catDropDisp;
+	  
+		
+	}
+	
+	
+	
+	
+	
+	
+	public void changeDateIfTableHasNoData() throws InterruptedException {
+
+		Boolean datainTable = validateALLTxnReportTableHasData();
+
 //	if(!datainTable) 
 //	{
 //		System.out.println("Table has NO data");
@@ -667,31 +744,19 @@ public class TransactionHistoryPOM extends commonFunc {
 //		System.out.println("Table has data");	
 //		
 //	}
-	
-	
-click(fromCalenderIcon, driver, logger);	
 
-try {
-	Thread.sleep(2000);
-} catch (InterruptedException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-}
-System.out.println("clicked cal icon");
+		click(fromCalenderIcon, driver, logger);
+		System.out.println("clicked from cal icon");
+		Thread.sleep(2000);
 
-System.out.println(fromCalender_Date_Today.getText());
-System.out.println("22222");
-System.out.println(fromCalender_Date_enabled_Highlited.getText());
-System.out.println("33333");
-System.out.println(fromCalender_Dates_enabled_notHighlited.get(1).getText());
-System.out.println("44444");
-System.out.println(fromCalender_Dates_disabled.get(1).getText());
+		System.out.println("fromCalender_Date_Today-" + fromCalender_Date_Today.getText());
+		System.out.println("fromCalender_Date_enabled_Highlited-" + fromCalender_Date_enabled_Highlited.getText());
+		System.out.println(
+				"fromCalender_Dates_enabled_notHighlited-" + fromCalender_Dates_enabled_notHighlited.get(1).getText());
+		System.out.println("fromCalender_Dates_disabled-" + fromCalender_Dates_disabled.get(1).getText());
 
-	
 	}
-	
-	
-	
+
 //3.ALL TRANSACTION TABLE methods-------------------------------------------------------------	
 
 	public int getTxnTable_columnNumbers() {
@@ -711,7 +776,7 @@ System.out.println(fromCalender_Dates_disabled.get(1).getText());
 	}
 
 	public int getTxnTable_rowNumbers() throws InterruptedException {
-		Thread.sleep(2000);
+		Thread.sleep(5000);
 		waitForPageLoaded(driver, logger);
 		return txnTable_rowNumbers.size();
 	}
@@ -752,59 +817,73 @@ System.out.println(fromCalender_Dates_disabled.get(1).getText());
 //		logger.log(LogStatus.INFO, "Current page number is");
 //	}
 
-	public void validate_DataInLastPage() throws InterruptedException {
+	public void validate_noOfPagesAccordingToPageSize() throws InterruptedException {
+//
+//		int pages = getPageNumbersCountDisplayedAtPageBottom();
+//		int pageSize = getCurentPageDataSize();
+//
+//		// find first and last number of record according to TABLE DATA..........
+//		
+//		WebElement ElementFirstNo = driver.findElement(By.xpath(
+//				"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
+//						+ 1 + "]/td[1]"));
+//		String firstNumFromTable = ElementFirstNo.getText();
+//
+//		int tableRows = getTxnTable_rowNumbers();
+//		WebElement ElementLastNo = driver.findElement(By.xpath(
+//				"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
+//						+ tableRows + "]/td[1]"));
+//		String lastNumFromtable = ElementLastNo.getText();
+//
+////			 find first and last number of record according to PAGE BOTTOM MESSAGE.............
+//
+//		String msgAtPageBottom = getPage_paginationDataCountingMsg();
+//		String[] splittedMsg = msgAtPageBottom.split(" ");
+//
+//		String firstNum = null;
+//		String lastNum = null;
+//		String totalTxns = null;
+//
+//		for (int a = 0; a <= (splittedMsg.length - 1); a++) {
+//			if (a == 0 || a == 2 || a == 4 || a == 6) {
+//				continue;
+//			} else {
+//				if (a == 1) {
+//					firstNum = splittedMsg[a];
+//				} else if (a == 3) {
+//					lastNum = splittedMsg[a];
+//				} else if (a == 5) {
+//					totalTxns = splittedMsg[a];
+//				}
+//			}
+//		}
+//		System.out.println("1 st no.from table -" + firstNumFromTable + "\n1 st no.in message - " + firstNum);
+//		System.out.println("last no.from table -" + lastNumFromtable + "\nlast no.in message - " + lastNum);
+//		System.out.println("total in message - " + totalTxns);
+//
+//	   Boolean dataInTable	= validateALLTxnReportTableHasData();
+//		if(dataInTable) 
+//		{
+//			
+//			
+//		}
+//		
+		int paginationButtons = paginationsAllButtons.size();
 
-		int pages = getPageNumbersCountDisplayedAtPageBottom();
-		int pageSize = getCurentPageDataSize();
+		System.out.println("pagination buttons numbers -" + paginationButtons);
 
-		// find first and last number of record according to TABLE DATA..........
-		
-		WebElement ElementFirstNo = driver.findElement(By.xpath(
-				"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
-						+ 1 + "]/td[1]"));
-		String firstNumFromTable = ElementFirstNo.getText();
+		for (int a = 0; a < paginationButtons; a++) {
 
-		int tableRows = getTxnTable_rowNumbers();
-		WebElement ElementLastNo = driver.findElement(By.xpath(
-				"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
-						+ tableRows + "]/td[1]"));
-		String lastNumFromtable = ElementLastNo.getText();
+			Boolean buttinActive = paginationsAllButtons.get(a).isEnabled();
 
-//			 find first and last number of record according to PAGE BOTTOM MESSAGE.............
+			if (buttinActive) {
 
-		String msgAtPageBottom = getPage_paginationDataCountingMsg();
-		String[] splittedMsg = msgAtPageBottom.split(" ");
-
-		String firstNum = null;
-		String lastNum = null;
-		String totalTxns = null;
-
-		for (int a = 0; a <= (splittedMsg.length - 1); a++) {
-			if (a == 0 || a == 2 || a == 4 || a == 6) {
-				continue;
 			} else {
-				if (a == 1) {
-					firstNum = splittedMsg[a];
-				} else if (a == 3) {
-					lastNum = splittedMsg[a];
-				} else if (a == 5) {
-					totalTxns = splittedMsg[a];
-				}
-			}
-		}
-		System.out.println("1 st no.from table -" + firstNumFromTable + "\n1 st no.in message - " + firstNum);
-		System.out.println("last no.from table -" + lastNumFromtable + "\nlast no.in message - " + lastNum);
-		System.out.println("total in message - " + totalTxns);
 
-	   Boolean dataInTable	= validateALLTxnReportTableHasData();
-		if(dataInTable) 
-		{
-			
-			
+			}
+
 		}
-		
-		
-		
+
 	}
 
 	// ok=====method
@@ -862,38 +941,34 @@ System.out.println(fromCalender_Dates_disabled.get(1).getText());
 // if table has data		
 		if (dataInTable) {
 
-	        scrollToWebElement(pageSizeDropdown, driver);
-	        // table data count
+			scrollToWebElement(pageSizeDropdown, driver);
+			// table data count
 			int tableDataCount = getTxnTable_rowNumbers();
-			//page size selected
+			// page size selected
 			int pageDataSizeSelected = getCurentPageDataSize();
-			
-			// 1a-yes => check - table has data - data is less or more than page size selected
+
+			// 1a-yes => check - table has data - data is less or more than page size
+			// selected
 			if (tableDataCount >= pageDataSizeSelected) {
-				 System.out.println("table data >= page size selected.\nTable data=" +
-						 tableDataCount
-				 + "\npage size selected=" + pageDataSizeSelected);
+				System.out.println("table data >= page size selected.\nTable data=" + tableDataCount
+						+ "\npage size selected=" + pageDataSizeSelected);
 
 				logger.log(LogStatus.INFO, "table data >= page size selected");
 
 				softAssert("STEP - Validate 'data per page' is fetched according to the 'page size' selected",
 						String.valueOf(tableDataCount), String.valueOf(pageDataSizeSelected), true, logger);
 
-				// logger.log(LogStatus.INFO, "Validate data per page and page size => data >=
-				// 10 nos."+capture(driver));
 			} else {
-				
+
 				// table data count
-				int dataCount_lessThanPageSizeSelected= (tableDataCount%pageDataSizeSelected);
+				int dataCount_lessThanPageSizeSelected = (tableDataCount % pageDataSizeSelected);
 
-					System.out.println("table data < page size selected.\nTable data=" + tableDataCount
-							+ "\npage size selected=" + pageDataSizeSelected);
+				System.out.println("table data < page size selected.\nTable data=" + tableDataCount
+						+ "\npage size selected=" + pageDataSizeSelected);
 
-				logger.log(LogStatus.INFO, "table data < page size selected.\nTable data nos.-" + dataCount_lessThanPageSizeSelected
-						+ "\nPage size nos.-" + pageDataSizeSelected);
-				
-				
-				
+				logger.log(LogStatus.INFO, "table data < page size selected.\nTable data nos.-"
+						+ dataCount_lessThanPageSizeSelected + "\nPage size nos.-" + pageDataSizeSelected);
+
 			}
 		} else
 // if table has no data
@@ -909,13 +984,10 @@ System.out.println(fromCalender_Dates_disabled.get(1).getText());
 
 		waitForPageLoaded(driver, logger);
 		Boolean dataInTable = validateALLTxnReportTableHasData();
-		
-		
-	
+
 //1a. if table has data
-		if (dataInTable) 
-		{
-			
+		if (dataInTable) {
+
 			// find first and last number of record according to TABLE
 			WebElement ElementFirstNo = driver.findElement(By.xpath(
 					"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
@@ -931,22 +1003,19 @@ System.out.println(fromCalender_Dates_disabled.get(1).getText());
 			// find first and last number of record according to PAGE BOTTOM MESSAGE
 
 			String msgAtPageBottom = getPage_paginationDataCountingMsg();
-			System.out.println("msgAtPageBottom -"+msgAtPageBottom);
-			String[] splittedMsg = msgAtPageBottom.split(" ");//the index number of the numbers must be same (should not change)
-	
+			System.out.println("msgAtPageBottom -" + msgAtPageBottom);
+			String[] splittedMsg = msgAtPageBottom.split(" ");// the index number of the numbers must be same (should
+																// not change)
+
 			String firstNum = null;
 			String lastNum = null;
 			String totalTxns = null;
 
-			for (int a = 0; a <= (splittedMsg.length - 1); a++) 
-			{
-				
-				if (a == 0 || a == 2 || a == 4 || a == 6) 
-				{
+			for (int a = 0; a <= (splittedMsg.length - 1); a++) {
+
+				if (a == 0 || a == 2 || a == 4 || a == 6) {
 					continue;
-				} 
-				else 
-				{
+				} else {
 					if (a == 1) {
 						firstNum = splittedMsg[a];
 					} else if (a == 3) {
@@ -954,17 +1023,15 @@ System.out.println(fromCalender_Dates_disabled.get(1).getText());
 					} else if (a == 5) {
 						totalTxns = splittedMsg[a];
 					}
-
 				}
-
 			}
 			// we have first,last,total txn number
-			
-			
-			logger.log(LogStatus.INFO, "1 st no.from table -" + firstNumFromTable +"\n1 st no.in message - " + firstNum+
-					                   "last no.from table -" + lastNumFromtable +"\nlast no.in message - " + lastNum+
-					                   "total in message -" + totalTxns);
-			
+
+			logger.log(LogStatus.INFO,
+					"1 st no.from table -" + firstNumFromTable + "\n1 st no.in message - " + firstNum
+							+ "last no.from table -" + lastNumFromtable + "\nlast no.in message - " + lastNum
+							+ "total in message -" + totalTxns);
+
 			System.out.println("1 st no.from table -" + firstNumFromTable + "\n1 st no.in message - " + firstNum);
 			System.out.println("last no.from table -" + lastNumFromtable + "\nlast no.in message - " + lastNum);
 			System.out.println("total in message - " + totalTxns);
@@ -981,12 +1048,12 @@ System.out.println(fromCalender_Dates_disabled.get(1).getText());
 //			System.out.println("last no.in message - " + lastNum);
 //			System.out.println("total in message - " + totalTxns);
 
-			
 			System.out.println("validation_tableDataAndTextMessage-----------no data in table....");
 
 			logger.log(LogStatus.INFO, "no data in table....");
-	//		logger.log(LogStatus.INFO, "1st no.in message - " + firstNum+"\blast no.in message - " + lastNum+"\btotal in message - " + totalTxns);
-			
+			// logger.log(LogStatus.INFO, "1st no.in message - " + firstNum+"\blast no.in
+			// message - " + lastNum+"\btotal in message - " + totalTxns);
+
 		}
 	}
 
@@ -1002,11 +1069,10 @@ System.out.println(fromCalender_Dates_disabled.get(1).getText());
 	}
 
 	public String getCurentPageNumber() {
-
+		
 		waitForElementToAppear(curentPageNumber, driver, logger);
 		logger.log(LogStatus.INFO, "Current page number captured -" + curentPageNumber.getText());
 		return curentPageNumber.getText();
-
 	}
 
 	public int getPageNumbersCountDisplayedAtPageBottom() {
@@ -1050,80 +1116,112 @@ System.out.println(fromCalender_Dates_disabled.get(1).getText());
 	}
 
 	public void click_navigate_firstPageButton() {
+
 		waitForPageLoaded(driver, logger);
-		waitForElementToAppear(e_navigate_firstPageButton, driver, logger);
-		logger.log(LogStatus.INFO, "scroll to first page button");
-		scrollToWebElement(e_navigate_firstPageButton, driver);
+		waitForElementToAppear(paginationWebElement, driver, logger);
+		logger.log(LogStatus.INFO, "scroll to pagination WebElement");
+		scrollToWebElement(paginationWebElement, driver);
 
-		try {
-			logger.log(LogStatus.INFO, "Click on FIRST page icon");
+//FIRST PAGE button is at ZERO index, so passing static value = 0			
+			WebElement firstPageIconElement = paginationsAllButtons.get(0);
+			Boolean buttonEnabled = firstPageIconElement.isEnabled();
+			
+			logger.log(LogStatus.INFO, "click first page button");
 
-			System.out.println("first button is enabled -" + e_navigate_firstPageButton_enabledOrDesabled.isEnabled());
-			System.out.println(
-					"first button is displayed -" + e_navigate_firstPageButton_enabledOrDesabled.isDisplayed());
-			System.out
-					.println("first button is selected -" + e_navigate_firstPageButton_enabledOrDesabled.isSelected());
+			if (buttonEnabled) {
+				System.out.println("click first page button");
+				click(firstPageIconElement, driver, logger);
+			} else {
+				logger.log(LogStatus.INFO, "first page button is DISABLED");
+			}
 
-			click(e_navigate_firstPageButton, driver, logger);
-		} catch (Exception e) {
-			logger.log(LogStatus.ERROR, e);
-			logger.log(LogStatus.INFO, "navigate_firstPageButton is disabled. You are at first page.");
-
-		}
+		
 
 	}
 
 	public void click_navigate_previousPageButton() {
+		
 		waitForPageLoaded(driver, logger);
-		waitForElementToAppear(e_navigate_previousPageButton, driver, logger);
-		logger.log(LogStatus.INFO, "scroll to previous page button");
-		scrollToWebElement(e_navigate_previousPageButton, driver);
-		logger.log(LogStatus.INFO, "Click on previous page icon");
+		waitForElementToAppear(paginationWebElement, driver, logger);
+		logger.log(LogStatus.INFO, "scroll to pagination WebElement");
+		scrollToWebElement(paginationWebElement, driver);
 
-		System.out
-				.println("previous button is enabled -" + e_navigate_previousPageButton_enabledOrDesabled.isEnabled());
-		System.out.println(
-				"previous button is displayed -" + e_navigate_previousPageButton_enabledOrDesabled.isDisplayed());
-		System.out.println(
-				"previous button is selected -" + e_navigate_previousPageButton_enabledOrDesabled.isSelected());
+//PREVIOUS PAGE button is at ONE index, so passing static value = 1			
+			WebElement prevPageIconElement = paginationsAllButtons.get(1);
+			Boolean buttonEnabled = prevPageIconElement.isEnabled();
 
-		click(e_navigate_previousPageButton, driver, logger);
+			logger.log(LogStatus.INFO, "click previous page button");
 
+			if (buttonEnabled) {
+				System.out.println("click previous page button");
+				click(prevPageIconElement, driver, logger);
+			} else {
+				logger.log(LogStatus.INFO, "previous page button is DISABLED");
+			}
 	}
 
 	public void click_navigate_nextPageButton() {
+
 		waitForPageLoaded(driver, logger);
-		waitForElementToAppear(e_navigate_nextPageButton, driver, logger);
-		logger.log(LogStatus.INFO, "scroll to next page button");
-		scrollToWebElement(e_navigate_nextPageButton, driver);
-		logger.log(LogStatus.INFO, "Click on next page icon");
-		System.out.println("next button is enabled -" + e_navigate_nextPageButton_enabledOrDesabled.isEnabled());
-		System.out.println("next button is displayed -" + e_navigate_nextPageButton_enabledOrDesabled.isDisplayed());
-		System.out.println("next button is selected -" + e_navigate_nextPageButton_enabledOrDesabled.isSelected());
+		waitForElementToAppear(paginationWebElement, driver, logger);
+		logger.log(LogStatus.INFO, "scroll to pagination WebElement");
+		scrollToWebElement(paginationWebElement, driver);
 
-		click(e_navigate_nextPageButton, driver, logger);
+		//NEXT PAGE button is at TWO index, so passing static value = 2			
+			WebElement nextPageIconElement = paginationsAllButtons.get(2);
+			Boolean buttonEnabled = nextPageIconElement.isEnabled();
 
+			logger.log(LogStatus.INFO, "click next page button");
+
+			if (buttonEnabled) {
+				System.out.println("click next page button");
+				click(nextPageIconElement, driver, logger);
+			} else {
+				logger.log(LogStatus.INFO, "next page button is DISABLED");
+			}
 	}
 
 	public void click_navigate_lastPageButton() {
+		
+
 		waitForPageLoaded(driver, logger);
-		waitForElementToAppear(e_navigate_lastPageButton, driver, logger);
-		logger.log(LogStatus.INFO, "scroll to last page button");
-		scrollToWebElement(e_navigate_lastPageButton, driver);
+		waitForElementToAppear(paginationWebElement, driver, logger);
+		logger.log(LogStatus.INFO, "scroll to pagination WebElement");
+		scrollToWebElement(paginationWebElement, driver);
 
-		try {
-			logger.log(LogStatus.INFO, "Click on LAST page icon");
+//LAST PAGE button is at THREE index, so passing static value = 3			
+			WebElement lastPageIconElement = paginationsAllButtons.get(3);
+			Boolean buttonEnabled = lastPageIconElement.isEnabled();
 
-			System.out.println("last button is enabled -" + e_navigate_lastPageButton.isEnabled());
-			System.out.println("last button is displayed -" + e_navigate_lastPageButton.isDisplayed());
-			System.out.println("last button is selected -" + e_navigate_lastPageButton.isSelected());
+			logger.log(LogStatus.INFO, "click last page button");
 
-			click(e_navigate_lastPageButton, driver, logger);
-		} catch (Exception e) {
-			logger.log(LogStatus.ERROR, e);
-			logger.log(LogStatus.INFO, "navigate_lastPageButton is disabled. You are at last page.");
+			if (buttonEnabled) {
+				System.out.println("click last page button");
+				click(lastPageIconElement, driver, logger);
+			} else {
+				logger.log(LogStatus.INFO, "last page button is DISABLED");
+			}
 
-		}
+		
+//previous logic to click pagination buttons------------------		
+//		waitForPageLoaded(driver, logger);
+//		waitForElementToAppear(e_navigate_lastPageButton, driver, logger);
+//		logger.log(LogStatus.INFO, "scroll to last page button");
+//		scrollToWebElement(e_navigate_lastPageButton, driver);
+//
+//		try {
+//			logger.log(LogStatus.INFO, "Click on LAST page icon");
+//
+//			System.out.println("last button is enabled -" + e_navigate_lastPageButton.isEnabled());
+//			System.out.println("last button is displayed -" + e_navigate_lastPageButton.isDisplayed());
+//			System.out.println("last button is selected -" + e_navigate_lastPageButton.isSelected());
+//
+//			click(e_navigate_lastPageButton, driver, logger);
+//		} catch (Exception e) {
+//			logger.log(LogStatus.ERROR, e);
+//			logger.log(LogStatus.INFO, "navigate_lastPageButton is disabled. You are at last page.");
+//
+		
 
 	}
 
@@ -1138,10 +1236,12 @@ System.out.println(fromCalender_Dates_disabled.get(1).getText());
 
 	}
 
+	
 	public void get_perPageDataOptions(int indexNo) {
 
 		perPageDataOptions.get(indexNo);
 	}
+	
 
 	public void selectDataPerPage(int dataPerPage) {
 
@@ -1180,7 +1280,7 @@ System.out.println(fromCalender_Dates_disabled.get(1).getText());
 		click_pageSizeDropdown();
 		// select a value from dropdown (index base so start from 0)
 		int pageSizeDropdownListNumbers = perPageDataOptions.size();
-		
+
 		String currentPageDatSize;
 
 		// for loop will fetch all options available in dropdown
@@ -1256,25 +1356,10 @@ System.out.println(fromCalender_Dates_disabled.get(1).getText());
 
 	}
 
-	public void aaagetFirstWE() {
-		System.out.println("first is displayed-" + e_navigate_firstPageButton.isDisplayed());
-		System.out.println("first is enabled-" + e_navigate_firstPageButton.isEnabled());
-
-	}
-
-	public void aaagetPrevWE() {
-		System.out.println("prev is displayed-" + e_navigate_previousPageButton.isDisplayed());
-		System.out.println("prev is enabled-" + e_navigate_previousPageButton.isEnabled());
-	}
-
-	public void aaagetNextWE() {
-		System.out.println("next is displayed-" + e_navigate_nextPageButton.isDisplayed());
-		System.out.println("next is enabled-" + e_navigate_nextPageButton.isEnabled());
-	}
 
 	public void aaagetLastWE() {
-		System.out.println("last is displayed-" + e_navigate_lastPageButton.isDisplayed());
-		System.out.println("last is enabled-" + e_navigate_lastPageButton.isEnabled());
+		System.out.println("last is displayed-");
+		System.out.println("last is enabled-");
 	}
 
 }

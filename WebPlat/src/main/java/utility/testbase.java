@@ -59,7 +59,8 @@ public class testbase {
 	public void InitializeParameters(@Optional String browser, @Optional String environment,
 			@Optional String platformName, @Optional String os, @Optional String sharedDirectory,
 			@Optional String mobileos, @Optional String appiumurl, @Optional String device, @Optional String resultsdir,
-			@Optional String tomail, @Optional String cmsusername, @Optional String cmspassword) throws IOException {
+			@Optional String tomail, @Optional String cmsusername, @Optional String cmspassword) throws IOException 
+	{
 		testConfig = new config();
 		config.BrowserName = browser;
 		config.Environment = environment;
@@ -98,32 +99,45 @@ public class testbase {
 	
 	}
 	
-
+//logging basic information at REPORT top
+//browser initialization
+	
 	@SuppressWarnings("deprecation")
 	@BeforeMethod(alwaysRun = true)
-	public void startMethod(Method method) {
+	public void startMethod(Method method) 
+	{
 		Test test = method.getAnnotation(Test.class);
-		if (test == null) {
+	
+		if (test == null) 
+		{
 			return;
 		}
+		
 		String class_name = this.getClass().getName();
 		logger = extent.startTest("Class_Name : " + class_name + "</br>" + "Test_Name : " + method.getName());
 		logger.assignCategory(class_name);
 		int flag = 1;
 		try {
 
-			if (testConfig.getRunTimeProperty("platformname").equalsIgnoreCase("desktop")) {
-				if (reqBrowser.equalsIgnoreCase("notrequired")) {
+			if (testConfig.getRunTimeProperty("platformname").equalsIgnoreCase("desktop")) 
+			{
+				if (reqBrowser.equalsIgnoreCase("notrequired")) 
+				{
 					logger.log(LogStatus.INFO, "Browser required", "No");
 					flag = 0;
-				} else if (testConfig.getRunTimeProperty("os").equalsIgnoreCase("mac")) {
+				} else if (testConfig.getRunTimeProperty("os").equalsIgnoreCase("mac")) 
+				
+				{
 					System.setProperty("webdriver.chrome.driver", testConfig.getRunTimeProperty("SharedDirectory")
 							+ testConfig.getRunTimeProperty("fileSeparator") + "chromedriver");
 
 					driver = new ChromeDriver();
 					System.out.println(driver);
-				} else if (testConfig.getRunTimeProperty("os").equalsIgnoreCase("windows")) {
-					if (reqBrowser.equalsIgnoreCase("chrome")) {
+					
+				} else if (testConfig.getRunTimeProperty("os").equalsIgnoreCase("windows")) 
+				{
+					if (reqBrowser.equalsIgnoreCase("chrome")) 
+					{
 						System.setProperty("webdriver.chrome.driver", testConfig.getRunTimeProperty("SharedDirectory")
 								+ testConfig.getRunTimeProperty("fileSeparator") + "chromedriver_windows.exe");
 						driver = new ChromeDriver();
@@ -189,12 +203,15 @@ public class testbase {
 
 	@SuppressWarnings("deprecation")
 	@AfterMethod(alwaysRun = true)
-	public void endMethod(ITestResult result) throws IOException, InterruptedException {
+	public void endMethod(ITestResult result) throws IOException, InterruptedException 
+	{
 		try {
-			if (result.getStatus() == ITestResult.FAILURE) {
+			if (result.getStatus() == ITestResult.FAILURE) 
+			{
 				logger.log(LogStatus.FAIL, result.getName() + " : Test case failed due to : ", result.getThrowable());
 
-				if (!reqBrowser.equalsIgnoreCase("notrequired")) {
+				if (!reqBrowser.equalsIgnoreCase("notrequired")) 
+				{
 					File scrf_a = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
 					String encodedBase64 = null;
@@ -228,9 +245,11 @@ public class testbase {
 				logger.log(LogStatus.SKIP, result.getName() + " : Test case skipped due to : ", result.getThrowable());
 			}
 
-		} catch (Exception e) {
+		} catch (Exception e) 
+		{
 			logger.log(LogStatus.WARNING, "Final test step failed due to : ", e.toString());
-		} finally {
+		} finally 
+		{
 			if ((!reqBrowser.equalsIgnoreCase("notrequired"))
 					&& (testConfig.getRunTimeProperty("platformname").equalsIgnoreCase("desktop"))) {
 				Thread.sleep(5000);
@@ -242,6 +261,7 @@ public class testbase {
 				driver_m.quit();
 				logger.log(LogStatus.PASS, "Browser Closed");
 			}
+			
 			extent.endTest(logger);
 		//	extent.config().addCustomStylesheet("/Users/praveenkumar/Downloads/data.css");
 		}

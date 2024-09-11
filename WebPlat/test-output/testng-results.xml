@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="1" total="2" passed="0" failed="1" skipped="0">
+<testng-results ignored="5" total="6" passed="0" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-09-10T20:12:20 IST" name="Default suite" finished-at="2024-09-10T20:12:55 IST" duration-ms="34701">
+  <suite started-at="2024-09-11T19:20:11 IST" name="Default suite" finished-at="2024-09-11T19:20:53 IST" duration-ms="42462">
     <groups>
     </groups>
-    <test started-at="2024-09-10T20:12:20 IST" name="Default test" finished-at="2024-09-10T20:12:55 IST" duration-ms="34701">
+    <test started-at="2024-09-11T19:20:11 IST" name="Default test" finished-at="2024-09-11T19:20:53 IST" duration-ms="42462">
       <class name="testCases.TC001_TransactionHistoryTest">
-        <test-method is-config="true" signature="InitializeParameters(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:testCases.TC001_TransactionHistoryTest@58d75e99]" started-at="2024-09-10T20:12:20 IST" name="InitializeParameters" finished-at="2024-09-10T20:12:20 IST" duration-ms="219" status="PASS">
+        <test-method is-config="true" signature="InitializeParameters(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:testCases.TC001_TransactionHistoryTest@52af26ee]" started-at="2024-09-11T19:20:11 IST" name="InitializeParameters" finished-at="2024-09-11T19:20:11 IST" duration-ms="317" status="PASS">
           <params>
             <param index="0">
               <value is-null="true"/>
@@ -49,60 +49,29 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- InitializeParameters -->
-        <test-method is-config="true" signature="startMethod(java.lang.reflect.Method)[pri:0, instance:testCases.TC001_TransactionHistoryTest@58d75e99]" started-at="2024-09-10T20:12:20 IST" name="startMethod" finished-at="2024-09-10T20:12:25 IST" duration-ms="4635" status="PASS">
+        <test-method is-config="true" signature="startMethod(java.lang.reflect.Method)[pri:0, instance:testCases.TC001_TransactionHistoryTest@52af26ee]" started-at="2024-09-11T19:20:11 IST" name="startMethod" finished-at="2024-09-11T19:20:17 IST" duration-ms="6269" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void testCases.TC001_TransactionHistoryTest.TC001_navigateToTxnHistoryPage() throws java.lang.InterruptedException,java.io.IOException]]>
+                <![CDATA[public void testCases.TC001_TransactionHistoryTest.TC005_generatedPagesAccordingToPageSize() throws java.lang.InterruptedException,java.io.IOException]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- startMethod -->
-        <test-method signature="TC001_navigateToTxnHistoryPage()[pri:1, instance:testCases.TC001_TransactionHistoryTest@58d75e99]" started-at="2024-09-10T20:12:25 IST" name="TC001_navigateToTxnHistoryPage" finished-at="2024-09-10T20:12:48 IST" duration-ms="23694" status="FAIL">
-          <exception class="org.openqa.selenium.NoSuchElementException">
+        <test-method signature="TC005_generatedPagesAccordingToPageSize()[pri:5, instance:testCases.TC001_TransactionHistoryTest@52af26ee]" started-at="2024-09-11T19:20:17 IST" name="TC005_generatedPagesAccordingToPageSize" finished-at="2024-09-11T19:20:47 IST" duration-ms="29658" status="FAIL">
+          <exception class="java.lang.AssertionError">
             <message>
-              <![CDATA[no such element: Unable to locate element: {"method":"xpath","selector":"//table[@class='p-datepicker-calendar ng-tns-c46-4']/tbody/tr[2]/td[@class='ng-tns-c46-4 p-datepicker-today ng-star-inserted']"}
-  (Session info: chrome=128.0.6613.120)
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: '3.14.0', revision: 'aacccce0', time: '2018-08-02T20:19:58.91Z'
-System info: host: 'WEBPLAT78', ip: '192.168.0.108', os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.9'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 128.0.6613.120, chrome: {chromedriverVersion: 128.0.6613.86 (3045ed680fda..., userDataDir: C:\Users\Test1\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:56830}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 03544a8c958b9ae727848645297a62db
-*** Element info: {Using=xpath, value=//table[@class='p-datepicker-calendar ng-tns-c46-4']/tbody/tr[2]/td[@class='ng-tns-c46-4 p-datepicker-today ng-star-inserted']}]]>
+              <![CDATA[The following asserts failed:
+cat dropdo is displayed assertTRUE (aepsTab) failed did not expect to find [true] but found [false]]]>
             </message>
             <full-stacktrace>
-              <![CDATA[org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"//table[@class='p-datepicker-calendar ng-tns-c46-4']/tbody/tr[2]/td[@class='ng-tns-c46-4 p-datepicker-today ng-star-inserted']"}
-  (Session info: chrome=128.0.6613.120)
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: '3.14.0', revision: 'aacccce0', time: '2018-08-02T20:19:58.91Z'
-System info: host: 'WEBPLAT78', ip: '192.168.0.108', os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '17.0.9'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 128.0.6613.120, chrome: {chromedriverVersion: 128.0.6613.86 (3045ed680fda..., userDataDir: C:\Users\Test1\AppData\Loca...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:56830}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
-Session ID: 03544a8c958b9ae727848645297a62db
-*** Element info: {Using=xpath, value=//table[@class='p-datepicker-calendar ng-tns-c46-4']/tbody/tr[2]/td[@class='ng-tns-c46-4 p-datepicker-today ng-star-inserted']}
-at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
-at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
-at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
-at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
-at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
-at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
-at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
-at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
-at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
-at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:548)
-at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:322)
-at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:424)
-at org.openqa.selenium.By$ByXPath.findElement(By.java:353)
-at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:314)
-at org.openqa.selenium.support.pagefactory.DefaultElementLocator.findElement(DefaultElementLocator.java:69)
-at org.openqa.selenium.support.pagefactory.internal.LocatingElementHandler.invoke(LocatingElementHandler.java:38)
-at jdk.proxy2/jdk.proxy2.$Proxy14.getText(Unknown Source)
-at pageObjects.TransactionHistoryPOM.changeDateIfTableHasNoData(TransactionHistoryPOM.java:682)
-at testCases.TC001_TransactionHistoryTest.TC001_navigateToTxnHistoryPage(TC001_TransactionHistoryTest.java:27)
+              <![CDATA[java.lang.AssertionError: The following asserts failed:
+cat dropdo is displayed assertTRUE (aepsTab) failed did not expect to find [true] but found [false]
+at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:47)
+at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:31)
+at testCases.TC001_TransactionHistoryTest.TC005_generatedPagesAccordingToPageSize(TC001_TransactionHistoryTest.java:152)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -133,22 +102,22 @@ at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
 at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
 ]]>
             </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.NoSuchElementException -->
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TC001_navigateToTxnHistoryPage -->
-        <test-method is-config="true" signature="endMethod(org.testng.ITestResult)[pri:0, instance:testCases.TC001_TransactionHistoryTest@58d75e99]" started-at="2024-09-10T20:12:48 IST" name="endMethod" finished-at="2024-09-10T20:12:55 IST" duration-ms="6333" status="PASS">
+        </test-method> <!-- TC005_generatedPagesAccordingToPageSize -->
+        <test-method is-config="true" signature="endMethod(org.testng.ITestResult)[pri:0, instance:testCases.TC001_TransactionHistoryTest@52af26ee]" started-at="2024-09-11T19:20:47 IST" name="endMethod" finished-at="2024-09-11T19:20:53 IST" duration-ms="6487" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=TC001_navigateToTxnHistoryPage status=FAILURE method=TC001_TransactionHistoryTest.TC001_navigateToTxnHistoryPage()[pri:1, instance:testCases.TC001_TransactionHistoryTest@58d75e99] output={null}]]]>
+                <![CDATA[[TestResult name=TC005_generatedPagesAccordingToPageSize status=FAILURE method=TC001_TransactionHistoryTest.TC005_generatedPagesAccordingToPageSize()[pri:5, instance:testCases.TC001_TransactionHistoryTest@52af26ee] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- endMethod -->
-        <test-method is-config="true" signature="dumpParameters()[pri:0, instance:testCases.TC001_TransactionHistoryTest@58d75e99]" started-at="2024-09-10T20:12:55 IST" name="dumpParameters" finished-at="2024-09-10T20:12:57 IST" duration-ms="2059" status="FAIL">
+        <test-method is-config="true" signature="dumpParameters()[pri:0, instance:testCases.TC001_TransactionHistoryTest@52af26ee]" started-at="2024-09-11T19:20:54 IST" name="dumpParameters" finished-at="2024-09-11T19:20:55 IST" duration-ms="1737" status="FAIL">
           <exception class="java.lang.RuntimeException">
             <message>
               <![CDATA[javax.mail.MessagingException: Could not convert socket to TLS;
@@ -160,7 +129,7 @@ javax.net.ssl.SSLHandshakeException: No appropriate protocol (protocol is disabl
   nested exception is:
 javax.net.ssl.SSLHandshakeException: No appropriate protocol (protocol is disabled or cipher suites are inappropriate)
 at utility.sendmail.SendMail(sendmail.java:102)
-at utility.testbase.dumpParameters(testbase.java:260)
+at utility.testbase.dumpParameters(testbase.java:280)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
