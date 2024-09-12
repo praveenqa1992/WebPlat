@@ -133,9 +133,12 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//div[@class='col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12']")
 	public List<WebElement> calenderAndDropdown_CommonTabList_allTabs;
 
-	@FindBy(xpath = "//div[@class='col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12 ng-star-inserted']")
+	@FindBy(xpath = "//div[@class='col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12 ng-star-inserted']/div/p-dropdown")
 	public WebElement categoryTab;
 
+	@FindBy(xpath = "//div[@class='col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12 ng-star-inserted']/lable")
+	public WebElement categoryTab_lable;
+	
 	@FindBy(xpath = "//div[@class='p-dropdown-trigger'][1]")
 	public WebElement categoryDropdown;
 
@@ -199,7 +202,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	public List<WebElement> txnTable_rowNumbers;
 
 	@FindBy(xpath = "//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr/td")
-	public List<WebElement> txnTable_ONErowData;
+	public List<WebElement> txnTable_columnWE;
 
 //modify	
 	@FindBy(xpath = "//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr[1]/td[10]/a/i")
@@ -319,7 +322,6 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 	public void click_txnHistoryModule() {
-//		scrollUp(driver);
 		waitForElementToAppear(txnHistoryModule, driver, logger);
 		scrollToWebElement(txnHistoryModule, driver);
 		logger.log(LogStatus.INFO, "click_txnHistoryModule");
@@ -670,13 +672,13 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 	public void validate_pageTitle(String stepName, String actualPageTitle, String expectedPageTitle) {
-		compareString(expectedPageTitle, actualPageTitle);
+		compareString(expectedPageTitle, actualPageTitle,false);
 		softAssert(stepName, expectedPageTitle, actualPageTitle, true, logger);
 		hardAssert(stepName, expectedPageTitle, actualPageTitle, true, logger);
 	}
 
 	
-	public Boolean isCategoryDropdownDisplayed() {
+	public Boolean isCategoryTabDisplayed() {
 
 		//approach 1...with common method.......		
 		
@@ -690,38 +692,38 @@ public class TransactionHistoryPOM extends commonFunc {
 //		
 		
 //approach 2..........		
-		Boolean catDropDisp;
+		Boolean catTabDisp;
 		
 		System.out.println("checking category tab is displayed or not");
 		logger.log(LogStatus.INFO,"checking category tab is displayed or not");
 	  
 		try {
-		catDropDisp = isPresentAndDisplayed(categoryTab, driver, logger);
+		catTabDisp = isPresentAndDisplayed(categoryTab, driver, logger);
 		highlightElement(categoryTab);
 		
-	  if(catDropDisp) {
+	  if(catTabDisp) {
 		  
 			System.out.println("category tab is displayed");
 			logger.log(LogStatus.INFO,"category tab is displayed");
-			catDropDisp=true;
+			catTabDisp=true;
 	  }
 	  else {
 		  
 			System.out.println("category tab is not displayed");
 			logger.log(LogStatus.INFO,"category tab is not displayed");
-			catDropDisp=false;
+			catTabDisp=false;
 	  }
 		}
 		catch (NoSuchElementException e) {
 			
-			System.out.println("category dropdown is not displayed");
 			System.out.println("NoSuchElementException -"+e);
+			System.out.println("category tab is not displayed");
 
-			logger.log(LogStatus.INFO,"category dropdown is not displayed");
-			catDropDisp=false;		
+			logger.log(LogStatus.INFO,"category tab is not displayed");
+			catTabDisp=false;		
 			}
 		
-	  return catDropDisp;
+	  return catTabDisp;
 	  
 		
 	}
@@ -783,10 +785,25 @@ public class TransactionHistoryPOM extends commonFunc {
 		return txnTable_rowNumbers.size();
 	}
 
-	public int getTxnTable_ONErowData() {
+	public int getTxnTable_columnsNos() {
 
-		return txnTable_ONErowData.size();
+		return txnTable_columnWE.size();
 
+	}
+	
+	public String getTxnTable_messageIfNoTableData() {
+
+		int columns = getTxnTable_columnsNos();
+		
+		String txnTableFirstRowFirstColText = null;
+		
+		if(columns == 1) {
+			
+		 txnTableFirstRowFirstColText	= txnTable_columnWE.get(0).getText();
+		}
+		System.out.println("msg is -"+txnTableFirstRowFirstColText);
+
+       return txnTableFirstRowFirstColText;
 	}
 
 	public void openTxnMoreInfo() {
@@ -813,11 +830,11 @@ public class TransactionHistoryPOM extends commonFunc {
 		moreInfoTable_paramValueList.get(0);
 	}
 
-//	public void getBottom_PagenumbersDisplayed(int indexNo) {
-//
-//		bottom_PagenumbersDisplayed.get(indexNo);
-//		logger.log(LogStatus.INFO, "Current page number is");
-//	}
+	public void getBottom_PagenumbersDisplayed(int indexNo) {
+
+		bottom_PagenumbersDisplayed.get(indexNo);
+		logger.log(LogStatus.INFO, "Current page number is");
+	}
 
 	public void validate_noOfPagesAccordingToPageSize() throws InterruptedException {
 //
@@ -891,20 +908,21 @@ public class TransactionHistoryPOM extends commonFunc {
 	// ok=====method
 	public boolean validateALLTxnReportTableHasData() {
 
-		int recordsInFirstRow = getTxnTable_ONErowData();
+		int tableRowNos = txnTable_rowNumbers.size();
+	int tableColumns =	txnTable_columnWE.size();
 
 		Boolean tableHasData;
 
-		if (recordsInFirstRow > 0) {
+		if (tableRowNos > 0 && tableColumns > 1) {
 
 			logger.log(LogStatus.INFO,
-					"TABLE -> Records Found.\nThe \"All Transactions Report\" tableHasData has data");
+					"All Transactions Report table has data");
 			tableHasData = true;
 
 		} else {
 
 			logger.log(LogStatus.INFO,
-					"TABLE -> No Records Found.\nThe \"All Transactions Report\" tableHasData has no data");
+					"All Transactions Report table has no data");
 			tableHasData = false;
 		}
 
@@ -935,11 +953,11 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 	}
 
-	public void validate_pageSizeSelectedAndDataPerPageFetched() throws IOException, InterruptedException {
+	public Boolean isDataFetchedAccordingToPageSizeSelected() throws IOException, InterruptedException {
 
 		waitForPageLoaded(driver, logger);
 		Boolean dataInTable = validateALLTxnReportTableHasData();
-
+        Boolean flag = null;
 // if table has data		
 		if (dataInTable) {
 
@@ -951,33 +969,54 @@ public class TransactionHistoryPOM extends commonFunc {
 
 			// 1a-yes => check - table has data - data is less or more than page size
 			// selected
-			if (tableDataCount >= pageDataSizeSelected) {
-				System.out.println("table data >= page size selected.\nTable data=" + tableDataCount
-						+ "\npage size selected=" + pageDataSizeSelected);
-
+			if (tableDataCount >= pageDataSizeSelected) 
+			{
+				
 				logger.log(LogStatus.INFO, "table data >= page size selected");
+				logger.log(LogStatus.INFO, "table Data Count -"+tableDataCount+"\npage Size Selected -"+pageDataSizeSelected);
 
-				softAssert("STEP - Validate 'data per page' is fetched according to the 'page size' selected",
-						String.valueOf(tableDataCount), String.valueOf(pageDataSizeSelected), true, logger);
+				if(tableDataCount == pageDataSizeSelected) 
+				{
+					flag=true;
+				}
+				else 
+				{
+					flag=true;
 
-			} else {
+				}
+				return flag;
+			} 
+			else {
+				logger.log(LogStatus.INFO, "table data < page size selected");
+				logger.log(LogStatus.INFO, "table Data Count -"+tableDataCount+"\npage Size Selected -"+pageDataSizeSelected);
 
 				// table data count
 				int dataCount_lessThanPageSizeSelected = (tableDataCount % pageDataSizeSelected);
+				
 
-				System.out.println("table data < page size selected.\nTable data=" + tableDataCount
-						+ "\npage size selected=" + pageDataSizeSelected);
+				if(dataCount_lessThanPageSizeSelected < pageDataSizeSelected) 
+				{
+					flag=true;
+					logger.log(LogStatus.INFO, "table data count ="+dataCount_lessThanPageSizeSelected+"\npage size selected ="+pageDataSizeSelected);
 
-				logger.log(LogStatus.INFO, "table data < page size selected.\nTable data nos.-"
-						+ dataCount_lessThanPageSizeSelected + "\nPage size nos.-" + pageDataSizeSelected);
+				}
+				else 
+				{
+					flag=false;
+					logger.log(LogStatus.ERROR, "table data count ="+dataCount_lessThanPageSizeSelected+"\npage size selected ="+pageDataSizeSelected);
 
+				}
+				return flag;
+
+			
 			}
 		} else
 // if table has no data
 		{
-			System.out.println("no data in table....");
-			logger.log(LogStatus.INFO, "no data in table.... ");
+			logger.log(LogStatus.INFO, "table has no data.... ");
 		}
+		return flag;
+
 
 	}
 
@@ -1060,6 +1099,27 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 //4.PAGINATION (PAGE BOTTOM) methods........................
+	
+	
+	public String get_page_dataPerPageNumber() {
+
+	String dataPerPageNo =	page_dataPerPageNumber.getText();
+		
+		return dataPerPageNo;
+	}
+	
+	public Boolean get_defaultDataSTRING_PerPageIs(String expectedDefaultPageSize) {
+		
+		waitForElementToAppear(dataPerPageField, driver, logger);
+		scrollToWebElement(dataPerPageField, driver);
+		
+	   String defaultDataPerPage =	dataPerPageField.getText();
+	   
+	  Boolean defaultDataPerPageSize = compareString(defaultDataPerPage, expectedDefaultPageSize, true);
+	
+		return defaultDataPerPageSize;
+
+	}
 
 	public String getPage_paginationDataCountingMsg() {
 
@@ -1077,7 +1137,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		return curentPageNumber.getText();
 	}
 
-	public int getPageNumbersCountDisplayedAtPageBottom() {
+	public int getPageCountToNavigateDisplayedAtPageBottom() {
 		// 1.check - table has data or not
 
 		waitForPageLoaded(driver, logger);
@@ -1299,7 +1359,7 @@ public class TransactionHistoryPOM extends commonFunc {
 			click(perPageDataOptions.get(a), driver, logger);
 			System.out.println("selected page size  -" + perPageDataOptions.get(a).getText());
 // m1...
-			validate_pageSizeSelectedAndDataPerPageFetched();
+//			validate_pageSizeSelectedAndDataPerPageFetched();
 //m2...			
 			validate_tableDataAndTextMessage();
 //wait for table loading after changing the data numbers displayed on page

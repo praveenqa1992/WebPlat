@@ -9,17 +9,19 @@
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
 <tr><th colspan="7">Default suite</th></tr>
-<tr><td><a href="#t0">Default test</a></td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">123,988</td><td></td><td></td></tr>
+<tr><td><a href="#t0">Default test</a></td><td class="num">5</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">197,227</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Default test &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="1">testCases.TC1_VerifyLogin</td><td><a href="#m0">dumpParameters</a></td><td rowspan="1">1726074214728</td><td rowspan="1">1223</td></tr><tr><th colspan="4">Default test &#8212; passed</th></tr><tr class="passedeven"><td rowspan="1">testCases.TC1_VerifyLogin</td><td><a href="#m1">verifySignIn</a></td><td rowspan="1">1726074188975</td><td rowspan="1">20242</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Default test &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="1">testRun.TransactionHistoryTEST</td><td><a href="#m0">dumpParameters</a></td><td rowspan="1">1726145741448</td><td rowspan="1">1634</td></tr><tr><th colspan="4">Default test &#8212; passed</th></tr><tr class="passedeven"><td rowspan="5">testRun.TransactionHistoryTEST</td><td><a href="#m1">TC001_navigateToAllTxnHistoryPage</a></td><td rowspan="1">1726145551387</td><td rowspan="1">30356</td></tr><tr class="passedeven"><td><a href="#m2">TC002_selectDateAndClickSearchButton</a></td><td rowspan="1">1726145592141</td><td rowspan="1">31252</td></tr><tr class="passedeven"><td><a href="#m3">TC003_messageDisplayedIfTableHasNoData</a></td><td rowspan="1">1726145633737</td><td rowspan="1">24609</td></tr><tr class="passedeven"><td><a href="#m4">TC004_validateTheDefaultPageSize</a></td><td rowspan="1">1726145668709</td><td rowspan="1">24991</td></tr><tr class="passedeven"><td><a href="#m5">TC005_validatePageDataAccordingToPageSize</a></td><td rowspan="1">1726145703851</td><td rowspan="1">31268</td></tr></tbody>
 </table>
-<h2>Default test</h2><h3 id="m0">testCases.TC1_VerifyLogin#dumpParameters</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.RuntimeException: javax.mail.MessagingException: Could not convert socket to TLS;
+<h2>Default test</h2><h3 id="m0">testRun.TransactionHistoryTEST#dumpParameters</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.RuntimeException: javax.mail.MessagingException: Could not convert socket to TLS;
   nested exception is:
 	javax.net.ssl.SSLHandshakeException: No appropriate protocol (protocol is disabled or cipher suites are inappropriate)
 	at utility.sendmail.SendMail(sendmail.java:102)
 	at utility.testbase.dumpParameters(testbase.java:280)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
 	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:133)
 	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:62)
 	at org.testng.internal.ConfigInvoker.invokeConfigurationMethod(ConfigInvoker.java:340)
@@ -46,9 +48,9 @@ Caused by: javax.mail.MessagingException: Could not convert socket to TLS;
 	at javax.mail.Transport.send0(Transport.java:194)
 	at javax.mail.Transport.send(Transport.java:124)
 	at utility.sendmail.SendMail(sendmail.java:100)
-	... 18 more
+	... 20 more
 Caused by: javax.net.ssl.SSLHandshakeException: No appropriate protocol (protocol is disabled or cipher suites are inappropriate)
-	at java.base/sun.security.ssl.HandshakeContext.&lt;init&gt;(HandshakeContext.java:162)
+	at java.base/sun.security.ssl.HandshakeContext.&lt;init&gt;(HandshakeContext.java:172)
 	at java.base/sun.security.ssl.ClientHandshakeContext.&lt;init&gt;(ClientHandshakeContext.java:103)
 	at java.base/sun.security.ssl.TransportContext.kickstart(TransportContext.java:247)
 	at java.base/sun.security.ssl.SSLSocketImpl.startHandshake(SSLSocketImpl.java:448)
@@ -56,8 +58,12 @@ Caused by: javax.net.ssl.SSLHandshakeException: No appropriate protocol (protoco
 	at com.sun.mail.util.SocketFetcher.configureSSLSocket(SocketFetcher.java:549)
 	at com.sun.mail.util.SocketFetcher.startTLS(SocketFetcher.java:486)
 	at com.sun.mail.smtp.SMTPTransport.startTLS(SMTPTransport.java:1902)
-	... 25 more
+	... 27 more
 </div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m1">testCases.TC1_VerifyLogin#verifySignIn</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m1">testRun.TransactionHistoryTEST#TC001_navigateToAllTxnHistoryPage</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m2">testRun.TransactionHistoryTEST#TC002_selectDateAndClickSearchButton</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m3">testRun.TransactionHistoryTEST#TC003_messageDisplayedIfTableHasNoData</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m4">testRun.TransactionHistoryTEST#TC004_validateTheDefaultPageSize</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m5">testRun.TransactionHistoryTEST#TC005_validatePageDataAccordingToPageSize</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>

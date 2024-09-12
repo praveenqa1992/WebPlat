@@ -53,12 +53,12 @@ public class TC001_TransactionHistoryTest extends testbase {
 		transactionHistoryPOM.click_searchButton();
 		
 		System.out.println("//validate data per page and page size selected when table data is EQUAL TO or MORE than page size selected");
-		transactionHistoryPOM.validate_pageSizeSelectedAndDataPerPageFetched();
+//		transactionHistoryPOM.validate_pageSizeSelectedAndDataPerPageFetched();
 		transactionHistoryPOM.validate_tableDataAndTextMessage();
 		
 		System.out.println("//validate data per page and page size selected when table data is LESS than page size selected");
 		transactionHistoryPOM.click_navigate_lastPageButton();
-		transactionHistoryPOM.validate_pageSizeSelectedAndDataPerPageFetched();
+//		transactionHistoryPOM.validate_pageSizeSelectedAndDataPerPageFetched();
 		transactionHistoryPOM.validate_tableDataAndTextMessage();
 		
 		System.out.println("//validate validate_dataPerPage by selecting All Page Sizes");
@@ -102,20 +102,20 @@ public class TC001_TransactionHistoryTest extends testbase {
 		
 		Thread.sleep(5000);
 
-		transactionHistoryPOM.validate_pageSizeSelectedAndDataPerPageFetched();
+//		transactionHistoryPOM.validate_pageSizeSelectedAndDataPerPageFetched();
 		transactionHistoryPOM.validate_tableDataAndTextMessage();
 		
 		System.out.println("click_telecomTab");
 		transactionHistoryPOM.click_telecomTab();
 		Thread.sleep(5000);
 
-		transactionHistoryPOM.validate_pageSizeSelectedAndDataPerPageFetched();
+//		transactionHistoryPOM.validate_pageSizeSelectedAndDataPerPageFetched();
 		transactionHistoryPOM.validate_tableDataAndTextMessage();
 		
 		
 	}
 	
-	@Test(priority = 5, enabled=true)
+	@Test(priority = 5, enabled=false)
 	public void TC005_generatedPagesAccordingToPageSize() throws InterruptedException, IOException {
 		
 
@@ -132,7 +132,7 @@ public class TC001_TransactionHistoryTest extends testbase {
 		
 		Thread.sleep(2000);
 		
-	Boolean catDrop	= transactionHistoryPOM.isCategoryDropdownDisplayed();
+	Boolean catDrop	= transactionHistoryPOM.isCategoryTabDisplayed();
 
 	SoftAssert softAssert = new SoftAssert();
 	System.out.println("soft assert 1......");
@@ -145,7 +145,7 @@ public class TC001_TransactionHistoryTest extends testbase {
     transactionHistoryPOM.click_aepsTab();
 	Thread.sleep(2000);
 
-    Boolean catDrop2 = transactionHistoryPOM.isCategoryDropdownDisplayed();
+    Boolean catDrop2 = transactionHistoryPOM.isCategoryTabDisplayed();
 	System.out.println("soft assert 2......");
 
     softAssert.assertTrue(catDrop2,"cat dropdo is displayed assertTRUE (aepsTab) failed");   

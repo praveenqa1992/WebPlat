@@ -3,15 +3,16 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="testCases.TC1_VerifyLogin">
+      <class name="testRun.TransactionHistoryTEST">
         <methods>
           <include name="endMethod"/>
+          <include name="TC005_validatePageDataAccordingToPageSize"/>
           <include name="startMethod"/>
           <include name="dumpParameters"/>
-          <include name="verifySignIn"/>
           <include name="InitializeParameters"/>
+          <include name="TC001_navigateToAllTxnHistoryPage"/>
         </methods>
-      </class> <!-- testCases.TC1_VerifyLogin -->
+      </class> <!-- testRun.TransactionHistoryTEST -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

@@ -137,36 +137,36 @@ public class commonFunc {
 		}
 	}
 
-//	public boolean compareString(String expected, String actual, boolean ignorecase) {
-//		if (Boolean.TRUE.equals(ignorecase)) {
-//			if (expected.trim().equalsIgnoreCase(actual.trim())) {
-//				return true;
-//			} else {
-//				return false;
-//			}
-//
-//		} else {
-//			if (expected.trim().equals(actual.trim())) {
-//				return true;
-//			} else {
-//				return false;
-//			}
-//		}
-//	}
-	
-	public boolean compareString(String expectedResult, String actualResult) {
-		this.expectedValue = expectedResult;
-		this.actualValue = actualResult;
-		
-		if(expectedValue.equals(actualResult)) {
-			
-			return true;
+	public boolean compareString(String actual, String expected, boolean ignorecase) {
+		if (Boolean.TRUE.equals(ignorecase)) {
+			if (expected.trim().equalsIgnoreCase(actual.trim())) {
+				return true;
+			} else {
+				return false;
+			}
+
 		} else {
-			return false;
+			if (expected.trim().equals(actual.trim())) {
+				return true;
+			} else {
+				return false;
+			}
 		}
-		
-		
 	}
+	
+//	public boolean compareString(String expectedResult, String actualResult) {
+//		this.expectedValue = expectedResult;
+//		this.actualValue = actualResult;
+//		
+//		if(expectedValue.equals(actualResult)) {
+//			
+//			return true;
+//		} else {
+//			return false;
+//		}
+//		
+//		
+//	}
 
 	public void sendingKeys(WebElement we, String text, WebDriver driver) {
 		if (checkPresenceOfElement(we, driver)) {
@@ -417,6 +417,8 @@ public class commonFunc {
 
 
 	public boolean isPresentAndDisplayed(WebElement locator,  WebDriver driver, ExtentTest logger) {
+		
+		waitForPageLoaded(driver, logger);
 		try {
 			if (locator.isDisplayed()) {
 

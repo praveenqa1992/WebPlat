@@ -56,21 +56,21 @@ public class TC1_VerifyLogin  extends testbase{
 		String expectedTitle = "Dashboard";
 		
 		commonFunc comm = new commonFunc();
-		boolean result = comm.compareString(expectedTitle, actualTitle);
+		boolean result = comm.compareString(expectedTitle, actualTitle,false);
 		
-		comm.softAssert("Verify page title", expectedTitle, actualTitle, result, logger);
+		comm.softAssert("Verify dashboard page title -", expectedTitle, actualTitle, result, logger);
 /**********************************************************************************************************************************/		
 
 		
 /**********************************************************************************************************************************/		
 								/*** Fail Assertion **/
 
-String expectedTitle1 = "Dashboard1";
-
-
-boolean result1 = comm.compareString(expectedTitle1, actualTitle);
-
-comm.softAssert("Verify page title", expectedTitle1, actualTitle, result1, logger);
+//String expectedTitle1 = "Dashboard1";
+//
+//
+//boolean result1 = comm.compareString(expectedTitle1, actualTitle,false);
+//
+//comm.softAssert("Verify dashboard page title (fail intentionally)-", expectedTitle1, actualTitle, result1, logger);
 /**********************************************************************************************************************************/
 		
 	logger.log(LogStatus.INFO, "Step 2: logged in successfully ");
