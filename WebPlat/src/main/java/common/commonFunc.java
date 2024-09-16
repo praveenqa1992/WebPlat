@@ -116,7 +116,73 @@ public class commonFunc {
 		return data;
 	}
 
-	public void softAssert(String stepname, String expected, String actual, boolean result, ExtentTest logger) {
+//below methods are added by shinde	
+	 public void softAssertTrue (String stepname,boolean result,ExtentTest logger)
+	 {
+		 
+		 if(Boolean.TRUE.equals(result))
+		 {
+			 logger.log(LogStatus.PASS, stepname,"Actual value : " + result + "Expected value :  True");
+			 
+		 }
+		 else 
+		 {
+			 logger.log(LogStatus.FAIL, stepname,"Actual value : " + result + "Expected value :  True");
+		}
+		 
+	 }
+	 
+	 public void softAssertFalse (String stepname,boolean result,ExtentTest logger)
+	 {
+		 
+		 if(Boolean.FALSE.equals(result))
+		 {
+			 logger.log(LogStatus.PASS, stepname,"Actual value : " + result + "\nExpected value :  False");
+			 
+		 }
+		 else 
+		 {
+			 logger.log(LogStatus.FAIL, stepname,"Actual value : " + result + "\nExpected value :  False");
+		}
+		 
+	 }
+	
+//hard assert
+	 
+	 public void hardAssertTrue (String stepname,boolean result,ExtentTest logger)
+	 {
+		 
+		 if(Boolean.TRUE.equals(result))
+		 {
+			 logger.log(LogStatus.PASS, stepname,"Actual value : " + result + "\nExpected value :  True");
+			 
+		 }
+		 else 
+		 {
+			 logger.log(LogStatus.FAIL, stepname,"Actual value : " + result + "\nExpected value :  True");
+			 Assert.fail();
+		}
+		 
+	 }
+	 
+	 public void hardAssertFalse (String stepname,boolean result,ExtentTest logger)
+	 {
+		 
+		 if(Boolean.FALSE.equals(result))
+		 {
+			 logger.log(LogStatus.PASS, stepname,"Actual value : " + result + "\nExpected value :  False");
+			 
+		 }
+		 else 
+		 {
+			 logger.log(LogStatus.FAIL, stepname,"Actual value : " + result + "\nExpected value :  False");
+			 Assert.fail();
+		}
+		 
+	 }
+	  
+//end of the methods are added by shinde	
+		public void softAssert(String stepname, String actual, String expected, boolean result, ExtentTest logger) {
 		if (Boolean.TRUE.equals(result)) {
 			logger.log(LogStatus.PASS, stepname,
 					"Expected value : " + expected + "</br>is equal to</br>actual value : " + actual);
@@ -126,7 +192,7 @@ public class commonFunc {
 		}
 	}
 
-	public void hardAssert(String stepname, String expected, String actual, boolean result, ExtentTest logger) {
+	public void hardAssert(String stepname, String actual, String expected, boolean result, ExtentTest logger) {
 		if (Boolean.TRUE.equals(result)) {
 			logger.log(LogStatus.PASS, stepname,
 					"Expected value : " + expected + "</br>is equal to</br>actual value : " + actual);
@@ -600,9 +666,9 @@ public class commonFunc {
 
 	}
 
-	public void highlightElement(WebElement locator) {
-		this.highlightElement(locator, "yellow", null, null);
-	}
+//	public void highlightElement(WebElement locator) {
+//		this.highlightElement(locator, "yellow", null, null);
+//	}
 
 
 	public void highlightElement(WebElement element, String color, WebDriver driver, ExtentTest logger) {

@@ -17,7 +17,7 @@ import common.commonFunc;
 import net.bytebuddy.implementation.bytecode.ByteCodeAppender.Size;
 
 public class TransactionHistoryPOM extends commonFunc {
-	
+
 	public static boolean result;
 
 	public WebDriver driver;
@@ -138,7 +138,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	@FindBy(xpath = "//div[@class='col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12 ng-star-inserted']/lable")
 	public WebElement categoryTab_lable;
-	
+
 	@FindBy(xpath = "//div[@class='p-dropdown-trigger'][1]")
 	public WebElement categoryDropdown;
 
@@ -148,12 +148,13 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//span[text()='Select Operator']")
 	public WebElement operatorDropdown;
 
+	// static data- 1st txn
 	@FindBy(xpath = "//table[@id='pr_id_13-table']/tbody/tr[1]/td[3]/span[1]")
 	public WebElement txn_service;
-
+//static data- 1st txn
 	@FindBy(xpath = "//table[@id='pr_id_13-table']/tbody/tr[1]/td[3]/span[2]")
 	public WebElement txn_category;
-
+	// static data- 1st txn
 	@FindBy(xpath = "//table[@id='pr_id_13-table']/tbody/tr[1]/td[3]/span[3]")
 	public WebElement txn_operator;
 
@@ -184,7 +185,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//ul[@id='pr_id_11_list']//p-dropdownitem")
 	public List<WebElement> serviceDropList;
 
-	@FindBy(xpath = "//ul[@id='pr_id_12_list']/p-dropdownitem")
+	@FindBy(xpath = "//ul[@id='pr_id_12_list']/p-dropdownitem") //replace 12 by 29 for demo 21 operator list
 	public List<WebElement> operatorDropList;
 
 	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-10']//tbody//span")
@@ -192,6 +193,10 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-11']//tbody//span")
 	public List<WebElement> datesOfToCalender;
+	
+	
+	@FindBy(xpath = "//input[@class='p-dropdown-filter p-inputtext p-component']")
+	public WebElement operatorDropdownInputField;
 
 //------------------------------------	
 
@@ -204,7 +209,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr/td")
 	public List<WebElement> txnTable_columnWE;
 
-//modify	
+//modify....static x path of 1st txn	
 	@FindBy(xpath = "//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr[1]/td[10]/a/i")
 	public WebElement txnMoreInfo_Icon;
 
@@ -297,8 +302,14 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//div[@class='p-paginator-first pr-0 p-paginator p-component ng-star-inserted']/button")
 	public List<WebElement> paginationsAllButtons;
 
+	@FindBy(xpath = "//div[@id='offcanvasRight']")
+	public WebElement moreinfoSideBar;
+
 	@FindBy(xpath = "")
-	public WebElement qa;
+	public WebElement a;
+
+	@FindBy(xpath = "")
+	public WebElement b;
 
 //CONSTRUCTOR..........
 
@@ -507,16 +518,44 @@ public class TransactionHistoryPOM extends commonFunc {
 
 //2.PAGE TOP elements methods...................
 
+	public void click_categoryDropdown() throws InterruptedException {
+
+		waitForElementToAppear(categoryDropdown, driver, logger);
+		scrollToWebElement(categoryDropdown, driver);
+		logger.log(LogStatus.INFO, "click category dropdown");
+		click(categoryDropdown, driver, logger);
+
+	}
+
+	public void click_serviceDropdown() throws InterruptedException {
+
+		waitForElementToAppear(serviceDropdown, driver, logger);
+		scrollToWebElement(serviceDropdown, driver);
+		logger.log(LogStatus.INFO, "click service dropdown");
+		click(serviceDropdown, driver, logger);
+
+	}
+
+	public void click_operatorDropdown() throws InterruptedException {
+
+		waitForElementToAppear(operatorDropdown, driver, logger);
+		scrollToWebElement(operatorDropdown, driver);
+		logger.log(LogStatus.INFO, "click operator dropdown");
+		click(operatorDropdown, driver, logger);
+
+	}
+
 	public void selectCategoryFromDropdown(String categoryToSelect) {
 
 		logger.log(LogStatus.INFO, "navigating through category dropdown ");
 
 		for (WebElement categoryOne : categoryDropList) {
+
 			String requiredCategory = categoryOne.getText().trim();
 
 			if (requiredCategory.equalsIgnoreCase(categoryToSelect)) {
+				logger.log(LogStatus.INFO, "click category -" + categoryOne);
 				click(categoryOne, driver, logger);
-				logger.log(LogStatus.INFO, "category click ");
 				break;
 			}
 		}
@@ -530,15 +569,14 @@ public class TransactionHistoryPOM extends commonFunc {
 			String requiredService = serviceOne.getText().trim();
 
 			if (requiredService.equalsIgnoreCase(serviceToSelect)) {
+				logger.log(LogStatus.INFO, "click service -" + serviceOne);
 				click(serviceOne, driver, logger);
-				logger.log(LogStatus.INFO, "service click ");
-
 				break;
 			}
 		}
 	}
 
-	public void selectOperatorFromDropdown(String operatorToSelect) {
+	public void selectOperatorFromDropdown(String operatorToSelect) throws InterruptedException {
 
 		logger.log(LogStatus.INFO, "navigating through operator dropdown ");
 
@@ -546,14 +584,22 @@ public class TransactionHistoryPOM extends commonFunc {
 			String requiredOperator = operatorOne.getText().trim();
 
 			if (requiredOperator.equalsIgnoreCase(operatorToSelect)) {
+				logger.log(LogStatus.INFO, "click operator -" + operatorOne);
 				click(operatorOne, driver, logger);
-				logger.log(LogStatus.INFO, "operator click ");
-
 				break;
 			}
 		}
 	}
 
+	
+	public void enterText_selectOperatorFromDropdown(String operatorToSelect) throws InterruptedException {
+
+	waitForElementToAppear(operatorDropdownInputField, driver, logger);
+	sendingKeys(operatorDropdownInputField, operatorToSelect, driver);
+	
+	}
+	
+	
 	public void selectFromDate2Auto() throws InterruptedException {
 
 		logger.log(LogStatus.INFO, "click from calendar icon");
@@ -652,7 +698,7 @@ public class TransactionHistoryPOM extends commonFunc {
 			calendarYear = toYear.getText();
 		}
 
-//		logger.log(LogStatus.INFO, "selected to month -" + calenderMonth + "\bselected to year -" + calenderYear);
+//		logger.log(LogStatus.INFO, "selected to month -" + calenderMonth + "\nselected to year -" + calenderYear);
 		logger.log(LogStatus.INFO, "selecting to date");
 
 		String calendarDateValue = null;
@@ -672,67 +718,59 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 	public void validate_pageTitle(String stepName, String actualPageTitle, String expectedPageTitle) {
-		compareString(expectedPageTitle, actualPageTitle,false);
+		compareString(expectedPageTitle, actualPageTitle, false);
 		softAssert(stepName, expectedPageTitle, actualPageTitle, true, logger);
 		hardAssert(stepName, expectedPageTitle, actualPageTitle, true, logger);
 	}
 
-	
 	public Boolean isCategoryTabDisplayed() {
 
-		//approach 1...with common method.......		
-		
-		
-//		waitForPageLoaded(driver, logger);
+		// approach 1...with common method.......
 //
+//		waitForPageLoaded(driver, logger);
+//        scrollToWebElement(categoryTab, driver);
+//        
 //	    	logger.log(LogStatus.INFO,"checking category dropdown is displayed or not");
-//		  Boolean catDropDisp = isPresentAndDisplayed(categoryDropdown, driver, logger);
+//		 
+//	    	Boolean catDropDisp = isPresentAndDisplayed(categoryTab, driver, logger);
 //
 //		  return catDropDisp;
 //		
-		
+
 //approach 2..........		
 		Boolean catTabDisp;
-		
+
 		System.out.println("checking category tab is displayed or not");
-		logger.log(LogStatus.INFO,"checking category tab is displayed or not");
-	  
+		logger.log(LogStatus.INFO, "checking category tab is displayed or not");
+
 		try {
-		catTabDisp = isPresentAndDisplayed(categoryTab, driver, logger);
-		highlightElement(categoryTab);
-		
-	  if(catTabDisp) {
-		  
-			System.out.println("category tab is displayed");
-			logger.log(LogStatus.INFO,"category tab is displayed");
-			catTabDisp=true;
-	  }
-	  else {
-		  
-			System.out.println("category tab is not displayed");
-			logger.log(LogStatus.INFO,"category tab is not displayed");
-			catTabDisp=false;
-	  }
-		}
-		catch (NoSuchElementException e) {
-			
-			System.out.println("NoSuchElementException -"+e);
+			catTabDisp = isPresentAndDisplayed(categoryTab, driver, logger);
+			highlightElement(categoryTab, "Red", driver, logger);
+
+			if (catTabDisp) {
+
+				System.out.println("category tab is displayed");
+				logger.log(LogStatus.INFO, "category tab is displayed");
+				catTabDisp = true;
+			} else {
+
+				System.out.println("category tab is not displayed");
+				logger.log(LogStatus.INFO, "category tab is not displayed");
+				catTabDisp = false;
+			}
+		} catch (NoSuchElementException e) {
+
+//			System.out.println("NoSuchElementException -" + e);
 			System.out.println("category tab is not displayed");
 
-			logger.log(LogStatus.INFO,"category tab is not displayed");
-			catTabDisp=false;		
-			}
-		
-	  return catTabDisp;
-	  
-		
+			logger.log(LogStatus.INFO, "category tab is not displayed");
+			catTabDisp = false;
+		}
+
+		return catTabDisp;
+
 	}
-	
-	
-	
-	
-	
-	
+
 	public void changeDateIfTableHasNoData() throws InterruptedException {
 
 		Boolean datainTable = validateALLTxnReportTableHasData();
@@ -790,44 +828,100 @@ public class TransactionHistoryPOM extends commonFunc {
 		return txnTable_columnWE.size();
 
 	}
-	
+
 	public String getTxnTable_messageIfNoTableData() {
 
 		int columns = getTxnTable_columnsNos();
-		
-		String txnTableFirstRowFirstColText = null;
-		
-		if(columns == 1) {
-			
-		 txnTableFirstRowFirstColText	= txnTable_columnWE.get(0).getText();
-		}
-		System.out.println("msg is -"+txnTableFirstRowFirstColText);
 
-       return txnTableFirstRowFirstColText;
+		String txnTableFirstRowFirstColText = null;
+
+		if (columns == 1) {
+
+			txnTableFirstRowFirstColText = txnTable_columnWE.get(0).getText();
+		}
+		System.out.println("msg is -" + txnTableFirstRowFirstColText);
+
+		return txnTableFirstRowFirstColText;
 	}
 
-	public void openTxnMoreInfo() {
+//static x path of 1st txn. only................	
+	public void openTxnMoreInfoPopup_staticFIRSTtxn() {
 		waitForElementToAppear(txnMoreInfo_Icon, driver, logger);
-		logger.log(LogStatus.INFO, "Open more info. of a transaction");
+		logger.log(LogStatus.INFO, "Click meatball icon (...) to open more info. popup of a transaction");
 		click(txnMoreInfo_Icon, driver, logger);
 
 	}
 
-	public void closeTxnMoreInfo() {
-		waitForElementToAppear(txnMoreInfo_Close, driver, logger);
-		logger.log(LogStatus.INFO, "Close more info. of a transaction");
-		click(txnMoreInfo_Close, driver, logger);
+	public void OpenMoreInfoOfTxnPopup(int txnNo) throws InterruptedException {
+
+		Boolean tableHasData = validateALLTxnReportTableHasData();
+
+		if (tableHasData) {
+
+			int colNos = getTxnTable_columnNumbers(); // last column has 'more info (meatball)' icon so last column
+														// number should be used
+
+			WebElement moreInfoIcon = driver.findElement(By.xpath(
+					"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
+							+ txnNo + "]/td[" + colNos + "]/a/i"));
+
+			waitForPageLoaded(driver, logger);
+			scrollToWebElement(moreInfoIcon, driver);
+
+			logger.log(LogStatus.INFO, "Click on more info (meatball) icon OPEN");
+			Thread.sleep(2000);
+			click(moreInfoIcon, driver, logger);
+			Thread.sleep(2000);
+
+		} else {
+
+			logger.log(LogStatus.INFO,
+					"validateMoreInfoOfTxn is failed.\nTABLE -> No Records Found.\nThe \"All Transactions Report\" tableHasData has no data");
+
+		}
+	}
+
+	public void closeMoreInfoOfTxnPopup(int dataNum) throws InterruptedException {
+
+		Boolean moreInfoPopupOpen = isMoreInfoOfTxnPopup_Appeared(dataNum);
+		if (moreInfoPopupOpen) {
+			waitForElementToAppear(txnMoreInfo_Close, driver, logger);
+			logger.log(LogStatus.INFO, "Click on 'X' to close more info. popup of a transaction");
+
+			try {
+				click(txnMoreInfo_Close, driver, logger);
+			} catch (Exception e) {
+				logger.log(LogStatus.INFO,
+						"Failed click on the 'X' button of more Info popup\nof Txn. number -" + dataNum);
+				logger.log(LogStatus.INFO, e);
+			}
+		}
 
 	}
 
-	public void getMoreInfoTable_paramNameList() {
+	public String getMoreInfoTable_paramName(int paramNo) {
 
-		moreInfoTable_paramNameList.get(0);
+		return moreInfoTable_paramNameList.get(paramNo).getText();
+
 	}
 
-	public void getMoreInfoTable_paramValueList() {
+	public String getMoreInfoTable_paramValue(int paramValue) {
 
-		moreInfoTable_paramValueList.get(0);
+		return moreInfoTable_paramValueList.get(paramValue).getText();
+	}
+
+	public int getMoreInfoTable_paramNameListSize() {
+
+		int num = moreInfoTable_paramNameList.size();
+		return num;
+
+	}
+
+	public int getMoreInfoTable_paramValueListSize() {
+
+		int num = moreInfoTable_paramValueList.size();
+		return num;
+
 	}
 
 	public void getBottom_PagenumbersDisplayed(int indexNo) {
@@ -900,38 +994,38 @@ public class TransactionHistoryPOM extends commonFunc {
 			} else {
 
 			}
-
 		}
-
 	}
 
 	// ok=====method
 	public boolean validateALLTxnReportTableHasData() {
 
-		int tableRowNos = txnTable_rowNumbers.size();
-	int tableColumns =	txnTable_columnWE.size();
+//	      waitForPageLoaded(driver, logger);
 
+		int tableRowNos = txnTable_rowNumbers.size();
+		int tableColumns = txnTable_columnWE.size();
 		Boolean tableHasData;
 
 		if (tableRowNos > 0 && tableColumns > 1) {
 
-			logger.log(LogStatus.INFO,
-					"All Transactions Report table has data");
+			logger.log(LogStatus.INFO, "All Transactions Report table has data");
 			tableHasData = true;
 
 		} else {
 
-			logger.log(LogStatus.INFO,
-					"All Transactions Report table has no data");
+			logger.log(LogStatus.INFO, "All Transactions Report table has no data");
 			tableHasData = false;
 		}
 
 		return tableHasData;
 	}
 
-	public void validateMoreInfoOfTxn(int txnNo) throws InterruptedException {
+	public Boolean isMoreInfoOfTxnPopup_Appeared(int txnNo) throws InterruptedException {
 
-		if (validateALLTxnReportTableHasData()) {
+		Boolean tableHasData = validateALLTxnReportTableHasData();
+		Boolean flag;
+
+		if (tableHasData) {
 
 			int colNos = getTxnTable_columnNumbers(); // last column has 'more info (meatball)' icon so last column
 														// number should be used
@@ -939,25 +1033,29 @@ public class TransactionHistoryPOM extends commonFunc {
 			WebElement moreInfoIcon = driver.findElement(By.xpath(
 					"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
 							+ txnNo + "]/td[" + colNos + "]/a/i"));
+
+			waitForPageLoaded(driver, logger);
 			logger.log(LogStatus.INFO, "Click on more info (meatball) icon OPEN");
+			Thread.sleep(2000);
 			click(moreInfoIcon, driver, logger);
-			Thread.sleep(3000);
-			logger.log(LogStatus.INFO, "Click on more info (meatball) icon CLOSE");
-			click(txnMoreInfo_Close, driver, logger);
+			Thread.sleep(2000);
+			flag = true;
 
 		} else {
 
 			logger.log(LogStatus.INFO,
 					"validateMoreInfoOfTxn is failed.\nTABLE -> No Records Found.\nThe \"All Transactions Report\" tableHasData has no data");
-
+			flag = false;
 		}
+
+		return flag;
 	}
 
 	public Boolean isDataFetchedAccordingToPageSizeSelected() throws IOException, InterruptedException {
 
 		waitForPageLoaded(driver, logger);
 		Boolean dataInTable = validateALLTxnReportTableHasData();
-        Boolean flag = null;
+		Boolean flag = null;
 // if table has data		
 		if (dataInTable) {
 
@@ -969,46 +1067,40 @@ public class TransactionHistoryPOM extends commonFunc {
 
 			// 1a-yes => check - table has data - data is less or more than page size
 			// selected
-			if (tableDataCount >= pageDataSizeSelected) 
-			{
-				
-				logger.log(LogStatus.INFO, "table data >= page size selected");
-				logger.log(LogStatus.INFO, "table Data Count -"+tableDataCount+"\npage Size Selected -"+pageDataSizeSelected);
+			if (tableDataCount >= pageDataSizeSelected) {
 
-				if(tableDataCount == pageDataSizeSelected) 
-				{
-					flag=true;
-				}
-				else 
-				{
-					flag=true;
+				logger.log(LogStatus.INFO, "table data >= page size selected");
+				logger.log(LogStatus.INFO,
+						"table Data Count -" + tableDataCount + "\npage Size Selected -" + pageDataSizeSelected);
+
+				if (tableDataCount == pageDataSizeSelected) {
+					flag = true;
+				} else {
+					flag = true;
 
 				}
 				return flag;
-			} 
-			else {
+			} else {
 				logger.log(LogStatus.INFO, "table data < page size selected");
-				logger.log(LogStatus.INFO, "table Data Count -"+tableDataCount+"\npage Size Selected -"+pageDataSizeSelected);
+				logger.log(LogStatus.INFO,
+						"table Data Count -" + tableDataCount + "\npage Size Selected -" + pageDataSizeSelected);
 
 				// table data count
 				int dataCount_lessThanPageSizeSelected = (tableDataCount % pageDataSizeSelected);
-				
 
-				if(dataCount_lessThanPageSizeSelected < pageDataSizeSelected) 
-				{
-					flag=true;
-					logger.log(LogStatus.INFO, "table data count ="+dataCount_lessThanPageSizeSelected+"\npage size selected ="+pageDataSizeSelected);
+				if (dataCount_lessThanPageSizeSelected < pageDataSizeSelected) {
+					flag = true;
+					logger.log(LogStatus.INFO, "table data count =" + dataCount_lessThanPageSizeSelected
+							+ "\npage size selected =" + pageDataSizeSelected);
 
-				}
-				else 
-				{
-					flag=false;
-					logger.log(LogStatus.ERROR, "table data count ="+dataCount_lessThanPageSizeSelected+"\npage size selected ="+pageDataSizeSelected);
+				} else {
+					flag = false;
+					logger.log(LogStatus.ERROR, "table data count =" + dataCount_lessThanPageSizeSelected
+							+ "\npage size selected =" + pageDataSizeSelected);
 
 				}
 				return flag;
 
-			
 			}
 		} else
 // if table has no data
@@ -1016,7 +1108,6 @@ public class TransactionHistoryPOM extends commonFunc {
 			logger.log(LogStatus.INFO, "table has no data.... ");
 		}
 		return flag;
-
 
 	}
 
@@ -1098,25 +1189,45 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 	}
 
-//4.PAGINATION (PAGE BOTTOM) methods........................
-	
-	
-	public String get_page_dataPerPageNumber() {
-
-	String dataPerPageNo =	page_dataPerPageNumber.getText();
-		
-		return dataPerPageNo;
+	public String getCategoryOfATxn(int rowNum) {
+		WebElement txn_category = driver
+				.findElement(By.xpath("//table[@id='pr_id_13-table']/tbody/tr[" + rowNum + "]/td[3]/span[2]"));
+		String categoryOfTxn = txn_category.getText();
+		return categoryOfTxn;
 	}
 	
+	public String getServiceOfATxn(int rowNum) {
+		WebElement txn_service = driver
+				.findElement(By.xpath("//table[@id='pr_id_13-table']/tbody/tr[" + rowNum + "]/td[3]/span[1]"));
+		String serviceOfTxn = txn_service.getText();
+		return serviceOfTxn;
+	}
+	
+	public String getOperatorOfATxn(int rowNum) {
+		WebElement txn_operator = driver
+				.findElement(By.xpath("//table[@id='pr_id_13-table']/tbody/tr[" + rowNum + "]/td[3]/span[3]"));
+		String operatorOfTxn = txn_operator.getText();
+		return operatorOfTxn;
+	}
+
+//4.PAGINATION (PAGE BOTTOM) methods........................
+
+	public String get_page_dataPerPageNumber() {
+
+		String dataPerPageNo = page_dataPerPageNumber.getText();
+
+		return dataPerPageNo;
+	}
+
 	public Boolean get_defaultDataSTRING_PerPageIs(String expectedDefaultPageSize) {
-		
+
 		waitForElementToAppear(dataPerPageField, driver, logger);
 		scrollToWebElement(dataPerPageField, driver);
-		
-	   String defaultDataPerPage =	dataPerPageField.getText();
-	   
-	  Boolean defaultDataPerPageSize = compareString(defaultDataPerPage, expectedDefaultPageSize, true);
-	
+
+		String defaultDataPerPage = dataPerPageField.getText();
+
+		Boolean defaultDataPerPageSize = compareString(defaultDataPerPage, expectedDefaultPageSize, true);
+
 		return defaultDataPerPageSize;
 
 	}
@@ -1131,7 +1242,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 	public String getCurentPageNumber() {
-		
+
 		waitForElementToAppear(curentPageNumber, driver, logger);
 		logger.log(LogStatus.INFO, "Current page number captured -" + curentPageNumber.getText());
 		return curentPageNumber.getText();
@@ -1185,41 +1296,39 @@ public class TransactionHistoryPOM extends commonFunc {
 		scrollToWebElement(paginationWebElement, driver);
 
 //FIRST PAGE button is at ZERO index, so passing static value = 0			
-			WebElement firstPageIconElement = paginationsAllButtons.get(0);
-			Boolean buttonEnabled = firstPageIconElement.isEnabled();
-			
-			logger.log(LogStatus.INFO, "click first page button");
+		WebElement firstPageIconElement = paginationsAllButtons.get(0);
+		Boolean buttonEnabled = firstPageIconElement.isEnabled();
 
-			if (buttonEnabled) {
-				System.out.println("click first page button");
-				click(firstPageIconElement, driver, logger);
-			} else {
-				logger.log(LogStatus.INFO, "first page button is DISABLED");
-			}
+		logger.log(LogStatus.INFO, "click first page button");
 
-		
+		if (buttonEnabled) {
+			System.out.println("click first page button");
+			click(firstPageIconElement, driver, logger);
+		} else {
+			logger.log(LogStatus.INFO, "first page button is DISABLED");
+		}
 
 	}
 
 	public void click_navigate_previousPageButton() {
-		
+
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(paginationWebElement, driver, logger);
 		logger.log(LogStatus.INFO, "scroll to pagination WebElement");
 		scrollToWebElement(paginationWebElement, driver);
 
 //PREVIOUS PAGE button is at ONE index, so passing static value = 1			
-			WebElement prevPageIconElement = paginationsAllButtons.get(1);
-			Boolean buttonEnabled = prevPageIconElement.isEnabled();
+		WebElement prevPageIconElement = paginationsAllButtons.get(1);
+		Boolean buttonEnabled = prevPageIconElement.isEnabled();
 
-			logger.log(LogStatus.INFO, "click previous page button");
+		logger.log(LogStatus.INFO, "click previous page button");
 
-			if (buttonEnabled) {
-				System.out.println("click previous page button");
-				click(prevPageIconElement, driver, logger);
-			} else {
-				logger.log(LogStatus.INFO, "previous page button is DISABLED");
-			}
+		if (buttonEnabled) {
+			System.out.println("click previous page button");
+			click(prevPageIconElement, driver, logger);
+		} else {
+			logger.log(LogStatus.INFO, "previous page button is DISABLED");
+		}
 	}
 
 	public void click_navigate_nextPageButton() {
@@ -1229,22 +1338,21 @@ public class TransactionHistoryPOM extends commonFunc {
 		logger.log(LogStatus.INFO, "scroll to pagination WebElement");
 		scrollToWebElement(paginationWebElement, driver);
 
-		//NEXT PAGE button is at TWO index, so passing static value = 2			
-			WebElement nextPageIconElement = paginationsAllButtons.get(2);
-			Boolean buttonEnabled = nextPageIconElement.isEnabled();
+		// NEXT PAGE button is at TWO index, so passing static value = 2
+		WebElement nextPageIconElement = paginationsAllButtons.get(2);
+		Boolean buttonEnabled = nextPageIconElement.isEnabled();
 
-			logger.log(LogStatus.INFO, "click next page button");
+		logger.log(LogStatus.INFO, "click next page button");
 
-			if (buttonEnabled) {
-				System.out.println("click next page button");
-				click(nextPageIconElement, driver, logger);
-			} else {
-				logger.log(LogStatus.INFO, "next page button is DISABLED");
-			}
+		if (buttonEnabled) {
+			System.out.println("click next page button");
+			click(nextPageIconElement, driver, logger);
+		} else {
+			logger.log(LogStatus.INFO, "next page button is DISABLED");
+		}
 	}
 
 	public void click_navigate_lastPageButton() {
-		
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(paginationWebElement, driver, logger);
@@ -1252,19 +1360,18 @@ public class TransactionHistoryPOM extends commonFunc {
 		scrollToWebElement(paginationWebElement, driver);
 
 //LAST PAGE button is at THREE index, so passing static value = 3			
-			WebElement lastPageIconElement = paginationsAllButtons.get(3);
-			Boolean buttonEnabled = lastPageIconElement.isEnabled();
+		WebElement lastPageIconElement = paginationsAllButtons.get(3);
+		Boolean buttonEnabled = lastPageIconElement.isEnabled();
 
-			logger.log(LogStatus.INFO, "click last page button");
+		logger.log(LogStatus.INFO, "click last page button");
 
-			if (buttonEnabled) {
-				System.out.println("click last page button");
-				click(lastPageIconElement, driver, logger);
-			} else {
-				logger.log(LogStatus.INFO, "last page button is DISABLED");
-			}
+		if (buttonEnabled) {
+			System.out.println("click last page button");
+			click(lastPageIconElement, driver, logger);
+		} else {
+			logger.log(LogStatus.INFO, "last page button is DISABLED");
+		}
 
-		
 //previous logic to click pagination buttons------------------		
 //		waitForPageLoaded(driver, logger);
 //		waitForElementToAppear(e_navigate_lastPageButton, driver, logger);
@@ -1283,7 +1390,6 @@ public class TransactionHistoryPOM extends commonFunc {
 //			logger.log(LogStatus.ERROR, e);
 //			logger.log(LogStatus.INFO, "navigate_lastPageButton is disabled. You are at last page.");
 //
-		
 
 	}
 
@@ -1298,12 +1404,10 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	}
 
-	
 	public void get_perPageDataOptions(int indexNo) {
 
 		perPageDataOptions.get(indexNo);
 	}
-	
 
 	public void selectDataPerPage(int dataPerPage) {
 
@@ -1402,7 +1506,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		try {
 			if (categoryDroIsPresent) {
 				System.out.println("Category dropdown is PRESENT -" + categoryDroIsPresent);
-				highlightElement(categoryTab);
+				// highlightElement(categoryTab);
 				logger.log(LogStatus.INFO, "Category dropdown is PRESENT -" + categoryDroIsPresent);
 			} else {
 				System.out.println("Category dropdown is pres -" + categoryDroIsPresent);
@@ -1417,7 +1521,6 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 
 	}
-
 
 	public void aaagetLastWE() {
 		System.out.println("last is displayed-");
