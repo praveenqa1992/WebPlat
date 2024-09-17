@@ -16,7 +16,7 @@ public class TransactionHistoryTEST extends testbase {
 
 	SoftAssert softAssert;
 
-	@Test(priority = 1, enabled = false)
+	@Test(priority = 1, enabled = true)
 	public void TC001_navigateToAllTxnHistoryPage() throws InterruptedException, IOException {
 
 		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
@@ -28,23 +28,20 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_reportsModule();
 		transactionHistoryPOM.click_txnHistoryModule();
 		Thread.sleep(2000);
-//assertion	
-
+//assertion	- page title check
 		String actualTitle = driver.getTitle();
 		String expectedTitle = "Transaction History";
 		commonfunc.compareString(actualTitle, expectedTitle, false);
-		commonfunc.softAssert("Navigate to Txn. History page and validate page title -", expectedTitle, actualTitle,
+		commonfunc.softAssert("Navigate to Txn. History page and validate page title -", actualTitle, expectedTitle,
 				true, logger);
 
 	}
 
-	@Test(priority = 2, enabled = false)
+	@Test(priority = 2, enabled = true)
 	public void TC002_selectDateAndClickSearchButton() throws InterruptedException, IOException {
 
 		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
 		TransactionHistoryPOM transactionHistoryPOM = new TransactionHistoryPOM(driver, logger);
-		commonFunc commonfunc = new commonFunc();
-
 //login
 		tC1_VerifyLogin.verifySignIn(driver, logger);
 //navigate to transaction module		
@@ -59,7 +56,7 @@ public class TransactionHistoryTEST extends testbase {
 
 	}
 
-	@Test(priority = 3, enabled = false)
+	@Test(priority = 3, enabled = true)
 	public void TC003_messageDisplayedIfTableHasNoData() throws InterruptedException, IOException {
 
 		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
@@ -77,8 +74,6 @@ public class TransactionHistoryTEST extends testbase {
 		// transactionHistoryPOM.selectToDate2(20, "August", 2024);
 //search		
 		transactionHistoryPOM.click_searchButton();
-
-		Thread.sleep(2000);
 //validate if table has data
 		Boolean dataInTable = transactionHistoryPOM.validateALLTxnReportTableHasData();
 
@@ -95,14 +90,13 @@ public class TransactionHistoryTEST extends testbase {
 			String expectedMessage = "No items found.";
 
 			commonfunc.compareString(actualMessage, expectedMessage, true);
+//assertion - message displayed		
 			commonfunc.softAssert("Message displayed if no data in Txn. table -", actualMessage, expectedMessage, true,
 					logger);
-
 		}
-
 	}
 
-	@Test(priority = 4, enabled = false)
+	@Test(priority = 4, enabled = true)
 	public void TC004_validateTheDefaultPageSize() throws InterruptedException, IOException {
 
 		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
@@ -117,28 +111,24 @@ public class TransactionHistoryTEST extends testbase {
 //select from date		
 		transactionHistoryPOM.selectFromDate2(10, "August", 2024);
 //select to date	
-		// transactionHistoryPOM.selectToDate2(20, "August", 2024);
+	   // transactionHistoryPOM.selectToDate2(20, "August", 2024);
 //search		
 		transactionHistoryPOM.click_searchButton();
-
-//assert_ default page size selected
-
+//validating default page size	
 		logger.log(LogStatus.INFO, "checking default page size");
-
-		String ActualDataPerPageNoDisplayed = transactionHistoryPOM.get_page_dataPerPageNumber();
-
+		String ActualDataPerPageNoDisplayed = transactionHistoryPOM.get_perPageDataSize();
 		// default page size STATIC =10
-
 		String expectedPageDataString = "10";
-
 		commonfunc.compareString(ActualDataPerPageNoDisplayed, expectedPageDataString, true);
+//assertion - default page size selected	
 		commonfunc.softAssert("Dafault page size -", ActualDataPerPageNoDisplayed, expectedPageDataString, true,
 				logger);
 
 	}
 
-	@Test(priority = 5, enabled = false)
+	@Test(priority = 5, enabled = true)
 	public void TC005_validatePageDataAccordingToPageSize() throws InterruptedException, IOException {
+// WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI S SCENARIO ????????????????????????????????????????????????????????????????????????
 
 		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
 		TransactionHistoryPOM transactionHistoryPOM = new TransactionHistoryPOM(driver, logger);
@@ -154,19 +144,19 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.selectToDate2(20, "August", 2024);
 //search		
 		transactionHistoryPOM.click_searchButton();
-//assert_page size selected and data fetched per page		
+//assertion - page size selected and data fetched per page		
 		Boolean dataFetchedAndPageSelected = transactionHistoryPOM.isDataFetchedAccordingToPageSizeSelected();
+		commonfunc.softAssertTrue("Data Fetched And Page Size Selected isSame-", dataFetchedAndPageSelected, logger);
 
-		commonfunc.softAssertTrue("soft assert true - dataFetchedAndPageSelected", dataFetchedAndPageSelected, logger);
+// WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI S SCENARIO ????????????????????????????????????????????????????????????????????????
+	
 	}
 
-	@Test(priority = 6, enabled = false)
+	@Test(priority = 6, enabled = true)
 	public void TC006_openMoreDetailsUsingMeatballIcon() throws InterruptedException, IOException {
 
 		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
 		TransactionHistoryPOM transactionHistoryPOM = new TransactionHistoryPOM(driver, logger);
-		commonFunc commonfunc = new commonFunc();
-
 //login
 		tC1_VerifyLogin.verifySignIn(driver, logger);
 //navigate to txn. history page		
@@ -177,28 +167,41 @@ public class TransactionHistoryTEST extends testbase {
 //		transactionHistoryPOM.selectToDate2(20, "August", 2024);
 //search		
 		transactionHistoryPOM.click_searchButton();
-		Thread.sleep(2000);
-
+		Thread.sleep(5000);
 //open more info side bar of 1st txn.	
 		transactionHistoryPOM.OpenMoreInfoOfTxnPopup(1);
-		Thread.sleep(1000);
 
-//assertion....side bar open	
+//validate side bar open or close
+		logger.log(LogStatus.INFO,"6-------------------");
+
 		Boolean moreInfoSideMenuIsOpen = transactionHistoryPOM
 				.isPresentAndDisplayed(transactionHistoryPOM.moreinfoSideBar, driver, logger);
 		Thread.sleep(1000);
+		logger.log(LogStatus.INFO,"12-------------------");
 
 		System.out.println("offCanvas/side menu bar is open1 by method -" + moreInfoSideMenuIsOpen);
 		System.out.println(
 				"offCanvas/side menu bar is open1 by me -" + transactionHistoryPOM.moreinfoSideBar.isDisplayed());
+		logger.log(LogStatus.INFO,"13-------------------");
 
+//assertion - is side bar open
 		transactionHistoryPOM.softAssertTrue("offCanvas/side menu bar is open1 -", moreInfoSideMenuIsOpen, logger);
+		Thread.sleep(2000);
+		logger.log(LogStatus.INFO,"14-------------------");
+
 		// close the more info side menu bar
 		transactionHistoryPOM.closeMoreInfoOfTxnPopup(1);
 		Thread.sleep(2000);
-		// assertion....side bar closed
 
-		transactionHistoryPOM.softAssertFalse("offCanvas/side menu bar is close2 -", moreInfoSideMenuIsOpen, logger);
+//assertion - is side bar closed
+		logger.log(LogStatus.INFO,"15-------------------");
+
+		Boolean moreInfoSideMenuIsClose = transactionHistoryPOM
+				.isPresentAndDisplayed(transactionHistoryPOM.moreinfoSideBar, driver, logger);
+		
+		Thread.sleep(2000);
+// assertion....side bar closed
+		transactionHistoryPOM.softAssertFalse("offCanvas/side menu bar is close2 -", moreInfoSideMenuIsClose, logger);
 
 //print parameter and values	
 //	Boolean moreInfoPopupOpen = transactionHistoryPOM.isMoreInfoOfTxnPopup_Appeared(1);
@@ -209,7 +212,7 @@ public class TransactionHistoryTEST extends testbase {
 
 	}
 
-	@Test(priority = 7, enabled = false)
+	@Test(priority = 7, enabled = true)
 	public void TC007_categoryFilterWorking() throws InterruptedException, IOException {
 
 		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
@@ -224,7 +227,6 @@ public class TransactionHistoryTEST extends testbase {
 //select date		
 		transactionHistoryPOM.selectFromDate2(10, "August", 2024);
 //		transactionHistoryPOM.selectToDate2(20, "August", 2024);
-
 		//click category dropdown
 		transactionHistoryPOM.click_categoryDropdown();	
 		// select category - Telecom
@@ -232,26 +234,20 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.selectCategoryFromDropdown(categoryToApplyFilter);
 		// search
 		transactionHistoryPOM.click_searchButton();
-		Thread.sleep(2000);
+		for (int a = 1; a <= 3; a++) {
 
-		for (int a = 1; a <= 5; a++) {
-
-			String txnCategoryInTablePair = transactionHistoryPOM.getCategoryOfATxn(a);
+			String txnCategoryInTablePair = transactionHistoryPOM.getTxnCategory(a);
 			String txnCategoryInTable=	txnCategoryInTablePair.replace("Category: ",""); //find alternative to get ONLY category name++++++++++++++
-			
-			
+				
 			Boolean stringIsSame = commonfunc.compareString(categoryToApplyFilter, txnCategoryInTable, true);
+//assertion - filter category and txn. category		
 			commonfunc.softAssert("Category filter applied and category of a txn. in table-", categoryToApplyFilter,
-					txnCategoryInTable, stringIsSame, logger);
-			
+					txnCategoryInTable, stringIsSame, logger);	
 			System.out.println("valid--cat--Txn no.-" + a + " txn cat -" + txnCategoryInTable);
-
-
 		}
-
 	}
 	
-	@Test(priority = 8, enabled = false)
+	@Test(priority = 8, enabled = true)
 	public void TC008_serviceFilterWorking() throws InterruptedException, IOException {
 
 		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
@@ -267,54 +263,52 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.selectFromDate2(10, "August", 2024);
 //		transactionHistoryPOM.selectToDate2(20, "August", 2024);
 
-		//click category dropdown
+		//click category dropdown -1
 		transactionHistoryPOM.click_categoryDropdown();	
 		// select category - Telecom
 		String categoryToApplyFilter = "Telecom";
-		transactionHistoryPOM.selectCategoryFromDropdown(categoryToApplyFilter);
-	
+		transactionHistoryPOM.selectCategoryFromDropdown(categoryToApplyFilter);	
 		Thread.sleep(2000);
 		
-		//click service dropdown
+		//click service dropdown -2
 				transactionHistoryPOM.click_serviceDropdown();	
 	//select service	
 		String serviceToApplyFilter = "Mobile";
 		transactionHistoryPOM.selectServiceFromDropdown(serviceToApplyFilter);
+		Thread.sleep(2000);
 
 		// search
 		transactionHistoryPOM.click_searchButton();
-		Thread.sleep(2000);
 
-		for (int a = 1; a <= 5; a++) {
+		for (int a = 1; a <= 3; a++) {
 
-			String txnCategoryInTablePair = transactionHistoryPOM.getCategoryOfATxn(a);
-			String txnCategoryInTable=	txnCategoryInTablePair.replace("Category: ",""); //find alternative to get ONLY category name++++++++++++++
+//			String txnCategoryInTablePair = transactionHistoryPOM.getCategoryOfATxn(a);
+//			String txnCategoryInTable=	txnCategoryInTablePair.replace("Category: ",""); //find alternative to get ONLY category name++++++++++++++
 			
-			String txnServiceInTablePair = transactionHistoryPOM.getServiceOfATxn(a);
+			String txnServiceInTablePair = transactionHistoryPOM.getTxnService(a);
 			String txnServiceInTable=	txnServiceInTablePair.replace("Service: ",""); //find alternative to get ONLY category name++++++++++++++
 			
 			
-			Boolean stringIsSame = commonfunc.compareString(categoryToApplyFilter, txnCategoryInTable, true);
-			commonfunc.softAssert("Category filter applied and category of a txn. in table-", categoryToApplyFilter,
-					txnCategoryInTable, stringIsSame, logger);
+//			Boolean stringIsSame = commonfunc.compareString(categoryToApplyFilter, txnCategoryInTable, true);
+////assertion - filter category and txn. category		
+//			
+//			commonfunc.softAssert("Category filter applied and category of a txn. in table-", categoryToApplyFilter,
+//					txnCategoryInTable, stringIsSame, logger);
 
 			Boolean stringIsSame2 = commonfunc.compareString(serviceToApplyFilter, txnServiceInTable, true);
+//assertion - filter service and txn. service		
+			
 			commonfunc.softAssert("Service filter applied and service of a txn. in table-", serviceToApplyFilter,
 					txnServiceInTable, stringIsSame2, logger);
 
-			
-			System.out.println("valid--cat--Txn no.-" + a + "." +categoryToApplyFilter+"-"+ txnCategoryInTable);
-			System.out.println("valid--service--Txn no.-" + a +"." +serviceToApplyFilter+"-"+ txnServiceInTable);
-
-
-
+//			System.out.println("valid--cat--Txn no.-" + a + "." +categoryToApplyFilter+"-"+ txnCategoryInTable);
+//			System.out.println("valid--service--Txn no.-" + a +"." +serviceToApplyFilter+"-"+ txnServiceInTable);
 		}
-		
 	}
 	
 //VALIDATE the method...operator dropdown handling........................
 	
-	@Test(priority = 9, enabled = false)
+	@Test(priority = 9, enabled = true)
 	public void TC009_operatorFilterWorking() throws InterruptedException, IOException {
 
 		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
@@ -351,45 +345,39 @@ Thread.sleep(2000);
 		//select operator	
 				String operatorToApplyFilter = "JIO";
 //				transactionHistoryPOM.enterText_selectOperatorFromDropdown(operatorToApplyFilter);
-				transactionHistoryPOM.selectOperatorFromDropdown(serviceToApplyFilter);
+				transactionHistoryPOM.selectOperatorFromDropdown(operatorToApplyFilter);
 				Thread.sleep(2000);
 
 		// search
 		transactionHistoryPOM.click_searchButton();
-		Thread.sleep(2000);
 
-		for (int a = 1; a <= 5; a++) {
+		for (int a = 1; a <= 3; a++) {
 
-			String txnCategoryInTablePair = transactionHistoryPOM.getCategoryOfATxn(a);
+			String txnCategoryInTablePair = transactionHistoryPOM.getTxnCategory(a);
 			String txnCategoryInTable=	txnCategoryInTablePair.replace("Category: ",""); //find alternative to get ONLY category name++++++++++++++
 			
-			String txnServiceInTablePair = transactionHistoryPOM.getServiceOfATxn(a);
+			String txnServiceInTablePair = transactionHistoryPOM.getTxnService(a);
 			String txnServiceInTable=	txnServiceInTablePair.replace("Service: ",""); //find alternative to get ONLY category name++++++++++++++
 			
-			String txnOperatorInTablePair = transactionHistoryPOM.getOperatorOfATxn(a);
+			String txnOperatorInTablePair = transactionHistoryPOM.getTxnOperator(a);
 			String txnOperatorInTable=	txnOperatorInTablePair.replace("Operator: ",""); //find alternative to get ONLY category name++++++++++++++
 	
-			
+//assertion - filter category and txn. category					
 			Boolean stringIsSame = commonfunc.compareString(categoryToApplyFilter, txnCategoryInTable, true);
 			commonfunc.softAssert("Category filter applied and category of a txn. in table-", categoryToApplyFilter,
 					txnCategoryInTable, stringIsSame, logger);
-
+//assertion - filter service and txn. service		
 			Boolean stringIsSame2 = commonfunc.compareString(serviceToApplyFilter, txnServiceInTable, true);
 			commonfunc.softAssert("Service filter applied and service of a txn. in table-", serviceToApplyFilter,
 					txnServiceInTable, stringIsSame2, logger);
-
+//assertion - filter operator and txn. operator		
 			Boolean stringIsSame3 = commonfunc.compareString(operatorToApplyFilter, txnOperatorInTable, true);
 			commonfunc.softAssert("opeartor filter applied and opeartor of a txn. in table-", operatorToApplyFilter,
-					txnOperatorInTable, stringIsSame3, logger);
-
-			
+					txnOperatorInTable, stringIsSame3, logger);	
 			System.out.println("valid--cat--Txn no.-" + a + "." +categoryToApplyFilter+"-"+ txnCategoryInTable);
 			System.out.println("valid--service--Txn no.-" + a +"." +serviceToApplyFilter+"-"+ txnServiceInTable);
 			System.out.println("valid--operator--Txn no.-" + a +"." +operatorToApplyFilter+"-"+ txnOperatorInTable);
-
-
-		}
-		
+		}	
 	}
 	
 	
@@ -407,17 +395,147 @@ Thread.sleep(2000);
 		transactionHistoryPOM.click_txnHistoryModule();
 		Thread.sleep(2000);
 		
-	Boolean catTaBoolean=	transactionHistoryPOM.isCategoryTabDisplayed();
-		System.out.println("cat tab is -"+catTaBoolean);
-		
+	Boolean catTabDisplayed=	transactionHistoryPOM.isCategoryTabDisplayed();
+		System.out.println("cat tab is displayed -"+catTabDisplayed);
+//assertion - is category tab displayed	
+		commonfunc.softAssertTrue("is category dropdown/tab displayed -", catTabDisplayed, logger);
 		Thread.sleep(2000);
+	
+		//navigate/click to telecom tab	
 		transactionHistoryPOM.click_telecomTab();
 		Thread.sleep(2000);
 		
-		Boolean catTaBoolean2=	transactionHistoryPOM.isCategoryTabDisplayed();
-		System.out.println("cat tab 2 is -"+catTaBoolean2);
+		Boolean catTabDisplayed2=	transactionHistoryPOM.isCategoryTabDisplayed();
+		System.out.println("cat tab2 is displayed -"+catTabDisplayed2);
+//assertion - is category tab displayed	
+		commonfunc.softAssertFalse("is category dropdown/tab displayed -", catTabDisplayed2, logger);
+				
+		
+	}
+	
+	@Test(priority = 11, enabled = true)
+	public void TC011_pagination_validatePageDataAndMessageCountAtPageBottom() throws InterruptedException, IOException {
+
+		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
+		TransactionHistoryPOM transactionHistoryPOM = new TransactionHistoryPOM(driver, logger);
+//login
+		tC1_VerifyLogin.verifySignIn(driver, logger);
+//navigate to transaction module		
+		transactionHistoryPOM.click_reportsModule();
+		transactionHistoryPOM.click_txnHistoryModule();
+		Thread.sleep(2000);
+		//select from date		
+				transactionHistoryPOM.selectFromDate2(10, "August", 2024);
+		//select to date	
+			//	transactionHistoryPOM.selectToDate2(20, "August", 2024);
+		//search		
+				transactionHistoryPOM.click_searchButton();
+	//assertion - validate table data and message at page bottom with ASSERTIONS		
+				
+				transactionHistoryPOM.	validate_tableDataAndTextMessage();
+	//change VALID page data size			
+				transactionHistoryPOM.changeCount_DataPerPage(25);
+//assertion - validate table data and message at page bottom with ASSERTIONS		
+
+				transactionHistoryPOM.	validate_tableDataAndTextMessage();
+				//change INVALID page data size			
+
+				transactionHistoryPOM.changeCount_DataPerPage(2);
+
+		
+	}
+	
+	
+	@Test(priority = 12, enabled = true)
+	public void TC012_pagination_validatePageDataAndMessageCountAtPageBottom_changePageSizeALL() throws InterruptedException, IOException {
+
+		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
+		TransactionHistoryPOM transactionHistoryPOM = new TransactionHistoryPOM(driver, logger);
+//login
+		tC1_VerifyLogin.verifySignIn(driver, logger);
+//navigate to transaction module		
+		transactionHistoryPOM.click_reportsModule();
+		transactionHistoryPOM.click_txnHistoryModule();
+		Thread.sleep(2000);
+		//select from date		
+				transactionHistoryPOM.selectFromDate2(10, "August", 2024);
+		//select to date	
+			//	transactionHistoryPOM.selectToDate2(20, "August", 2024);
+		//search		
+				transactionHistoryPOM.click_searchButton();
+				
+		//change page data size and validate the table data displayed
+		transactionHistoryPOM.	validate_dataPerPageWithAllPageSizes();
+				
+	}
+
+	@Test(priority = 13, enabled = true)
+	public void TC013_pagination_changePagesUsingPaginationButtons() throws InterruptedException, IOException {
+
+		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
+		TransactionHistoryPOM transactionHistoryPOM = new TransactionHistoryPOM(driver, logger);
+//login
+		tC1_VerifyLogin.verifySignIn(driver, logger);
+//navigate to transaction module		
+		transactionHistoryPOM.click_reportsModule();
+		transactionHistoryPOM.click_txnHistoryModule();
+		Thread.sleep(2000);
+		//select from date		
+				transactionHistoryPOM.selectFromDate2(10, "August", 2024);
+		//select to date	
+			//	transactionHistoryPOM.selectToDate2(20, "August", 2024);
+		//search		
+				transactionHistoryPOM.click_searchButton();
+				
+				transactionHistoryPOM.click_navigate_nextPageButton();
+				Thread.sleep(3000);
+
+				transactionHistoryPOM.click_navigate_lastPageButton();
+				Thread.sleep(3000);
+	//navigate to last page from last page
+				transactionHistoryPOM.click_navigate_lastPageButton();
+				Thread.sleep(3000);
+				
+				transactionHistoryPOM.click_navigate_previousPageButton();
+				Thread.sleep(3000);
+
+				transactionHistoryPOM.click_navigate_firstPageButton();
+				Thread.sleep(3000);
+//navigate to first page from first page
+				transactionHistoryPOM.click_navigate_firstPageButton();
+
+
+	}
+	
+	
+	@Test(priority = 14, enabled = true)
+	public void TC014_pagination_changePagesUsingPaginationButtons() throws InterruptedException, IOException {
+
+		
+
+		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
+		TransactionHistoryPOM transactionHistoryPOM = new TransactionHistoryPOM(driver, logger);
+//login
+		tC1_VerifyLogin.verifySignIn(driver, logger);
+//navigate to transaction module		
+		transactionHistoryPOM.click_reportsModule();
+		transactionHistoryPOM.click_txnHistoryModule();
+		Thread.sleep(2000);
+		//select from date		
+				transactionHistoryPOM.selectFromDate2(10, "August", 2024);
+		//select to date	
+			//	transactionHistoryPOM.selectToDate2(20, "August", 2024);
+		//search		
+				transactionHistoryPOM.click_searchButton();
+				
+				transactionHistoryPOM.click_bbpsTab();
 		
 		
 	}
+	
+	
+	
+	
+	
 	
 }

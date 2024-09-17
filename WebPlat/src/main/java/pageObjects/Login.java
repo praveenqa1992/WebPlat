@@ -70,7 +70,9 @@ public class Login  extends commonFunc
 		sendingKeys(username, user, driver);
 		sendingKeys(password, pass, driver);
 		click(btnSign, driver, logger);
-		Thread.sleep(10000);
+		
+		waitForPageLoaded(driver, logger);
+//Thread.sleep(5000);
 		
 	}
 	

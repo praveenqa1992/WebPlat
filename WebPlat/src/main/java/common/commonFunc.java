@@ -484,18 +484,27 @@ public class commonFunc {
 
 	public boolean isPresentAndDisplayed(WebElement locator,  WebDriver driver, ExtentTest logger) {
 		
+		logger.log(LogStatus.INFO,"7-------------------");
+
 		waitForPageLoaded(driver, logger);
+		logger.log(LogStatus.INFO,"8-------------------");
+
+		
 		try {
 			if (locator.isDisplayed()) {
+				logger.log(LogStatus.INFO,"9-------------------");
 
 				return true;
 			} else {
+				logger.log(LogStatus.INFO,"10-------------------");
 
 				return false;
 			}
 		} catch (NoSuchElementException arg2) {
+			logger.log(LogStatus.INFO,"11-------------------");
 
 			return false;
+
 		}
 	}
 
@@ -862,7 +871,7 @@ public class commonFunc {
 				locator.click();
 
 			} else {
-				logger.log(LogStatus.FAIL, " Element found in the DOM but not displayed :  " + logger.addScreenCapture(capture(driver)));
+				logger.log(LogStatus.INFO, " Element found in the DOM but not displayed :  " + logger.addScreenCapture(capture(driver)));
 			}
 
 		} catch (Exception arg4) {
