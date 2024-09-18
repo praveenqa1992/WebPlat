@@ -25,11 +25,19 @@ import utility.testbase;
  *******************************************************************************************************************************/
 
 public class TC1_VerifyLogin extends testbase {
+	
+	String verify;
+	String expectedTitle = "Dashboard";
+	boolean result;
+	
 
 	@Test
 	public void verifySignIn(WebDriver driver, ExtentTest logger) throws InterruptedException, IOException {
+		
 
+	
 		Login login = new Login(driver, logger);
+		commonFunc comm = new commonFunc();
 		testConfig = new config(logger);
 		// commonFunc comm =new commonFunc();
 
@@ -37,29 +45,41 @@ public class TC1_VerifyLogin extends testbase {
 		String pass = testConfig.getRunTimeProperty("password");
 
 		logger.log(LogStatus.INFO, "Step 1: Goto \"https://merchant.uatdev.in/\" ");
-
-		login.signin(user, pass);
 		
-		logger.log(LogStatus.INFO, "Step 2: logged in successfully ");
+		
+		for (int i=1; i<=3; i++) {
+			verify = login.signin(user, pass);
+			
+			if (verify.equals(expectedTitle)) {
+				
+				result = comm.compareString(verify,expectedTitle, false);
+				comm.softAssert("Step 2: Logged in successfully ", verify,expectedTitle, result, logger);
+				
+				break;
+				
+			}else {
+				
+				result = comm.compareString(verify,expectedTitle, false);
+				comm.softAssert("Attempt "+i+ ": Logged In failed ", verify,expectedTitle, result, logger);
+			}
+			
+		}
 
-		Thread.sleep(5000);
-		login.dialogClose();
 
 //		String actualTitle = driver.getTitle();
 //
 //		logger.log(LogStatus.INFO, "Step 3: soft assert ");
 //		
-//		/**********************************************************************************************************************************/
-//		/*** Success Assertion **/
-//
-//		String expectedTitle = "Dashboard";
-//
-//		commonFunc comm = new commonFunc();
-//		boolean result = comm.compareString(actualTitle,expectedTitle, false);
-//
-//		comm.softAssert("Verify dashboard page title -", actualTitle,expectedTitle, result, logger);
-//		/**********************************************************************************************************************************/
-//
+		/**********************************************************************************************************************************/
+		/*** Success Assertion **/
+
+		
+
+		/**********************************************************************************************************************************/
+
+//		Thread.sleep(5000);	
+//		login.dialogClose();
+		
 //		/**********************************************************************************************************************************/
 //		/*** Fail Assertion **/
 //

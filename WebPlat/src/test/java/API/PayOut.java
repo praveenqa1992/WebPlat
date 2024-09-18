@@ -38,7 +38,7 @@ public class PayOut {
 	  	.body(payOut)
 	  	.contentType("application/json")
 	  
-	  .when().post("https://qa.uatdev.in/api/api/api-module/payout/payout")
+	  .when().post("https://demo21.webplat.in/api/api/api-module/payout/payout")
 	  
 	  .then()
 	  	.statusCode(200)

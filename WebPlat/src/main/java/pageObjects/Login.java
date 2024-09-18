@@ -52,6 +52,7 @@ public class Login  extends commonFunc
 	public ExtentTest logger;
 
 	public WebElement Element;
+	public static String title;
 
 
 
@@ -64,7 +65,7 @@ public class Login  extends commonFunc
 
 
 	
-	public void signin(String user, String pass) throws InterruptedException {
+	public String signin(String user, String pass) throws InterruptedException {
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(username, driver, logger);
 		sendingKeys(username, user, driver);
@@ -72,6 +73,12 @@ public class Login  extends commonFunc
 		click(btnSign, driver, logger);
 		
 		waitForPageLoaded(driver, logger);
+		Thread.sleep(10000);
+		
+		title = driver.getTitle();
+		
+		return title;
+		
 //Thread.sleep(5000);
 		
 	}
