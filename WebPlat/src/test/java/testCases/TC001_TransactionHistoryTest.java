@@ -47,7 +47,7 @@ public class TC001_TransactionHistoryTest extends testbase {
 		transactionHistoryPOM.click_reportsModule();
 		transactionHistoryPOM.click_txnHistoryModule();
 //select date		
-		transactionHistoryPOM.selectFromDate2(10, "August", 2024);
+		transactionHistoryPOM.selectFromDate2("10", "August", "2024");
 		transactionHistoryPOM.selectToDate2(20, "August", 2024);
 //search		
 		transactionHistoryPOM.click_searchButton();
@@ -95,7 +95,7 @@ public class TC001_TransactionHistoryTest extends testbase {
 
 		transactionHistoryPOM.click_txnHistoryModule();
 		
-		transactionHistoryPOM.selectFromDate2(10, "August", 2024);
+		transactionHistoryPOM.selectFromDate2("10", "August", "2024");
 //		transactionHistoryPOM.selectToDate2(20, "August", 2024);
 //search		
 		transactionHistoryPOM.click_searchButton();

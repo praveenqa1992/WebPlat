@@ -47,6 +47,7 @@ import org.testng.annotations.DataProvider;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -146,6 +147,7 @@ public class commonFunc {
 		}
 		 
 	 }
+	 
 	
 //hard assert
 	 
@@ -309,10 +311,53 @@ public class commonFunc {
 		oSelect.selectByVisibleText(text);
 	}
 
-	public long getCurrentDateAndTime() {
+	public long getCurrentDateAndTimeInMill() {
 		long epoch = System.currentTimeMillis() / 1000;
 		return epoch;
 	}
+	
+//method added by shinde.......start........
+	
+	public String getCurrentDateAndTimeInFormat() {			
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy hh:mm:ss"); 
+		String formattedDate = sdf. format(date); 
+        return formattedDate;
+        
+	}
+	
+	public String getCurrentDate() {			
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd"); 
+		String formattedDate = sdf. format(date); 
+        return formattedDate;
+        
+	}
+	public String getCurrentMonth() {			
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("MMMM"); 
+		String formattedDate = sdf. format(date); 
+        return formattedDate;
+        
+	}
+	public String getCurrentYear() {			
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy"); 
+		String formattedDate = sdf. format(date); 
+        return formattedDate;
+        
+	}
+	
+	
+	
+	
+	//method added by shinde....end...........
+	
+	
+	
+	
+	
+	
 
 	public void uploadFile(WebElement we, String filename, WebDriver driver) throws Exception {
 		StringSelection s = new StringSelection(filename);

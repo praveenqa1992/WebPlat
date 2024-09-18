@@ -1,6 +1,8 @@
 package testCases;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -310,6 +312,12 @@ public class codeTEST {
 		
 		
 		
+		
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy hh:mm:ss"); 
+		String formattedDate = sdf. format(date); 
+			
+		System.out.println("date -"+formattedDate);
 		
 		
 		

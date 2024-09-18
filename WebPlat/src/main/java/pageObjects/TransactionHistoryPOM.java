@@ -14,6 +14,7 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 import common.commonFunc;
+//import net.bytebuddy.agent.builder.AgentBuilder.Default.BootstrapInjectionStrategy.Enabled;
 import net.bytebuddy.implementation.bytecode.ByteCodeAppender.Size;
 
 public class TransactionHistoryPOM extends commonFunc {
@@ -34,97 +35,147 @@ public class TransactionHistoryPOM extends commonFunc {
 	public WebElement txnHistoryModule;
 
 //page top elements
+
+	// from calendar----------------------------
+
+//from set 1---46-10	
 	@FindBy(xpath = "//calendaricon[@class='p-element p-icon-wrapper ng-tns-c46-10 ng-star-inserted']")
 	public WebElement fromCalenderIcon;
-
 	@FindBy(xpath = "//button[@class='p-datepicker-month p-link ng-tns-c46-10 ng-star-inserted']")
 	public WebElement fromMonth;
-
 	@FindBy(xpath = "//button[@class='p-datepicker-year p-link ng-tns-c46-10 ng-star-inserted']")
 	public WebElement fromYear;
-
-//from calendar previous and next buttons xpath...
-
 	@FindBy(xpath = "//button[@class='p-ripple p-element p-datepicker-prev p-link ng-tns-c46-10 ng-star-inserted']")
 	public WebElement fromCalenderPreviousButton;
-
 	@FindBy(xpath = "//button[@class='p-ripple p-element p-datepicker-next p-link ng-tns-c46-10']")
 	public WebElement fromCalenderNextButton;
 
-//from calendar previous and next icons xpath...
-
-//	@FindBy(xpath = "//chevronlefticon[@class='p-element p-icon-wrapper ng-tns-c46-10 ng-star-inserted']")
-//	public WebElement fromCalenderPreviousButton;
-//
-//	@FindBy(xpath = "//chevronrighticon[@class='p-element p-icon-wrapper ng-tns-c46-10 ng-star-inserted']")
-//	public WebElement fromCalenderNextButton;
-
-//from calendar today's date => yes or not
-
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr[2]/td[@class='ng-tns-c46-14 p-datepicker-today ng-star-inserted']")
+//todays date
+	// 18 sept 2024
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-10']/tbody/tr/td[@class='ng-tns-c46-10 p-datepicker-today ng-star-inserted']")
 	public WebElement fromCalender_Date_Today;
-//checkkkk list or not
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr[2]/td[@class='ng-tns-c46-14 ng-star-inserted']")
-	public List<WebElement> fromCalender_Dates_notToday;
-
-	// from calendar highlighted,enabled,disabled dates....
-
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr[2]/td/span[@class='p-ripple p-element ng-tns-c46-14 p-disabled ng-star-inserted']")
-	public List<WebElement> fromCalender_Dates_disabled;
-
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr[2]/td/span[@class='p-ripple p-element ng-tns-c46-14 ng-star-inserted']")
-	public List<WebElement> fromCalender_Dates_enabled_notHighlited;
-
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr[2]/td/span[@class='p-ripple p-element ng-tns-c46-14 p-highlight ng-star-inserted']")
+// months all dates except todays
+	// 18 sept 2024
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-10']/tbody/tr/td[@class='ng-tns-c46-10 ng-star-inserted']")
+	public List<WebElement> fromCalender_Dates_currentMonthsAllDatedExceptToday;
+//enabled - highlited date	
+	// 18 sept 2024
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-10']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-10 p-highlight ng-star-inserted']")
 	public WebElement fromCalender_Date_enabled_Highlited;
+//enabled - other than highlited date	
+	// 18 sept 2024
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-10']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-10 ng-star-inserted']")
+	public List<WebElement> fromCalender_Dates_enabled_notHighlited;
+//disabled and all dates from table
+	// 18 sept 2024
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-10']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-10 p-disabled ng-star-inserted']")
+	public List<WebElement> fromCalender_Dates_disabled_AllDisplayedInDropdown;
 
-//	@FindBy(xpath="//chevronlefticon[@class='p-element p-icon-wrapper ng-tns-c46-10 ng-star-inserted']")
-//	public WebElement fromCalenderNextButton;
+	//from set 2---46-14.........................
+	// todays date
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr/td[@class='ng-tns-c46-14 p-datepicker-today ng-star-inserted']")
+//	public WebElement fromCalender_Date_Today;	
+	// months all dates except todays
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr/td[@class='ng-tns-c46-14 ng-star-inserted']")
+//	public List<WebElement> fromCalender_Dates_currentMonthsAllDatedExceptToday;
+	// enabled - highlited date
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-14 p-highlight ng-star-inserted']")
+//	public WebElement fromCalender_Date_enabled_Highlited;
+	// enabled - other than highlited date
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-14 ng-star-inserted']")
+//	public List<WebElement> fromCalender_Dates_enabled_notHighlited;
+	// disabled and all dates from table
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-14']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-14 p-disabled ng-star-inserted']")
+//	public List<WebElement> fromCalender_Dates_disabled_AllDisplayedInDropdown;
 
+
+// to calendar----------------------------	
+
+	//to set 1---46-11.............	
 	@FindBy(xpath = "//calendaricon[@class='p-element p-icon-wrapper ng-tns-c46-11 ng-star-inserted']")
 	public WebElement toCalenderIcon;
-
 	@FindBy(xpath = "//button[@class='p-datepicker-month p-link ng-tns-c46-11 ng-star-inserted']")
 	public WebElement toMonth;
-
 	@FindBy(xpath = "//button[@class='p-datepicker-year p-link ng-tns-c46-11 ng-star-inserted']")
 	public WebElement toYear;
-
-	// to calendar previous and next buttons xpath...
-
 	@FindBy(xpath = "//button[@class='p-ripple p-element p-datepicker-prev p-link ng-tns-c46-11 ng-star-inserted']")
 	public WebElement toCalenderPreviousButton;
-
 	@FindBy(xpath = "//button[@class='p-ripple p-element p-datepicker-next p-link ng-tns-c46-11']")
 	public WebElement toCalenderNextButton;
 
-	// to calendar previous and next icons xpath...
+	
+	//to set 2---46-27......................
+//	@FindBy(xpath = "//calendaricon[@class='p-element p-icon-wrapper ng-tns-c46-27 ng-star-inserted']")
+//	public WebElement toCalenderIcon;
+//	@FindBy(xpath = "//button[@class='p-datepicker-month p-link ng-tns-c46-27 ng-star-inserted']")
+//	public WebElement toMonth;
+//	@FindBy(xpath = "//button[@class='p-datepicker-year p-link ng-tns-c46-27 ng-star-inserted']")
+//	public WebElement toYear;
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-datepicker-prev p-link ng-tns-c46-27 ng-star-inserted']")
+//	public WebElement toCalenderPreviousButton;
+//	@FindBy(xpath = "//button[@class='p-ripple p-element p-datepicker-next p-link ng-tns-c46-27']")
+//	public WebElement toCalenderNextButton;
+//	
+	//--------------------------------------
+	
+	//to set 2---46-11......................
 
-//		@FindBy(xpath = "//chevronlefticon[@class='p-element p-icon-wrapper ng-tns-c46-11 ng-star-inserted']")
-//		public WebElement toCalenderPreviousButton;
-//
-//		@FindBy(xpath = "//chevronrighticon[@class='p-element p-icon-wrapper ng-tns-c46-11 ng-star-inserted']")
-//		public WebElement toCalenderNextButton;
-
-	// to calendar today's date => yes or not
-
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-5']/tbody/tr[2]/td[@class='ng-tns-c46-5 p-datepicker-today ng-star-inserted']")
+	//todays date
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-11']/tbody/tr/td[@class='ng-tns-c46-11 p-datepicker-today ng-star-inserted']")
 	public WebElement toCalender_Date_Today;
-//check list or not
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-5']/tbody/tr[2]/td[@class='ng-tns-c46-5 ng-star-inserted']")
-	public List<WebElement> toCalender_Dates_notToday;
-
-	// to calendar highlighted,enabled,disabled dates....
-
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-5']/tbody/tr[2]/td/span[@class='p-ripple p-element ng-tns-c46-5 p-disabled ng-star-inserted']")
-	public List<WebElement> toCalender_Dates_disabled;
-
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-5']/tbody/tr[2]/td/span[@class='p-ripple p-element ng-tns-c46-5 ng-star-inserted']")
-	public List<WebElement> toCalender_Dates_enabled_notHighlited;
-
-	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-5']/tbody/tr[2]/td/span[@class='p-ripple p-element ng-tns-c46-5 p-highlight ng-star-inserted']")
+	// months all dates except todays
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-11']/tbody/tr/td[@class='ng-tns-c46-11 ng-star-inserted']")
+	public List<WebElement> toCalender_Dates_currentMonthsAllDatedExceptToday;
+	// enabled - highlited date
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-11']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-11 p-highlight ng-star-inserted']")
 	public WebElement toCalender_Date_enabled_Highlited;
+	// enabled - other than highlited date
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-11']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-11 ng-star-inserted']")
+	public List<WebElement> toCalender_Dates_enabled_notHighlited;
+	// disabled and all dates from table
+	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-11']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-11 p-disabled ng-star-inserted']")
+	public List<WebElement> toCalender_Dates_disabled_AllDisplayedInDropdown;
 
+	
+	//to set 2---46-27......................
+		
+//	//todays date
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-27']/tbody/tr/td[@class='ng-tns-c46-27 p-datepicker-today ng-star-inserted']")
+//	public WebElement toCalender_Date_Today;
+//	// months all dates except todays
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-27']/tbody/tr/td[@class='ng-tns-c46-27 ng-star-inserted']")
+//	public List<WebElement> toCalender_Dates_currentMonthsAllDatedExceptToday;
+//	// enabled - highlited date
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-27']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-27 p-highlight ng-star-inserted']")
+//	public WebElement toCalender_Date_enabled_Highlited;
+//	// enabled - other than highlited date
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-27']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-27 ng-star-inserted']")
+//	public List<WebElement> toCalender_Dates_enabled_notHighlited;
+//	// disabled and all dates from table
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-27']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-27 p-disabled ng-star-inserted']")
+//	public List<WebElement> toCalender_Dates_disabled_AllDisplayedInDropdown;
+
+	//to set 3---46-5.............................................
+	
+//	//todays date
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-5']/tbody/tr/td[@class='ng-tns-c46-5 p-datepicker-today ng-star-inserted']")
+//	public WebElement toCalender_Date_Today;
+//	// months all dates except todays
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-5']/tbody/tr/td[@class='ng-tns-c46-5 ng-star-inserted']")
+//	public List<WebElement> toCalender_Dates_currentMonthsAllDatedExceptToday;
+//	// enabled - highlited date
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-5']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-5 p-highlight ng-star-inserted']")
+//	public WebElement toCalender_Date_enabled_Highlited;
+//	// enabled - other than highlited date
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-5']/tbody/tr/td/span[@class='p-ripple p-element ng-tns-c46-5 ng-star-inserted']")
+//	public List<WebElement> toCalender_Dates_enabled_notHighlited;
+//	// disabled and all dates from table
+//	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-5']/tbody/tr[2]/td/span[@class='p-ripple p-element ng-tns-c46-5 p-disabled ng-star-inserted']")
+//	public List<WebElement> toCalender_Dates_disabled;
+
+	
+//---------------------------------------------------------------------------------------------------	
+	
 	@FindBy(xpath = "//button[text()='Search']")
 	public WebElement searchButton;
 
@@ -176,7 +227,6 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//button[@id='nav-contact-tab'][2]")
 	public WebElement bbpsTab;
 
-	
 	@FindBy(xpath = "//button[@id='nav-contact-tab'][3]")
 	public WebElement aepsTab;
 
@@ -609,39 +659,9 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 	}
 
-	public void selectFromDate2Auto() throws InterruptedException {
-
-		logger.log(LogStatus.INFO, "click from calendar icon");
-		Thread.sleep(2000);
-		click(fromCalenderIcon, driver, logger);
-		String calendarDateValue = null;
-
-		String month = fromMonth.getText();
-		String year = fromYear.getText();
-
-		for (int aa = 0; aa <= 34; aa++) {
-
-			WebElement calendarDateValueAAA = datesOfFromCalender.get(aa);
-			if (calendarDateValueAAA.isEnabled()) {
-				calendarDateValue = calendarDateValueAAA.getText();
-				System.out.println("Enabled Date -" + calendarDateValue + "-" + month + "-" + year);
-
-			} else {
-
-				System.out.println("Disabled Date -" + calendarDateValue + "-" + month + "-" + year);
-
-			}
-
-		}
-
-	}
-
-	public void selectFromDate2(int date, String monthString, int year) {
+	public void selectFromDate2(String stringDate, String monthString, String stringYear) {
 
 		logger.log(LogStatus.INFO, "selecting a date from date calendar");
-
-		String stringDate = Integer.toString(date);
-		String stringYear = Integer.toString(year);
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(fromCalenderIcon, driver, logger);
@@ -690,7 +710,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(toCalenderIcon, driver, logger);
-		scrollToWebElement(toCalenderIcon, driver);
+//		scrollToWebElement(toCalenderIcon, driver);
 
 		logger.log(LogStatus.INFO, "click to calendar icon");
 		click(toCalenderIcon, driver, logger);
@@ -722,43 +742,257 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		}
 		logger.log(LogStatus.INFO, "selected to date-" + calendarDateValue + "-" + calendarMonth + "-" + calendarYear);
-
 	}
 
-	public Boolean isCategoryTabDisplayed() {
+//in progress-----------------	
+	public void dateTest() throws InterruptedException {
 
-		// approach 1...with common method.......
-//
-//		waitForPageLoaded(driver, logger);
-//        
-//	    	logger.log(LogStatus.INFO,"checking category dropdown is displayed or not");
-//		 
-//	    	Boolean catDropDisp = isPresentAndDisplayed(categoryTab, driver, logger);
-//
-//		  return catDropDisp;
 //		
+//		logger.log(LogStatus.INFO, "click to calendar icon");
+//		click(fromCalenderIcon, driver, logger);
+//		
+//		System.out.println("");
+//		
+//		
+//		Thread.sleep(2000);
+//
+//		System.out.println("taday's date -"+fromCalender_Date_Today.getText());
+//		
+//		Thread.sleep(2000);
+//		
+//		System.out.println("enabled highlited date -"+fromCalender_Date_enabled_Highlited.getText());
+//		Thread.sleep(2000);
+//		
+//
+//            int	enabledDatesNo =	fromCalender_Dates_enabled_notHighlited.size();
+//		
+//            for(int a=0;a<=(enabledDatesNo-1);a++)
+//            {
+//            	
+//            String enabledDateString=	fromCalender_Dates_enabled_notHighlited.get(a).getText();
+//        		System.out.println("enabled dates CURRENT MONTH-"+enabledDateString);
+//
+//            	
+//            }
+//
+//            Thread.sleep(2000);
+//		
+//            int	disabledDatesNo =	fromCalender_Dates_disabled_AllDisplayedInDropdown.size();
+//    		
+//            for(int a=0;a<=(disabledDatesNo-1);a++)
+//            {
+//            	
+//            String disabledDateString=	fromCalender_Dates_disabled_AllDisplayedInDropdown.get(a).getText();
+//        		System.out.println("disabled dates ALL-"+disabledDateString);	
+//            }
+//            
+//    		System.out.println("current time inMill is -"+getCurrentDateAndTimeInMill());
+//
+//    		System.out.println("current time formatted is -"+getCurrentDateAndTimeInFormat());
+//
+//    		System.out.println("current date is -"+getCurrentDate());
+//
+//    		System.out.println("current month is -"+getCurrentMonth());
+//
+//    		System.out.println("current year is -"+getCurrentYear());
+//
+//            
+		logger.log(LogStatus.INFO, "selecting a date from date calendar");
 
-//approach 2..........		
-		Boolean catTabDisp;
-		logger.log(LogStatus.INFO, "checking category tab is displayed or not");
-		try {
-			catTabDisp = isPresentAndDisplayed(categoryTab, driver, logger);
+		waitForPageLoaded(driver, logger);
+		waitForElementToAppear(fromCalenderIcon, driver, logger);
+		scrollToWebElement(fromCalenderIcon, driver);
 
-			if (catTabDisp) {
-				logger.log(LogStatus.INFO, "category tab is displayed");
-				highlightElement(categoryTab, "Red", driver, logger);
-				catTabDisp = true;
-			} else {
-				logger.log(LogStatus.INFO, "category tab is not displayed");
-				catTabDisp = false;
-			}
-		} catch (NoSuchElementException e) {
-			logger.log(LogStatus.INFO, "category tab element is not displayed");
-			catTabDisp = false;
-		}
-		return catTabDisp;
+		logger.log(LogStatus.INFO, "click from calendar icon");
+		click(fromCalenderIcon, driver, logger);
+		logger.log(LogStatus.INFO, "selecting from month and from year");
+
+		String calendarMonth = fromMonth.getText();
+		String calendarYear = fromYear.getText();
+		String highlitedDate = fromCalender_Date_enabled_Highlited.getText();
+
+		System.out.println("calendar current date -" + calendarMonth);
+		System.out.println("calendar current month -" + calendarMonth);
+		System.out.println("calendar current year -" + calendarMonth);
+
 	}
 
+// from calendar.................
+	public String getFromCalendar_highlitedDate() {
+
+		logger.log(LogStatus.INFO, "getting highlited date from FROM date calendar");
+
+		waitForPageLoaded(driver, logger);
+		waitForElementToAppear(fromCalenderIcon, driver, logger);
+//		scrollToWebElement(fromCalenderIcon, driver);
+
+		logger.log(LogStatus.INFO, "click from calendar icon");
+		click(fromCalenderIcon, driver, logger);
+		logger.log(LogStatus.INFO, "capturing highlited_from date");
+
+		String calendarHighlitedDate = fromCalender_Date_enabled_Highlited.getText();
+		logger.log(LogStatus.INFO, "captured default from date is -" + calendarHighlitedDate);
+
+		return calendarHighlitedDate;
+	}
+
+	public String getFromCalendar_todayDate() {
+
+		logger.log(LogStatus.INFO, "getting today's date from date calendar");
+
+		waitForPageLoaded(driver, logger);
+		waitForElementToAppear(fromCalenderIcon, driver, logger);
+//		scrollToWebElement(fromCalenderIcon, driver);
+
+		logger.log(LogStatus.INFO, "click from calendar icon");
+		click(fromCalenderIcon, driver, logger);
+		logger.log(LogStatus.INFO, "capturing today's_from date");
+
+		String calendarTodayDate = fromCalender_Date_Today.getText();
+		logger.log(LogStatus.INFO, "captured today's date from calendar is -" + calendarTodayDate);
+
+		return calendarTodayDate;
+	}
+
+	public String getFromCalendar_Month() {
+
+		logger.log(LogStatus.INFO, "getting selected month from date calendar");
+
+		waitForPageLoaded(driver, logger);
+		waitForElementToAppear(fromCalenderIcon, driver, logger);
+//		scrollToWebElement(fromCalenderIcon, driver);
+
+		logger.log(LogStatus.INFO, "click from calendar icon");
+		click(fromCalenderIcon, driver, logger);
+		logger.log(LogStatus.INFO, "capturing default_from month");
+
+		String calendarFromMonth = fromMonth.getText();
+		logger.log(LogStatus.INFO, "captured from month is -" + calendarFromMonth);
+
+		return calendarFromMonth;
+	}
+
+	public String getFromCalendarSelectedYear() {
+
+		logger.log(LogStatus.INFO, "getting selected year from date calendar");
+
+		waitForPageLoaded(driver, logger);
+		waitForElementToAppear(fromCalenderIcon, driver, logger);
+//		scrollToWebElement(fromCalenderIcon, driver);
+
+		logger.log(LogStatus.INFO, "click from calendar icon");
+		click(fromCalenderIcon, driver, logger);
+		logger.log(LogStatus.INFO, "capturing default_from year");
+
+		String calendarFromYear = fromYear.getText();
+		logger.log(LogStatus.INFO, "captured from year is -" + calendarFromYear);
+
+		return calendarFromYear;
+
+	}
+
+	// to calendar.................
+	public String getToCalendar_highlitedDate() {
+
+		logger.log(LogStatus.INFO, "getting highlited date from TO date calendar");
+
+		waitForPageLoaded(driver, logger);
+		waitForElementToAppear(toCalenderIcon, driver, logger);
+//		scrollToWebElement(toCalenderIcon, driver);
+
+		logger.log(LogStatus.INFO, "click to calendar icon");
+		click(toCalenderIcon, driver, logger);
+		logger.log(LogStatus.INFO, "capturing highlited_to date");
+
+		String calendarHighlitedDate = toCalender_Date_enabled_Highlited.getText();
+		logger.log(LogStatus.INFO, "captured default to date is -" + calendarHighlitedDate);
+
+		return calendarHighlitedDate;
+	}
+
+	public String getToCalendar_todayDate() {
+
+		logger.log(LogStatus.INFO, "getting today's date to date calendar");
+
+		waitForPageLoaded(driver, logger);
+		waitForElementToAppear(toCalenderIcon, driver, logger);
+//		scrollToWebElement(toCalenderIcon, driver);
+
+		logger.log(LogStatus.INFO, "click to calendar icon");
+		click(toCalenderIcon, driver, logger);
+		logger.log(LogStatus.INFO, "capturing today's_to date");
+
+		String calendarTodayDate = toCalender_Date_Today.getText();
+		logger.log(LogStatus.INFO, "captured today's date from calendar is -" + calendarTodayDate);
+
+		return calendarTodayDate;
+	}
+
+	public String getToCalendar_Month() {
+
+		logger.log(LogStatus.INFO, "getting selected month to date calendar");
+
+		waitForPageLoaded(driver, logger);
+		waitForElementToAppear(toCalenderIcon, driver, logger);
+//		scrollToWebElement(toCalenderIcon, driver);
+
+		logger.log(LogStatus.INFO, "click to calendar icon");
+		click(toCalenderIcon, driver, logger);
+		logger.log(LogStatus.INFO, "capturing default_to month");
+
+		String calendarToMonth = toMonth.getText();
+		logger.log(LogStatus.INFO, "captured from month is -" + calendarToMonth);
+
+		return calendarToMonth;
+	}
+
+	public String getToCalendarSelectedYear() {
+
+		logger.log(LogStatus.INFO, "getting selected year to date calendar");
+
+		waitForPageLoaded(driver, logger);
+		waitForElementToAppear(toCalenderIcon, driver, logger);
+//		scrollToWebElement(toCalenderIcon, driver);
+
+		logger.log(LogStatus.INFO, "click to calendar icon");
+		click(toCalenderIcon, driver, logger);
+		logger.log(LogStatus.INFO, "capturing default_to year");
+
+		String calendarToYear = toYear.getText();
+		logger.log(LogStatus.INFO, "captured from year is -" + calendarToYear);
+
+		return calendarToYear;
+
+	}
+
+	public void selectFromDate2Auto() throws InterruptedException {
+
+		logger.log(LogStatus.INFO, "click from calendar icon");
+		Thread.sleep(2000);
+		click(fromCalenderIcon, driver, logger);
+		String calendarDateValue = null;
+
+		String month = fromMonth.getText();
+		String year = fromYear.getText();
+
+		for (int aa = 0; aa <= 34; aa++) {
+
+			WebElement calendarDateValueAAA = datesOfFromCalender.get(aa);
+			if (calendarDateValueAAA.isEnabled()) {
+				calendarDateValue = calendarDateValueAAA.getText();
+				System.out.println("Enabled Date -" + calendarDateValue + "-" + month + "-" + year);
+
+			} else {
+
+				System.out.println("Disabled Date -" + calendarDateValue + "-" + month + "-" + year);
+
+			}
+
+		}
+
+	}
+
+	// incomplete----------------
 	public void changeDateIfTableHasNoData() throws InterruptedException {
 
 		Boolean datainTable = validateALLTxnReportTableHasData();
@@ -783,8 +1017,30 @@ public class TransactionHistoryPOM extends commonFunc {
 		System.out.println("fromCalender_Date_enabled_Highlited-" + fromCalender_Date_enabled_Highlited.getText());
 		System.out.println(
 				"fromCalender_Dates_enabled_notHighlited-" + fromCalender_Dates_enabled_notHighlited.get(1).getText());
-		System.out.println("fromCalender_Dates_disabled-" + fromCalender_Dates_disabled.get(1).getText());
+//		System.out.println("fromCalender_Dates_disabled-" + fromCalender_Dates_disabled.get(1).getText());
 
+	}
+
+	public Boolean isCategoryTabDisplayed() {
+
+		Boolean catTabDisp;
+		logger.log(LogStatus.INFO, "checking category tab is displayed or not");
+		try {
+			catTabDisp = isPresentAndDisplayed(categoryTab, driver, logger);
+
+			if (catTabDisp) {
+				logger.log(LogStatus.INFO, "category tab is displayed");
+				highlightElement(categoryTab, "Red", driver, logger);
+				catTabDisp = true;
+			} else {
+				logger.log(LogStatus.INFO, "category tab is not displayed");
+				catTabDisp = false;
+			}
+		} catch (NoSuchElementException e) {
+			logger.log(LogStatus.INFO, "category tab element is not displayed");
+			catTabDisp = false;
+		}
+		return catTabDisp;
 	}
 
 //3.ALL TRANSACTION TABLE methods-------------------------------------------------------------	
@@ -1065,12 +1321,11 @@ public class TransactionHistoryPOM extends commonFunc {
 			// table data count
 			int tableDataCount = getTxnTable_rowNumbers();
 			// page size selected
-			
-	    int pageDataSizeSelected	=Integer.parseInt(get_perPageDataSize());
 
-			//=> scenario - table data is equal to or more than page size selected
-			if (tableDataCount >= pageDataSizeSelected) 
-			{
+			int pageDataSizeSelected = Integer.parseInt(get_perPageDataSize());
+
+			// => scenario - table data is equal to or more than page size selected
+			if (tableDataCount >= pageDataSizeSelected) {
 
 				logger.log(LogStatus.INFO, "table data >= page size selected");
 				logger.log(LogStatus.INFO,
@@ -1078,19 +1333,19 @@ public class TransactionHistoryPOM extends commonFunc {
 
 				if (tableDataCount == pageDataSizeSelected) {
 					flag = true;
-				} else 
-				{
-					// WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI S SCENARIO ????????????????????????????????????????????????????????????????????????
+				} else {
+					// WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI
+					// S SCENARIO
+					// ????????????????????????????????????????????????????????????????????????
 
 					flag = true;
 
 				}
 				return flag;
-			} 
-			//=> scenario 2- table has data - data is less than page size selected
-		
-			else 
-			{
+			}
+			// => scenario 2- table has data - data is less than page size selected
+
+			else {
 				logger.log(LogStatus.INFO, "table data < page size selected");
 				logger.log(LogStatus.INFO,
 						"table Data Count -" + tableDataCount + "\npage Size Selected -" + pageDataSizeSelected);
@@ -1098,14 +1353,15 @@ public class TransactionHistoryPOM extends commonFunc {
 				// table data count
 				int dataCount_lessThanPageSizeSelected = (tableDataCount % pageDataSizeSelected);
 
-				if (dataCount_lessThanPageSizeSelected < pageDataSizeSelected) 
-				{
+				if (dataCount_lessThanPageSizeSelected < pageDataSizeSelected) {
 					flag = true;
 					logger.log(LogStatus.INFO, "table data count =" + dataCount_lessThanPageSizeSelected
 							+ "\npage size selected =" + pageDataSizeSelected);
 
 				} else {
-					// WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI S SCENARIO ????????????????????????????????????????????????????????????????????????
+					// WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI
+					// S SCENARIO
+					// ????????????????????????????????????????????????????????????????????????
 
 					flag = false;
 					logger.log(LogStatus.ERROR, "table data count =" + dataCount_lessThanPageSizeSelected
@@ -1123,13 +1379,14 @@ public class TransactionHistoryPOM extends commonFunc {
 		return flag;
 
 	}
+
 //working.......fine..........
 	public void validate_tableDataAndTextMessage() throws IOException, InterruptedException {
-		
+
 		logger.log(LogStatus.INFO, "validating - tableData And TextMessage");
 
 		// 1.check - table has data or not
-        Thread.sleep(2000);
+		Thread.sleep(2000);
 		waitForPageLoaded(driver, logger);
 		Boolean dataInTable = validateALLTxnReportTableHasData();
 
@@ -1176,20 +1433,20 @@ public class TransactionHistoryPOM extends commonFunc {
 							+ "last no.from table -" + lastNumFromtable + "\nlast no.in message - " + lastNum
 							+ "total in message -" + totalTxns);
 			// assert - first number is matching or not
-			Boolean firstNumIsmatching	= compareString(firstNumFromTable, firstNum, false);
+			Boolean firstNumIsmatching = compareString(firstNumFromTable, firstNum, false);
 			softAssert("validate-first number of record according to PAGE BOTTOM MESSAGE\n", firstNumFromTable,
-						firstNum, firstNumIsmatching, logger);
+					firstNum, firstNumIsmatching, logger);
 			// assert - last number is matching or not
-				Boolean lastNumIsmatching	=compareString(lastNumFromtable, lastNum, false);
-				softAssert("validate-last number of record according to PAGE BOTTOM MESSAGE\n", lastNumFromtable,
-						lastNum, lastNumIsmatching, logger);
+			Boolean lastNumIsmatching = compareString(lastNumFromtable, lastNum, false);
+			softAssert("validate-last number of record according to PAGE BOTTOM MESSAGE\n", lastNumFromtable, lastNum,
+					lastNumIsmatching, logger);
 		} else
 // 1b-if table has no data =>
 		{
 			logger.log(LogStatus.INFO, "Table has no data");
 		}
 	}
-	//working.......fine..........
+	// working.......fine..........
 
 	public String getTxnCategory(int rowNum) {
 		WebElement txn_category = driver
@@ -1197,7 +1454,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		String categoryOfTxn = txn_category.getText();
 		return categoryOfTxn;
 	}
-	//working.......fine..........
+	// working.......fine..........
 
 	public String getTxnService(int rowNum) {
 		WebElement txn_service = driver
@@ -1205,7 +1462,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		String serviceOfTxn = txn_service.getText();
 		return serviceOfTxn;
 	}
-	//working.......fine..........
+	// working.......fine..........
 
 	public String getTxnOperator(int rowNum) {
 		WebElement txn_operator = driver
@@ -1218,21 +1475,18 @@ public class TransactionHistoryPOM extends commonFunc {
 	public String get_perPageDataSize() {
 		String dataPerPageNo = null;
 		try {
-			
-		logger.log(LogStatus.INFO, "fetch data per page number");
-		 dataPerPageNo = page_dataPerPageNumber.getText();
-		return dataPerPageNo;
 
-		}
-		catch (Exception e) 
-		{
+			logger.log(LogStatus.INFO, "fetch data per page number");
+			dataPerPageNo = page_dataPerPageNumber.getText();
+			return dataPerPageNo;
+
+		} catch (Exception e) {
 			logger.log(LogStatus.INFO, e);
-			logger.log(LogStatus.INFO, "Data per page dropdown has no value");		
+			logger.log(LogStatus.INFO, "Data per page dropdown has no value");
 		}
 		return dataPerPageNo;
-		
-	}
 
+	}
 
 	public void click_navigate_firstPageButton() {
 
@@ -1245,7 +1499,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		Boolean buttonEnabled = firstPageIconElement.isEnabled();
 		logger.log(LogStatus.INFO, "click first page button");
 		if (buttonEnabled) {
-			logger.log(LogStatus.INFO, "first page button is enabled -"+buttonEnabled);
+			logger.log(LogStatus.INFO, "first page button is enabled -" + buttonEnabled);
 			click(firstPageIconElement, driver, logger);
 		} else {
 			logger.log(LogStatus.INFO, "first page button is DISABLED");
@@ -1265,7 +1519,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		Boolean buttonEnabled = prevPageIconElement.isEnabled();
 		logger.log(LogStatus.INFO, "click previous page button");
 		if (buttonEnabled) {
-			logger.log(LogStatus.INFO, "previous page button is enabled -"+buttonEnabled);
+			logger.log(LogStatus.INFO, "previous page button is enabled -" + buttonEnabled);
 			click(prevPageIconElement, driver, logger);
 		} else {
 			logger.log(LogStatus.INFO, "previous page button is DISABLED");
@@ -1286,7 +1540,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		logger.log(LogStatus.INFO, "click next page button");
 
 		if (buttonEnabled) {
-			logger.log(LogStatus.INFO, "next page button is enabled -"+buttonEnabled);
+			logger.log(LogStatus.INFO, "next page button is enabled -" + buttonEnabled);
 			click(nextPageIconElement, driver, logger);
 		} else {
 			logger.log(LogStatus.INFO, "next page button is DISABLED");
@@ -1307,7 +1561,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		logger.log(LogStatus.INFO, "click last page button");
 
 		if (buttonEnabled) {
-			logger.log(LogStatus.INFO, "last page button is enabled -"+buttonEnabled);
+			logger.log(LogStatus.INFO, "last page button is enabled -" + buttonEnabled);
 			click(lastPageIconElement, driver, logger);
 		} else {
 			logger.log(LogStatus.INFO, "last page button is DISABLED");
@@ -1346,7 +1600,7 @@ public class TransactionHistoryPOM extends commonFunc {
 //		return defaultDataPerPageSize;
 //
 //	}
-	
+
 	public void click_pageSizeDropdown() {
 
 		waitForElementToAppear(pageSizeDropdown, driver, logger);
@@ -1390,8 +1644,9 @@ public class TransactionHistoryPOM extends commonFunc {
 			logger.log(LogStatus.INFO, e);
 		}
 	}
-	
-	//working......fine.....LAST LOOP FAILING- stale element , loop out of index exceptions.
+
+	// working......fine.....LAST LOOP FAILING- stale element , loop out of index
+	// exceptions.
 
 	public void validate_dataPerPageWithAllPageSizes() throws InterruptedException, IOException {
 
@@ -1413,15 +1668,15 @@ public class TransactionHistoryPOM extends commonFunc {
 			logger.log(LogStatus.INFO, "Selected data per page -" + currentPageDatSize);
 //click data size option 1 (according to index no.) 
 			click(perPageDataOptions.get(a), driver, logger);
-			logger.log(LogStatus.INFO, "clicked/selected page size ="+ perPageDataOptions.get(a).getText());
-		                	System.out.println("selected page size  -" + perPageDataOptions.get(a).getText());
-		                	Thread.sleep(2000);
+			logger.log(LogStatus.INFO, "clicked/selected page size =" + perPageDataOptions.get(a).getText());
+			System.out.println("selected page size  -" + perPageDataOptions.get(a).getText());
+			Thread.sleep(2000);
 // m1...
 //			validate_pageSizeSelectedAndDataPerPageFetched();
 //m2...			
 			validate_tableDataAndTextMessage();
 //wait for table loading after changing the data numbers displayed on page
-			logger.log(LogStatus.INFO, "validation done (loop no. completed) -"+(a+1));
+			logger.log(LogStatus.INFO, "validation done (loop no. completed) -" + (a + 1));
 
 			waitForPageLoaded(driver, logger);
 			scrollToWebElement(pageSizeDropdown, driver);
@@ -1435,16 +1690,10 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	}
 
-	
-	
-	
-	
-	
-	
 	public String getCurentPageNumber() {
 		waitForElementToAppear(curentPageNumber, driver, logger);
 		String pageNo = curentPageNumber.getText();
-		logger.log(LogStatus.INFO, "Current page number is -" +pageNo );
+		logger.log(LogStatus.INFO, "Current page number is -" + pageNo);
 		return pageNo;
 	}
 
@@ -1456,16 +1705,6 @@ public class TransactionHistoryPOM extends commonFunc {
 		return page_paginationDataCountingMsg.getText();
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public int getPageCountToNavigateDisplayedAtPageBottom() {
 		// 1.check - table has data or not
 		waitForPageLoaded(driver, logger);
@@ -1490,12 +1729,6 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		perPageDataOptions.get(indexNo);
 	}
-	
-	
-	
-	
-	
-	
 
 //methods to reconsider...............	
 
