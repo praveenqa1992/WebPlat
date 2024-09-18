@@ -44,7 +44,7 @@ public class TC1_VerifyLogin extends testbase {
 		String user = testConfig.getRunTimeProperty("username");
 		String pass = testConfig.getRunTimeProperty("password");
 
-		logger.log(LogStatus.INFO, "Step 1: Goto \"https://merchant.uatdev.in/\" ");
+		logger.log(LogStatus.INFO, "Step 1: Goto " +testConfig.getRunTimeProperty("url"));
 		
 		
 		for (int i=1; i<=3; i++) {
