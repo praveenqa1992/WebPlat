@@ -1,5 +1,6 @@
 package common;
 
+
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -10,7 +11,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -37,23 +41,16 @@ import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.Logs;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 
-import com.mongodb.diagnostics.logging.Logger;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+
+import okhttp3.Response;
 
 
 public class commonFunc {
@@ -66,8 +63,10 @@ public class commonFunc {
 	public static HSSFSheet worksheet;
 	public static DataFormatter formatter= new DataFormatter();
 	private int elementWaitTime = 15;
+	public URL getUrl;
 	public static String expectedValue;
 	public static String actualValue;
+	public HashMap headerValue = new HashMap();
 
 
 
@@ -1014,6 +1013,26 @@ public class commonFunc {
 
 		logger.log(LogStatus.INFO,"<<<<<<<<< END of Function waitUntilFileUpload()");
 	}
+	
+//	public Response getRequest(URL url, HashMap header) {
+//		
+//		this.getUrl = url;
+//		this.headerValue = header;
+//		
+//		  Response response = given()
+//				  				.headers(headerValue)
+//						  
+//				  			.when()
+//				  				.get(getUrl)
+//						  
+//				  			.then()
+//						  		.statusCode(200)
+//						  		.extract().response();
+//		
+//
+//		
+//		return response;
+//	}
 
 	public void verifyCSSValue(WebElement locator, String cssProp, String expectedValue,   WebDriver driver, ExtentTest logger) throws IOException {
 		String actualValue = null;
