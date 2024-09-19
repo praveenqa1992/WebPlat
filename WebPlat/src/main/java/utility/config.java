@@ -16,14 +16,15 @@ public class config {
 	public static String PlatformName;
 	public static String os;
 	public static String SharedDirectory;
-	public static String ResultsDir;
 	public static String mobileos;
 	public static String appiumurl;
 	public static String device;
-	public static String fileSeparator = File.separator;
+	public static String ResultsDir;
 	public static String tomail;
 	public static String cmsusername;
 	public static String cmspassword;
+	
+	public static String fileSeparator = File.separator;
 	Properties runtimeProperties;
 
 	public config() {
@@ -32,21 +33,27 @@ public class config {
 
 	public config(ExtentTest logger) {
 		try {
-			// Read the config file
+			//1. Read the config file
 			Properties property = new Properties();
 			String path = System.getProperty("user.dir") + fileSeparator + "config.properties";
 			FileInputStream fn = new FileInputStream(path);
 			property.load(fn);
 			fn.close();
 
+			//2. Store properties into THIS veriable.......
+			
 			this.runtimeProperties = new Properties();
+			
 			Enumeration<Object> em = property.keys();
-			while (em.hasMoreElements()) {
-				String str = (String) em.nextElement();
-				putRunTimeProperty(str, (String) property.get(str));
+			
+			while (em.hasMoreElements()) 
+			{
+				String keyName = (String) em.nextElement();
+				putRunTimeProperty(keyName, (String) property.get(keyName));
 			}
 
-			// override the environment value if passed through mvn command line
+			
+//3. override the environment value if passed through mvn command line..........................................
 			if (!(Environment == null || Environment.isEmpty()))
 				putRunTimeProperty("Environment", Environment.toLowerCase());
 
@@ -64,7 +71,9 @@ public class config {
 
 			if (!(ResultsDir == null || ResultsDir.isEmpty())) {
 				putRunTimeProperty("ResultsDir", ResultsDir);
-			} else {
+			}
+			else 
+			{
 				String resultsDir = System.getProperty("user.dir") + fileSeparator + getRunTimeProperty("ResultsDir");
 				putRunTimeProperty("ResultsDir", resultsDir);
 			}

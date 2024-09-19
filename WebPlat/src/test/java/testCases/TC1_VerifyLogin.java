@@ -48,7 +48,8 @@ public class TC1_VerifyLogin extends testbase {
 		
 		
 		for (int i=1; i<=3; i++) {
-			verify = login.signin(user, pass);
+			login.signin(user, pass);
+			verify = driver.getTitle();
 			
 			if (verify.equals(expectedTitle)) {
 				

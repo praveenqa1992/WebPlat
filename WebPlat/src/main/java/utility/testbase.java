@@ -44,15 +44,16 @@ import io.appium.java_client.remote.MobilePlatform;
 @Listeners({ SuiteListener.class })
 public class testbase {
 
-	public static String path;
-	public static String extentReportFile;
+	public static String path; //2.reports folder path with folder name
+	public static String extentReportFile; //3.html report path with folder name
+	public static String reqBrowser; //1.browser....used in @BeforeMethod method
 	public static ExtentReports extent;
-	public static config testConfig;
-	public static String reqBrowser;
 	public static ExtentTest logger;
+	public static config testConfig;
 	public WebDriver driver;
 	public AndroidDriver<MobileElement> driver_m;
 
+	
 	@BeforeSuite(alwaysRun = true)
 	@Parameters({ "browser", "environment", "platformName", "os", "sharedDirectory", "mobileos", "appiumurl", "device",
 			"resultsDir", "tomail", "cmsusername","cmspassword" })
@@ -66,35 +67,61 @@ public class testbase {
 		config.Environment = environment;
 		config.PlatformName = platformName;
 		config.os = os;
+		config.SharedDirectory = sharedDirectory;
 		config.mobileos = mobileos;
 		config.appiumurl = appiumurl;
-		config.SharedDirectory = sharedDirectory;
+		config.device = device;
 		config.ResultsDir = resultsdir;
 		config.tomail = tomail;
-		config.device = device;
 		config.cmsusername= cmsusername;
 		config.cmspassword=cmspassword;
 
 		testConfig = new config(logger);
+	
+	//1.browser...	used in @BeforeMethod method
 		reqBrowser = testConfig.getRunTimeProperty("browser");
 
+		
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd-HH_mm_ss_SSS");
 		Date now = new Date();
 		String strDate = sdfDate.format(now);
-
+		
+//2.reports FOLDER (path and name) as date as mentioned in above format...DECIDE
 		path = testConfig.getRunTimeProperty("ResultsDir") + testConfig.getRunTimeProperty("fileSeparator") + strDate;
 
+	//2B.reports folder (path and name) as date as mentioned in above format...CREATE folder to store html report
+	
 		new File(path).mkdirs();
+		
+//2C_html report......
+		   //3.html report path with folder name
+		//html report NAME...DECIDE
 		extentReportFile = path + testConfig.getRunTimeProperty("fileSeparator")
 				+ testConfig.getRunTimeProperty("reportfilename");
+		
+		// navigate to html report...CREATE
 		File file = new File(extentReportFile);
 		file.createNewFile();
+	
+		//Extent Reports class objjjjjjjjjjjjjj==============++++++++++++++++++====================
 		extent = new ExtentReports(extentReportFile, true);
-		logger = extent.startTest("Configurations for : " + getSuiteName());
+		
+		//Extent Test class objjjjjjjjjjjjjjjjj========================
+		
+		//set/log INITIAL info to the report........
+		
+		//1.suite name...start test
+		logger = extent.startTest("Configurations for : " + getSuiteName());//method to get suite name is at last
+		
+		//2.log info at suite name...start test
 		logger.log(LogStatus.INFO, "Details for starting the suite",
-				"1. Browser name : " + testConfig.getRunTimeProperty("browser") + "</br>2. Environment : "
-						+ testConfig.getRunTimeProperty("environment") + "</br>3. Platform Name : "
-						+ testConfig.getRunTimeProperty("platformName"));
+				     "1. Browser name : " + testConfig.getRunTimeProperty("browser") + 
+				"</br>2. Environment : "+ testConfig.getRunTimeProperty("environment") +
+				"</br>3. Platform Name : "+ testConfig.getRunTimeProperty("platformName"));
+		
+		//3.suite name...end test
+		//end test.....	after suite to FLUSH logs used in this method to the report	
+
 		extent.endTest(logger);
 	
 	}
@@ -106,6 +133,8 @@ public class testbase {
 	@BeforeMethod(alwaysRun = true)
 	public void startMethod(Method method) 
 	{
+		
+		//get annotations mentioned in the "Test.class" and store in test......???????????????
 		Test test = method.getAnnotation(Test.class);
 	
 		if (test == null) 
@@ -114,22 +143,39 @@ public class testbase {
 		}
 		
 		String class_name = this.getClass().getName();
+		
+		//start test 2 (1st is in before suite method)...like second tab with mentioned/logged info
+		
 		logger = extent.startTest("Class_Name : " + class_name + "</br>" + "Test_Name : " + method.getName());
-		logger.assignCategory(class_name);
+		
+		logger.assignCategory(class_name); //?????????????????
+		
+		
 		int flag = 1;
 		try {
 
+//platform - DESKTOP---------
 			if (testConfig.getRunTimeProperty("platformname").equalsIgnoreCase("desktop")) 
 			{
+				
+				//BROWSER REQUIRED - NO
 				if (reqBrowser.equalsIgnoreCase("notrequired")) 
 				{
 					logger.log(LogStatus.INFO, "Browser required", "No");
 					flag = 0;
-				} else if (testConfig.getRunTimeProperty("os").equalsIgnoreCase("mac")) 
+		//flag = 0	===============	
+				}
+				
+				//browser req - YES (desktop + browser)
+				else if 
+				(testConfig.getRunTimeProperty("os").equalsIgnoreCase("mac")) //os- mac....then initialize the CHROME DRIVER (name should be -"chromedriver")
 				
 				{
-					System.setProperty("webdriver.chrome.driver", testConfig.getRunTimeProperty("SharedDirectory")
-							+ testConfig.getRunTimeProperty("fileSeparator") + "chromedriver");
+					
+					//initialize the CHROME DRIVER ------------
+					
+					System.setProperty("webdriver.chrome.driver", testConfig.getRunTimeProperty("SharedDirectory")//chrome driver location
+							+ testConfig.getRunTimeProperty("fileSeparator") + "chromedriver"); // chrome driver file name
 
 					driver = new ChromeDriver();
 					System.out.println(driver);
@@ -152,32 +198,50 @@ public class testbase {
 //					}
 				}
 			}
+////platform - MOBILE---------
 
 			else if (testConfig.getRunTimeProperty("platformname").equalsIgnoreCase("mobile")) {
 				flag = 2;
-				if (reqBrowser.equalsIgnoreCase("notrequired")) {
+				if (reqBrowser.equalsIgnoreCase("notrequired")) 
+				{
 					logger.log(LogStatus.INFO, "Browser required", "No");
 					flag = 0;
-				} else if (testConfig.getRunTimeProperty("mobileos").equalsIgnoreCase("android")) {
+				} 
+				else if 
+				
+			//MOBILE OS - ANDROID	
+				(testConfig.getRunTimeProperty("mobileos").equalsIgnoreCase("android")) 
+				{
 					DesiredCapabilities capabilities = new DesiredCapabilities();
-					if (testConfig.getRunTimeProperty("os").equalsIgnoreCase("mac")) {
+			
+				//	OS - MAC	
+					if (testConfig.getRunTimeProperty("os").equalsIgnoreCase("mac")) 
+					{
 						capabilities.setCapability("chromedriverExecutable",
 								testConfig.getRunTimeProperty("SharedDirectory")
 										+ testConfig.getRunTimeProperty("fileSeparator") + "chromedriver");
-					} else if (testConfig.getRunTimeProperty("os").equalsIgnoreCase("windows")) {
+			//	OS - WINDOWS		
+					} else if (testConfig.getRunTimeProperty("os").equalsIgnoreCase("windows")) 
+					{
 						capabilities.setCapability("chromedriverExecutable",
 								testConfig.getRunTimeProperty("SharedDirectory")
 										+ testConfig.getRunTimeProperty("fileSeparator") + "chromedriver_windows.exe");
 					}
+					
 					capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, MobileBrowserType.CHROME);
 					capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
 					capabilities.setCapability(MobileCapabilityType.DEVICE_NAME,
+							
 							testConfig.getRunTimeProperty("device"));
+					
 					capabilities.setCapability("showChromedriverLog", true);
+					
 					URL url = null;
-					try {
+					try 
+					{
 						url = new URL(testConfig.getRunTimeProperty("appiumurl"));
-					} catch (MalformedURLException e) {
+					} catch (MalformedURLException e) 
+					{
 						e.printStackTrace();
 					}
 					driver_m = new AndroidDriver<MobileElement>(url, capabilities);
@@ -187,46 +251,75 @@ public class testbase {
 
 		} catch (Exception e) {
 			logger.log(LogStatus.FAIL, "Browser Open", e.getLocalizedMessage());
-			extent.endTest(logger);
-		}
+			
+			//MOST IMP.......
+			//end test.....	 to FLUSH logs used in this method to the report if unable to open the browser...thst's why endTest is called in CATCH block 
+			//if called out side the box all logs will be flushed as method starts and not when method ends.)
 
+			extent.endTest(logger);
+					}
+		
+		//platform - ( desktop or android + no browser required).... flag = 0
+		//platform - android ... flag = 2
+
+// maximize browser after opening it..................		
 		if (flag == 1) {
 			logger.log(LogStatus.INFO, "Browser Open", "Browser opened successfully");
 			driver.manage().window().maximize();
 			driver.manage().deleteAllCookies();
-			if (testConfig.getRunTimeProperty("url")!=null) {
+		
+		//if properties file has URL provided then navigate to that url..........	
+			if (testConfig.getRunTimeProperty("url")!=null) 
+			{
 				driver.get(testConfig.getRunTimeProperty("url"));
 			}
 			logger.log(LogStatus.INFO, "Browser Maximize", "Browser maximized sucessfully");
 		}
 	}
 
+	
 	@SuppressWarnings("deprecation")
 	@AfterMethod(alwaysRun = true)
 	public void endMethod(ITestResult result) throws IOException, InterruptedException 
 	{
 		try {
+			
 			if (result.getStatus() == ITestResult.FAILURE) 
 			{
 				logger.log(LogStatus.FAIL, result.getName() + " : Test case failed due to : ", result.getThrowable());
 
+			//if browser is not required	
+				
 				if (!reqBrowser.equalsIgnoreCase("notrequired")) 
 				{
+				//	take screenshot................
 					File scrf_a = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
+					
 					String encodedBase64 = null;
 					FileInputStream fileInputStreamReader = null;
-					try {
+					try 
+					{
+				//read/navigate to screenshot taken............
 						fileInputStreamReader = new FileInputStream(scrf_a);
+						
+				//get the screenshot length ==> to convert into byte		
 						byte[] bytes = new byte[(int) scrf_a.length()];
+				//read the bytes	
 						fileInputStreamReader.read(bytes);
+						
+				//ENCODE bytes to base64 string		
 						encodedBase64 = new String(Base64.encodeBase64(bytes));
 						
-					} catch (FileNotFoundException e) {
+					} catch (FileNotFoundException e) 
+					{
 						e.printStackTrace();
-					} catch (IOException e) {
+					} catch (IOException e) 
+					{
 						e.printStackTrace();
 					}
+					
+					
 					String final_file_path = "data:image/png;base64," + encodedBase64;
 					String image_a = logger.addScreenCapture(final_file_path);
 					logger.log(LogStatus.FAIL, "Test case failed. Please check - visible image", image_a);
@@ -239,9 +332,11 @@ public class testbase {
 //					String image_b = logger.addScreenCapture(newPath_b);
 //					logger.log(LogStatus.FAIL, "Test case failed. Please check - full image", image_b);
 				}
-			} else if (result.getStatus() == ITestResult.SUCCESS) {
+			} else if (result.getStatus() == ITestResult.SUCCESS) 
+			{
 				logger.log(LogStatus.PASS, result.getName() + " : Test case passed");
-			} else {
+			} else 
+			{
 				logger.log(LogStatus.SKIP, result.getName() + " : Test case skipped due to : ", result.getThrowable());
 			}
 
@@ -251,31 +346,42 @@ public class testbase {
 		} finally 
 		{
 			if ((!reqBrowser.equalsIgnoreCase("notrequired"))
-					&& (testConfig.getRunTimeProperty("platformname").equalsIgnoreCase("desktop"))) {
+					&& (testConfig.getRunTimeProperty("platformname").equalsIgnoreCase("desktop"))) 
+			{
 				Thread.sleep(5000);
 				driver.quit();
 				logger.log(LogStatus.PASS, "Browser Closed");
 			} else if ((!reqBrowser.equalsIgnoreCase("notrequired"))
-					&& (testConfig.getRunTimeProperty("platformname").equalsIgnoreCase("mobile"))) {
+					&& (testConfig.getRunTimeProperty("platformname").equalsIgnoreCase("mobile"))) 
+			{
 				Thread.sleep(5000);
 				driver_m.quit();
 				logger.log(LogStatus.PASS, "Browser Closed");
 			}
 			
+	//end test.....	after every method to FLUSH logs to the report	
 			extent.endTest(logger);
 		//	extent.config().addCustomStylesheet("/Users/praveenkumar/Downloads/data.css");
 		}
 	}
 
+	
 	@AfterSuite(alwaysRun = true)
 	public void dumpParameters() throws IOException {
 		//extent.config().addCustomStylesheet("/Users/praveenkumar/Downloads/data.css");// File.separator;
 		extent.flush();
 		extent.close();
-		String bodyData = "1. Browser name : " + testConfig.getRunTimeProperty("browser") + "\n2. Environment : "
-				+ testConfig.getRunTimeProperty("environment") + "\n3. Platform Name : "
-				+ testConfig.getRunTimeProperty("platformName") + "\n4. OS : " + testConfig.getRunTimeProperty("os")
-				+ "\n5. To Mail : " + testConfig.getRunTimeProperty("tomail")+ "\n6. style : " + testConfig.getRunTimeProperty("style") + "\n\n PFA report.";
+		
+	//send the report on mail.........
+		
+		String bodyData = "1. Browser name : " + testConfig.getRunTimeProperty("browser") + 
+				        "\n2. Environment : "+ testConfig.getRunTimeProperty("environment") + 
+				        "\n3. Platform Name : "+ testConfig.getRunTimeProperty("platformName") + 
+				        "\n4. OS : " + testConfig.getRunTimeProperty("os")
+				      + "\n5. To Mail : " + testConfig.getRunTimeProperty("tomail")+ 
+				        "\n6. style : " + testConfig.getRunTimeProperty("style") + 
+				        "\n\n PFA report.";
+		
 		sendmail sendmail = new sendmail();
 		sendmail.SendMail(testConfig.getRunTimeProperty("tomail"), testConfig.getRunTimeProperty("replyto"),
 				"Automation Report : " + getSuiteName(), path, testConfig.getRunTimeProperty("reportemail"),

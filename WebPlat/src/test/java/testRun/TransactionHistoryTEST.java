@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import com.relevantcodes.extentreports.LogStatus;
 
 import common.commonFunc;
+import pageObjects.Login;
 import pageObjects.TransactionHistoryPOM;
 import testCases.TC1_VerifyLogin;
 import utility.testbase;
@@ -18,9 +19,17 @@ public class TransactionHistoryTEST extends testbase {
 	@Test(priority = 1, enabled = true, groups="regression.allTxnReport")
 	public void TC001_navigateToAllTxnHistoryPage() throws InterruptedException, IOException {
 
+		
+//		Login tC1_VerifyLogin = new Login(driver, logger);
+//		String user = testConfig.getRunTimeProperty("username");
+//		String pass = testConfig.getRunTimeProperty("password");
+//		tC1_VerifyLogin.signin(user, pass);
+//		tC1_VerifyLogin.dialogClose();		
+				
 		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
 		TransactionHistoryPOM transactionHistoryPOM = new TransactionHistoryPOM(driver, logger);
 		commonFunc commonfunc = new commonFunc();
+
 //login...
 		tC1_VerifyLogin.verifySignIn(driver, logger);
 //navigate to transaction history module...
@@ -31,8 +40,10 @@ public class TransactionHistoryTEST extends testbase {
 		String actualTitle = driver.getTitle();
 		String expectedTitle = "Transaction History";
 		commonfunc.compareString(actualTitle, expectedTitle, false);
+		logger.log(LogStatus.INFO,"act title-"+actualTitle+"expected title-"+expectedTitle);
 		commonfunc.softAssert("Navigate to Txn. History page and validate page title -", actualTitle, expectedTitle,
 				true, logger);
+		logger.log(LogStatus.INFO,"act title2-"+actualTitle+"expected title2-"+expectedTitle);
 
 	}
 
@@ -600,6 +611,35 @@ public class TransactionHistoryTEST extends testbase {
 	}
 
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+// executing scenarios for other tabs than 'All Transaction	Report' tab............
 	@Test(priority = 51, enabled = true, groups="regression.telecomTab")
 
 	public void TC051_scenarios_telecomTab() throws InterruptedException, IOException {
@@ -617,7 +657,8 @@ public class TransactionHistoryTEST extends testbase {
 		Thread.sleep(2000);
 		//navigate to telecom module/tab.........................		
 		transactionHistoryPOM.click_telecomTab();
-		
+		Thread.sleep(2000);
+
 //select from date		
 		 transactionHistoryPOM.selectFromDate2("11", "September", "2024");
 //select to date	
@@ -721,6 +762,7 @@ public class TransactionHistoryTEST extends testbase {
 		
 	}
 
+//more info side bar has DIFFERENT OPTIONS / BUTTONS.........update script accordingly	
 	@Test(priority = 61, enabled = true, groups="regression.Dmt")
 
 	public void TC061_scenarios_DmtTab() throws InterruptedException, IOException {
@@ -736,8 +778,131 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_txnHistoryModule();
 		
 		Thread.sleep(2000);
-		//navigate to telecom module/tab.........................		
-		transactionHistoryPOM.click_telecomTab();
+	//navigate to dmt module/tab++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+		transactionHistoryPOM.click_dmtTab();
+		Thread.sleep(2000);
+
+//select from date		
+		 transactionHistoryPOM.selectFromDate2("11", "September", "2024");
+//select to date	
+		 transactionHistoryPOM.selectToDate2(12, "September", 2024);
+//search		
+		transactionHistoryPOM.click_searchButton();
+//1.validate if table has data-----------
+		logger.log(LogStatus.INFO, "1.validate if table has data-----------");
+
+		Boolean dataInTable = transactionHistoryPOM.validateALLTxnReportTableHasData();
+
+		if (dataInTable) {
+
+			logger.log(LogStatus.INFO, "Txn. table has data");
+
+		} else {
+
+			logger.log(LogStatus.INFO, "No data found for the selected date.");
+			logger.log(LogStatus.INFO, "checking message displayed when no data found");
+
+			String actualMessage = transactionHistoryPOM.getTxnTable_messageIfNoTableData();
+			String expectedMessage = "No items found.";
+
+			commonfunc.compareString(actualMessage, expectedMessage, true);
+//assertion - message displayed		
+			commonfunc.softAssert("Message displayed if no data in Txn. table -", actualMessage, expectedMessage, true,
+					logger);
+			
+		}
+
+			//2.validating default page size-----------	
+			logger.log(LogStatus.INFO, "2.validating default page size-----------");
+
+			logger.log(LogStatus.INFO, "checking default page size");
+			String ActualDataPerPageNoDisplayed = transactionHistoryPOM.get_perPageDataSize();
+			// default page size STATIC =10
+			String expectedPageDataString = "10";
+			commonfunc.compareString(ActualDataPerPageNoDisplayed, expectedPageDataString, true);
+	//assertion - default page size selected	
+			commonfunc.softAssert("Dafault page size -", ActualDataPerPageNoDisplayed, expectedPageDataString, true,
+					logger);
+		
+			Thread.sleep(5000);
+			
+			
+			//3.validate side bar open or close---------------------
+			logger.log(LogStatus.INFO, "3.validate side bar open or close---------------------");
+		
+			//select date		
+			transactionHistoryPOM.selectFromDate2("10", "August", "2024");
+//			transactionHistoryPOM.selectToDate2(20, "August", 2024);
+	//search		
+			transactionHistoryPOM.click_searchButton();
+			Thread.sleep(5000);
+	//open more info side bar of 1st txn.	
+			transactionHistoryPOM.OpenMoreInfoOfTxnPopup(1);
+
+	//validate side bar open or close
+
+			Boolean moreInfoSideMenuIsOpen = transactionHistoryPOM
+					.isPresentAndDisplayed(transactionHistoryPOM.moreinfoSideBar, driver, logger);
+			Thread.sleep(1000);
+
+			System.out.println("offCanvas/side menu bar is open1 by method -" + moreInfoSideMenuIsOpen);
+			System.out.println(
+					"offCanvas/side menu bar is open1 by me -" + transactionHistoryPOM.moreinfoSideBar.isDisplayed());
+
+	//assertion - is side bar open
+			transactionHistoryPOM.softAssertTrue("offCanvas/side menu bar is open1 -", moreInfoSideMenuIsOpen, logger);
+			Thread.sleep(2000);
+
+			// close the more info side menu bar
+			transactionHistoryPOM.closeMoreInfoOfTxnPopup(1);
+			Thread.sleep(2000);
+
+	//assertion - is side bar closed
+
+			Boolean moreInfoSideMenuIsClose = transactionHistoryPOM
+					.isPresentAndDisplayed(transactionHistoryPOM.moreinfoSideBar, driver, logger);
+
+			Thread.sleep(2000);
+	// assertion....side bar closed
+			transactionHistoryPOM.softAssertFalse("offCanvas/side menu bar is close2 -", moreInfoSideMenuIsClose, logger);
+
+			Thread.sleep(5000);
+			//4.validate data count and message count at page bottom---------------
+			logger.log(LogStatus.INFO, "4.validate data count and message count at page bottom---------------");
+		
+			
+			transactionHistoryPOM.validate_tableDataAndTextMessage();
+			// change VALID page data size
+			transactionHistoryPOM.changeCount_DataPerPage(25);
+	//assertion - validate table data and message at page bottom with ASSERTIONS		
+
+			transactionHistoryPOM.validate_tableDataAndTextMessage();
+			// change INVALID page data size
+
+			transactionHistoryPOM.changeCount_DataPerPage(2);
+
+		
+	}
+	
+	@Test(priority = 71, enabled = true, groups="regression.Bbps")
+
+	public void TC071_scenarios_BbpsTab() throws InterruptedException, IOException {
+
+		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
+		TransactionHistoryPOM transactionHistoryPOM = new TransactionHistoryPOM(driver, logger);
+		commonFunc commonfunc = new commonFunc();
+
+//login
+		tC1_VerifyLogin.verifySignIn(driver, logger);
+//navigate to transaction module		
+		transactionHistoryPOM.click_reportsModule();
+		transactionHistoryPOM.click_txnHistoryModule();
+		
+		Thread.sleep(2000);
+		//navigate to BBPS module/tab++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+		transactionHistoryPOM.click_bbpsTab();
+		Thread.sleep(2000);
+
 		
 //select from date		
 		 transactionHistoryPOM.selectFromDate2("11", "September", "2024");
@@ -842,9 +1007,250 @@ public class TransactionHistoryTEST extends testbase {
 		
 	}
 	
+	@Test(priority = 81, enabled = true, groups="regression.Aeps")
+
+	public void TC081_scenarios_AepsTab() throws InterruptedException, IOException {
+
+		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
+		TransactionHistoryPOM transactionHistoryPOM = new TransactionHistoryPOM(driver, logger);
+		commonFunc commonfunc = new commonFunc();
+
+//login
+		tC1_VerifyLogin.verifySignIn(driver, logger);
+//navigate to transaction module		
+		transactionHistoryPOM.click_reportsModule();
+		transactionHistoryPOM.click_txnHistoryModule();
+		
+		Thread.sleep(2000);
+		//navigate to AEPS module/tab++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+		transactionHistoryPOM.click_aepsTab();
+		Thread.sleep(2000);
+
+		
+//select from date		
+		 transactionHistoryPOM.selectFromDate2("11", "September", "2024");
+//select to date	
+		 transactionHistoryPOM.selectToDate2(12, "September", 2024);
+//search		
+		transactionHistoryPOM.click_searchButton();
+//1.validate if table has data-----------
+		logger.log(LogStatus.INFO, "1.validate if table has data-----------");
+
+		Boolean dataInTable = transactionHistoryPOM.validateALLTxnReportTableHasData();
+
+		if (dataInTable) {
+
+			logger.log(LogStatus.INFO, "Txn. table has data");
+
+		} else {
+
+			logger.log(LogStatus.INFO, "No data found for the selected date.");
+			logger.log(LogStatus.INFO, "checking message displayed when no data found");
+
+			String actualMessage = transactionHistoryPOM.getTxnTable_messageIfNoTableData();
+			String expectedMessage = "No items found.";
+
+			commonfunc.compareString(actualMessage, expectedMessage, true);
+//assertion - message displayed		
+			commonfunc.softAssert("Message displayed if no data in Txn. table -", actualMessage, expectedMessage, true,
+					logger);
+			
+		}
+		
+		
+			//2.validating default page size-----------	
+			logger.log(LogStatus.INFO, "2.validating default page size-----------");
+
+			logger.log(LogStatus.INFO, "checking default page size");
+			String ActualDataPerPageNoDisplayed = transactionHistoryPOM.get_perPageDataSize();
+			// default page size STATIC =10
+			String expectedPageDataString = "10";
+			commonfunc.compareString(ActualDataPerPageNoDisplayed, expectedPageDataString, true);
+	//assertion - default page size selected	
+			commonfunc.softAssert("Dafault page size -", ActualDataPerPageNoDisplayed, expectedPageDataString, true,
+					logger);
+		
+			Thread.sleep(5000);
+			
+			
+			//3.validate side bar open or close---------------------
+			logger.log(LogStatus.INFO, "3.validate side bar open or close---------------------");
+		
+			//select date		
+			transactionHistoryPOM.selectFromDate2("10", "August", "2024");
+//			transactionHistoryPOM.selectToDate2(20, "August", 2024);
+	//search		
+			transactionHistoryPOM.click_searchButton();
+			Thread.sleep(5000);
+	//open more info side bar of 1st txn.	
+			transactionHistoryPOM.OpenMoreInfoOfTxnPopup(1);
+
+	//validate side bar open or close
+
+			Boolean moreInfoSideMenuIsOpen = transactionHistoryPOM
+					.isPresentAndDisplayed(transactionHistoryPOM.moreinfoSideBar, driver, logger);
+			Thread.sleep(1000);
+
+			System.out.println("offCanvas/side menu bar is open1 by method -" + moreInfoSideMenuIsOpen);
+			System.out.println(
+					"offCanvas/side menu bar is open1 by me -" + transactionHistoryPOM.moreinfoSideBar.isDisplayed());
+
+	//assertion - is side bar open
+			transactionHistoryPOM.softAssertTrue("offCanvas/side menu bar is open1 -", moreInfoSideMenuIsOpen, logger);
+			Thread.sleep(2000);
+
+			// close the more info side menu bar
+			transactionHistoryPOM.closeMoreInfoOfTxnPopup(1);
+			Thread.sleep(2000);
+
+	//assertion - is side bar closed
+
+			Boolean moreInfoSideMenuIsClose = transactionHistoryPOM
+					.isPresentAndDisplayed(transactionHistoryPOM.moreinfoSideBar, driver, logger);
+
+			Thread.sleep(2000);
+	// assertion....side bar closed
+			transactionHistoryPOM.softAssertFalse("offCanvas/side menu bar is close2 -", moreInfoSideMenuIsClose, logger);
+
+			Thread.sleep(5000);
+			//4.validate data count and message count at page bottom---------------
+			logger.log(LogStatus.INFO, "4.validate data count and message count at page bottom---------------");
+		
+			
+			transactionHistoryPOM.validate_tableDataAndTextMessage();
+			// change VALID page data size
+			transactionHistoryPOM.changeCount_DataPerPage(25);
+	//assertion - validate table data and message at page bottom with ASSERTIONS		
+
+			transactionHistoryPOM.validate_tableDataAndTextMessage();
+			// change INVALID page data size
+
+			transactionHistoryPOM.changeCount_DataPerPage(2);
+
+		
+	}
 	
-	
-	
-	
+	@Test(priority = 91, enabled = true, groups="regression.MicroAtm")
+
+	public void TC091_scenarios_MicroAtmTab() throws InterruptedException, IOException {
+
+		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
+		TransactionHistoryPOM transactionHistoryPOM = new TransactionHistoryPOM(driver, logger);
+		commonFunc commonfunc = new commonFunc();
+
+//login
+		tC1_VerifyLogin.verifySignIn(driver, logger);
+//navigate to transaction module		
+		transactionHistoryPOM.click_reportsModule();
+		transactionHistoryPOM.click_txnHistoryModule();
+		
+		Thread.sleep(2000);
+		//navigate to Micro Atm module/tab++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+		transactionHistoryPOM.click_microAtmTab();
+		Thread.sleep(2000);
+
+		
+//select from date		
+		 transactionHistoryPOM.selectFromDate2("11", "September", "2024");
+//select to date	
+		 transactionHistoryPOM.selectToDate2(12, "September", 2024);
+//search		
+		transactionHistoryPOM.click_searchButton();
+//1.validate if table has data-----------
+		logger.log(LogStatus.INFO, "1.validate if table has data-----------");
+
+		Boolean dataInTable = transactionHistoryPOM.validateALLTxnReportTableHasData();
+
+		if (dataInTable) {
+
+			logger.log(LogStatus.INFO, "Txn. table has data");
+
+		} else {
+
+			logger.log(LogStatus.INFO, "No data found for the selected date.");
+			logger.log(LogStatus.INFO, "checking message displayed when no data found");
+
+			String actualMessage = transactionHistoryPOM.getTxnTable_messageIfNoTableData();
+			String expectedMessage = "No items found.";
+
+			commonfunc.compareString(actualMessage, expectedMessage, true);
+//assertion - message displayed		
+			commonfunc.softAssert("Message displayed if no data in Txn. table -", actualMessage, expectedMessage, true,
+					logger);
+			
+		}
+		
+		
+			//2.validating default page size-----------	
+			logger.log(LogStatus.INFO, "2.validating default page size-----------");
+
+			logger.log(LogStatus.INFO, "checking default page size");
+			String ActualDataPerPageNoDisplayed = transactionHistoryPOM.get_perPageDataSize();
+			// default page size STATIC =10
+			String expectedPageDataString = "10";
+			commonfunc.compareString(ActualDataPerPageNoDisplayed, expectedPageDataString, true);
+	//assertion - default page size selected	
+			commonfunc.softAssert("Dafault page size -", ActualDataPerPageNoDisplayed, expectedPageDataString, true,
+					logger);
+		
+			Thread.sleep(5000);
+			
+			
+			//3.validate side bar open or close---------------------
+			logger.log(LogStatus.INFO, "3.validate side bar open or close---------------------");
+		
+			//select date		
+			transactionHistoryPOM.selectFromDate2("10", "August", "2024");
+//			transactionHistoryPOM.selectToDate2(20, "August", 2024);
+	//search		
+			transactionHistoryPOM.click_searchButton();
+			Thread.sleep(5000);
+	//open more info side bar of 1st txn.	
+			transactionHistoryPOM.OpenMoreInfoOfTxnPopup(1);
+
+	//validate side bar open or close
+
+			Boolean moreInfoSideMenuIsOpen = transactionHistoryPOM
+					.isPresentAndDisplayed(transactionHistoryPOM.moreinfoSideBar, driver, logger);
+			Thread.sleep(1000);
+
+			System.out.println("offCanvas/side menu bar is open1 by method -" + moreInfoSideMenuIsOpen);
+			System.out.println(
+					"offCanvas/side menu bar is open1 by me -" + transactionHistoryPOM.moreinfoSideBar.isDisplayed());
+
+	//assertion - is side bar open
+			transactionHistoryPOM.softAssertTrue("offCanvas/side menu bar is open1 -", moreInfoSideMenuIsOpen, logger);
+			Thread.sleep(2000);
+
+			// close the more info side menu bar
+			transactionHistoryPOM.closeMoreInfoOfTxnPopup(1);
+			Thread.sleep(2000);
+
+	//assertion - is side bar closed
+
+			Boolean moreInfoSideMenuIsClose = transactionHistoryPOM
+					.isPresentAndDisplayed(transactionHistoryPOM.moreinfoSideBar, driver, logger);
+
+			Thread.sleep(2000);
+	// assertion....side bar closed
+			transactionHistoryPOM.softAssertFalse("offCanvas/side menu bar is close2 -", moreInfoSideMenuIsClose, logger);
+
+			Thread.sleep(5000);
+			//4.validate data count and message count at page bottom---------------
+			logger.log(LogStatus.INFO, "4.validate data count and message count at page bottom---------------");
+		
+			
+			transactionHistoryPOM.validate_tableDataAndTextMessage();
+			// change VALID page data size
+			transactionHistoryPOM.changeCount_DataPerPage(25);
+	//assertion - validate table data and message at page bottom with ASSERTIONS		
+
+			transactionHistoryPOM.validate_tableDataAndTextMessage();
+			// change INVALID page data size
+
+			transactionHistoryPOM.changeCount_DataPerPage(2);
+
+		
+	}
 	
 }

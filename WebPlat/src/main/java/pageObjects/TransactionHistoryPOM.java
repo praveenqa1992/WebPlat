@@ -403,7 +403,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		scrollUp(driver);
 		waitForElementToAppear(allTxnReportTab, driver, logger);
 //		scrollToWebElement(allTxnReportTab, driver);
-		logger.log(LogStatus.INFO, "click_allTxnReportTab");
+		logger.log(LogStatus.INFO, "click_allTxnReportTab--------");
 		click(allTxnReportTab, driver, logger);
 
 	}
@@ -412,7 +412,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		scrollUp(driver);
 		waitForElementToAppear(telecomTab, driver, logger);
 //		scrollToWebElement(telecomTab, driver);
-		logger.log(LogStatus.INFO, "click_telecomTab");
+		logger.log(LogStatus.INFO, "click_telecomTab--------");
 		click(telecomTab, driver, logger);
 
 	}
@@ -421,7 +421,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		scrollUp(driver);
 		waitForElementToAppear(dmtTab, driver, logger);
 //		scrollToWebElement(dmtTab, driver);
-		logger.log(LogStatus.INFO, "click_dmtTab");
+		logger.log(LogStatus.INFO, "click_dmtTab-------");
 		click(dmtTab, driver, logger);
 
 	}
@@ -430,7 +430,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		scrollUp(driver);
 		waitForElementToAppear(bbpsTab, driver, logger);
 //		scrollToWebElement(bbpsTab, driver);
-		logger.log(LogStatus.INFO, "click_bbpsTab");
+		logger.log(LogStatus.INFO, "click_bbpsTab-------");
 		click(bbpsTab, driver, logger);
 
 	}
@@ -439,7 +439,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		scrollUp(driver);
 		waitForElementToAppear(aepsTab, driver, logger);
 //		scrollToWebElement(aepsTab, driver);
-		logger.log(LogStatus.INFO, "click_aepsTab");
+		logger.log(LogStatus.INFO, "click_aepsTab-------");
 		click(aepsTab, driver, logger);
 
 	}
@@ -448,7 +448,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		scrollUp(driver);
 		waitForElementToAppear(microAtmTab, driver, logger);
 //		scrollToWebElement(microAtmTab, driver);
-		logger.log(LogStatus.INFO, "click_microAtmTab");
+		logger.log(LogStatus.INFO, "click_microAtmTab-------------");
 		click(microAtmTab, driver, logger);
 
 	}
@@ -457,7 +457,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		scrollUp(driver);
 		waitForElementToAppear(exportFileIcon, driver, logger);
 		scrollToWebElement(exportFileIcon, driver);
-		logger.log(LogStatus.INFO, "click_telecomTab");
+		logger.log(LogStatus.INFO, "click_exportFileIcon----------");
 		click(exportFileIcon, driver, logger);
 
 	}
@@ -465,7 +465,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	public void click_searchButton() throws InterruptedException {
 		waitForElementToAppear(searchButton, driver, logger);
 		scrollToWebElement(searchButton, driver);
-		logger.log(LogStatus.INFO, "click_searchButton");
+		logger.log(LogStatus.INFO, "click_searchButton--------");
 		click(searchButton, driver, logger);
 		Thread.sleep(2000);
 
@@ -665,8 +665,9 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(fromCalenderIcon, driver, logger);
-		scrollToWebElement(fromCalenderIcon, driver);
-
+//		scrollToWebElement(fromCalenderIcon, driver);
+        scrollUp(driver);
+		
 		logger.log(LogStatus.INFO, "click from calendar icon");
 		click(fromCalenderIcon, driver, logger);
 		logger.log(LogStatus.INFO, "selecting from month and from year");
@@ -1099,27 +1100,20 @@ public class TransactionHistoryPOM extends commonFunc {
 	public void OpenMoreInfoOfTxnPopup(int txnNo) throws InterruptedException {
 
 		Boolean tableHasData = validateALLTxnReportTableHasData();
-		logger.log(LogStatus.INFO, "1-------------------");
 		if (tableHasData) {
 			int colNos = getTxnTable_columnNumbers(); // last column has 'more info (meatball)' icon so last column
 														// number should be used
-			logger.log(LogStatus.INFO, "2-------------------");
 
 			WebElement moreInfoIcon = driver.findElement(By.xpath(
 					"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
 							+ txnNo + "]/td[" + colNos + "]/a/i"));
 
-			logger.log(LogStatus.INFO, "3-------------------");
-
 			waitForPageLoaded(driver, logger);
-
-			logger.log(LogStatus.INFO, "4-------------------");
 
 //			scrollToWebElement(moreInfoIcon, driver);
 			logger.log(LogStatus.INFO, "Click on more info (meatball) icon OPEN");
 			waitToBeClickable(moreInfoIcon, driver);
 			click(moreInfoIcon, driver, logger);
-			logger.log(LogStatus.INFO, "5-------------------");
 
 			Thread.sleep(2000);
 		} else {
@@ -1142,16 +1136,24 @@ public class TransactionHistoryPOM extends commonFunc {
 		logger.log(LogStatus.INFO, "Click on 'X' to close more info. popup of a transaction no. -" + dataNum);
 
 		try {
-			logger.log(LogStatus.INFO, "19--------------------");
-			isPresentAndDisplayed(txnMoreInfo_Close, driver, logger);
+		
+			Boolean xisPresent = isPresentAndDisplayed(txnMoreInfo_Close, driver, logger);
+	
+			if(xisPresent) 
+		{	
+			logger.log(LogStatus.INFO, "Click on 'X' to close more info. popup of a transaction no. -" + dataNum);
 			click(txnMoreInfo_Close, driver, logger);
-		} catch (Exception e) {
-			logger.log(LogStatus.INFO, "Failed click on the 'X' button of more Info popup\nof Txn. number -" + dataNum);
-			logger.log(LogStatus.INFO, "20--------------------");
 
-			logger.log(LogStatus.INFO, e);
 		}
-//		}
+		else 
+		{
+			logger.log(LogStatus.INFO, "Txn. more info close 'X' button is not displayed of Txn. number -" + dataNum);
+		}
+		} catch (Exception e) 
+		{
+			logger.log(LogStatus.INFO, "Txn.. more info close 'X' button is not displayed of Txn. number -" + dataNum);
+		}
+
 
 	}
 

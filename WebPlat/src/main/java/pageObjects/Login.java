@@ -48,11 +48,14 @@ public class Login  extends commonFunc
 	@FindBy(xpath="//h1[text()='News']//following-sibling::button[@aria-label='Close']")
 	public WebElement closeDialogBox;
 
+	
+	
+	
+	
 	public WebDriver driver;
 	public ExtentTest logger;
-
 	public WebElement Element;
-	public static String title;
+//	public static String title;
 
 
 
@@ -65,7 +68,7 @@ public class Login  extends commonFunc
 
 
 	
-	public String signin(String user, String pass) throws InterruptedException {
+	public void signin(String user, String pass) throws InterruptedException {
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(username, driver, logger);
 		sendingKeys(username, user, driver);
@@ -75,9 +78,9 @@ public class Login  extends commonFunc
 		waitForPageLoaded(driver, logger);
 		Thread.sleep(10000);
 		
-		title = driver.getTitle();
+//		title = driver.getTitle();
 		
-		return title;
+//		return title;
 		
 //Thread.sleep(5000);
 		

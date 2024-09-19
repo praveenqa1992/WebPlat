@@ -51,6 +51,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.mongodb.diagnostics.logging.Logger;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -206,6 +207,9 @@ public class commonFunc {
 	}
 
 	public boolean compareString(String actual, String expected, boolean ignorecase) {
+		
+				
+		
 		if (Boolean.TRUE.equals(ignorecase)) {
 			if (expected.trim().equalsIgnoreCase(actual.trim())) {
 				return true;
@@ -529,24 +533,18 @@ public class commonFunc {
 
 	public boolean isPresentAndDisplayed(WebElement locator,  WebDriver driver, ExtentTest logger) {
 		
-		logger.log(LogStatus.INFO,"7-------------------");
 
 		waitForPageLoaded(driver, logger);
-		logger.log(LogStatus.INFO,"8-------------------");
-
 		
 		try {
 			if (locator.isDisplayed()) {
-				logger.log(LogStatus.INFO,"9-------------------");
 
 				return true;
 			} else {
-				logger.log(LogStatus.INFO,"10-------------------");
 
 				return false;
 			}
 		} catch (NoSuchElementException arg2) {
-			logger.log(LogStatus.INFO,"11-------------------");
 
 			return false;
 
@@ -901,11 +899,23 @@ public class commonFunc {
 	public static String capture(WebDriver driver) throws IOException
 	{
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		String destination = System.getProperty("user.dir") + "/screenshots/" + System.currentTimeMillis() + ".png" ;
-		FileUtils.copyFile(scrFile, new File(destination));
-		return destination;
+		String destinationPath = System.getProperty("user.dir") + "/screenshots/" + System.currentTimeMillis() + ".png" ;
+		File destination =new File(destinationPath);
+		FileUtils.copyFile(scrFile, destination);
+		return destinationPath;
 	}
 
+//method added by shinde.......start.....	
+	public void screenshotInLog( WebDriver driver, ExtentTest logger) throws IOException {
+         
+		logger.log(LogStatus.INFO,"Screenshot Captured -");
+		logger.addScreenCapture(capture(driver));
+		
+	}
+	
+//method added by shinde.......end.....	
+	
+	
 	public void click(WebElement locator, WebDriver driver, ExtentTest logger) {
 
 		try {
