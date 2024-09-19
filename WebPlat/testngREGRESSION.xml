@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="RegressionSuiteONE">
+	<test thread-count="5" name="TestONE">
+		<classes>
+			<class name="testRun.TransactionHistoryTEST">
+				<methods>
+					<include name="TC051_scenarios_telecomTab"/>
+					<exclude name="TC061_scenarios_DmtTab"/>
+					<include name="TC071_scenarios_BbpsTab"/>
+					<include name="TC081_scenarios_AepsTab"/>
+					<include name="TC091_scenarios_MicroAtmTab"/>
+				</methods>
+			</class>
+		</classes>
+	</test> <!-- TestONE -->
+</suite> <!--
+RegressionSuiteONE -->
