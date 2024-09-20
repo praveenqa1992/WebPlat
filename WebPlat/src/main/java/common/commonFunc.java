@@ -273,6 +273,7 @@ public class commonFunc {
 		actObj.moveToElement(we).build().perform();
 	}
 
+//similar method 'isPresentAndDisplayed'	is written in this class
 	public boolean checkPresenceOfElement(WebElement we, WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(we));
@@ -486,7 +487,22 @@ public class commonFunc {
 		logger.addBase64ScreenShot(currentDir);
 	}
 
+	//similar method 'checkPresenceOfElement'	is written in this class
 
+public boolean isPresentAndDisplayed(WebElement locator,  WebDriver driver, ExtentTest logger) {
+		waitForPageLoaded(driver, logger);
+		try {
+			if (locator.isDisplayed()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (NoSuchElementException arg2) {
+			return false;
+		}
+	}
+	
+	
 	public void verifyPosition(WebElement targetElement, String position, WebElement relativeElement, WebDriver driver, ExtentTest logger) {
 
 		logger.log(LogStatus.INFO,"<<<<< Start  OF verifyPosition()  Function >>>>>");
@@ -530,25 +546,7 @@ public class commonFunc {
 	}
 
 
-	public boolean isPresentAndDisplayed(WebElement locator,  WebDriver driver, ExtentTest logger) {
-		
-
-		waitForPageLoaded(driver, logger);
-		
-		try {
-			if (locator.isDisplayed()) {
-
-				return true;
-			} else {
-
-				return false;
-			}
-		} catch (NoSuchElementException arg2) {
-
-			return false;
-
-		}
-	}
+	
 
 	public void verifyLinkIsWorking(List<WebElement> webElement  , ExtentTest logger) throws IOException {
 
@@ -905,10 +903,10 @@ public class commonFunc {
 	}
 
 //method added by shinde.......start.....	
-	public void screenshotInLog( WebDriver driver, ExtentTest logger) throws IOException {
+	public void screenshotInReport(String screenshotReason,WebDriver driver, ExtentTest logger) throws IOException {
          
-		logger.log(LogStatus.INFO,"Screenshot Captured -");
-		logger.addScreenCapture(capture(driver));
+		logger.log(LogStatus.INFO,"Screenshot Captured to report -</br>"+screenshotReason+"</br>"+logger.addScreenCapture(capture(driver)));
+		;
 		
 	}
 	

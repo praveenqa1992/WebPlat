@@ -49,7 +49,7 @@
               <ul>
                 <li>
                   <a href="#" panel-name="test-xml-Default_suite" class="navigator-link ">
-                    <span>testng-customsuite.xml</span>
+                    <span>C:\Users\Test1\AppData\Local\Temp\testng-eclipse-1683141998\testng-customsuite.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -59,7 +59,7 @@
                 </li>
                 <li>
                   <a href="#" panel-name="group-Default_suite" class="navigator-link ">
-                    <span>0 groups</span>
+                    <span>1 group</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -102,7 +102,7 @@
                     <div class="method-list-content passed suite-Default_suite">
                       <span>
                         <img src="passed.png" width="3%"/>
-                        <a href="#" panel-name="suite-Default_suite" title="API.getTransactionHistory" class="method navigator-link" hash-for-method="getTransactionHistory">getTransactionHistory</a> <!-- method navigator-link -->
+                        <a href="#" panel-name="suite-Default_suite" title="testRun.TransactionHistoryTEST" class="method navigator-link" hash-for-method="TC061_scenarios_DmtTab">TC061_scenarios_DmtTab</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Default_suite -->
@@ -120,14 +120,14 @@
           <div class="suite-Default_suite-class-passed">
             <div class="main-panel-header rounded-window-top">
               <img src="passed.png"/>
-              <span class="class-name">API.getTransactionHistory</span>
+              <span class="class-name">testRun.TransactionHistoryTEST</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="getTransactionHistory">
-                  </a> <!-- getTransactionHistory -->
-                  <span class="method-name">getTransactionHistory</span>
+                  <a name="TC061_scenarios_DmtTab">
+                  </a> <!-- TC061_scenarios_DmtTab -->
+                  <span class="method-name">TC061_scenarios_DmtTab</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -135,7 +135,7 @@
         </div> <!-- panel Default_suite -->
         <div panel-name="test-xml-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">/private/var/folders/dd/mc63kknj7vz1ck290yczlhf80000gn/T/testng-eclipse--1247788423/testng-customsuite.xml</span>
+            <span class="header-content">C:\Users\Test1\AppData\Local\Temp\testng-eclipse-1683141998\testng-customsuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -144,7 +144,11 @@
 &lt;suite name=&quot;Default suite&quot; guice-stage=&quot;DEVELOPMENT&quot;&gt;
   &lt;test thread-count=&quot;5&quot; name=&quot;Default test&quot; verbose=&quot;2&quot;&gt;
     &lt;classes&gt;
-      &lt;class name=&quot;API.getTransactionHistory&quot;/&gt;
+      &lt;class name=&quot;testRun.TransactionHistoryTEST&quot;&gt;
+        &lt;methods&gt;
+          &lt;include name=&quot;TC061_scenarios_DmtTab&quot;/&gt;
+        &lt;/methods&gt;
+      &lt;/class&gt; &lt;!-- testRun.TransactionHistoryTEST --&gt;
     &lt;/classes&gt;
   &lt;/test&gt; &lt;!-- Default test --&gt;
 &lt;/suite&gt; &lt;!-- Default suite --&gt;
@@ -168,6 +172,14 @@
             <span class="header-content">Groups for Default suite</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
+            <div class="test-group">
+              <span class="test-group-name">regression.Dmt</span>
+              <br/>
+              <div class="method-in-group">
+                <span class="method-in-group-name">TC061_scenarios_DmtTab</span>
+                <br/>
+              </div> <!-- method-in-group -->
+            </div> <!-- test-group -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
         <div panel-name="times-Default_suite" class="panel">
@@ -186,14 +198,14 @@ data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'getTransactionHistory')
-data.setCell(0, 2, 'API.getTransactionHistory')
-data.setCell(0, 3, 4211);
+data.setCell(0, 1, 'TC061_scenarios_DmtTab')
+data.setCell(0, 2, 'testRun.TransactionHistoryTEST')
+data.setCell(0, 3, 2120113);
 window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 4 seconds</span>
+              <span class="suite-total-time">Total running time: 35 minutes</span>
               <div id="times-div-Default_suite">
               </div> <!-- times-div-Default_suite -->
             </div> <!-- times-div -->
@@ -208,9 +220,52 @@ return data;
         </div> <!-- panel -->
         <div panel-name="ignored-methods-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">0 ignored methods</span>
+            <span class="header-content">19 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
+            <div class="ignored-class-div">
+              <span class="ignored-class-name">testRun.TransactionHistoryTEST</span>
+              <div class="ignored-methods-div">
+                <span class="ignored-method-name">TC051_scenarios_telecomTab</span>
+                <br/>
+                <span class="ignored-method-name">TC014_validate_defaultDateSelected_fromDatepicker</span>
+                <br/>
+                <span class="ignored-method-name">TC015_validate_defaultDateSelected_toDatepicker</span>
+                <br/>
+                <span class="ignored-method-name">TC007_categoryFilterWorking</span>
+                <br/>
+                <span class="ignored-method-name">TC006_openMoreDetailsUsingMeatballIcon</span>
+                <br/>
+                <span class="ignored-method-name">TC012_pagination_validatePageDataAndMessageCountAtPageBottom_changePageSizeALL</span>
+                <br/>
+                <span class="ignored-method-name">TC008_serviceFilterWorking</span>
+                <br/>
+                <span class="ignored-method-name">TC081_scenarios_AepsTab</span>
+                <br/>
+                <span class="ignored-method-name">TC003_messageDisplayedIfTableHasNoData</span>
+                <br/>
+                <span class="ignored-method-name">TC071_scenarios_BbpsTab</span>
+                <br/>
+                <span class="ignored-method-name">TC013_pagination_changePagesUsingPaginationButtons</span>
+                <br/>
+                <span class="ignored-method-name">TC011_pagination_validatePageDataAndMessageCountAtPageBottom</span>
+                <br/>
+                <span class="ignored-method-name">TC009_operatorFilterWorking</span>
+                <br/>
+                <span class="ignored-method-name">TC005_validatePageDataAccordingToPageSize</span>
+                <br/>
+                <span class="ignored-method-name">TC004_validateTheDefaultPageSize</span>
+                <br/>
+                <span class="ignored-method-name">TC010_telecomTabHasNoCatDropdown</span>
+                <br/>
+                <span class="ignored-method-name">TC091_scenarios_MicroAtmTab</span>
+                <br/>
+                <span class="ignored-method-name">TC001_navigateToAllTxnHistoryPage</span>
+                <br/>
+                <span class="ignored-method-name">TC002_selectDateAndClickSearchButton</span>
+                <br/>
+              </div> <!-- ignored-methods-div -->
+            </div> <!-- ignored-class-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
         <div panel-name="chronological-Default_suite" class="panel">
@@ -219,11 +274,29 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
-              <div class="chronological-class-name">API.getTransactionHistory</div> <!-- chronological-class-name -->
-              <div class="test-method">
-                <span class="method-name">getTransactionHistory</span>
+              <div class="chronological-class-name">testRun.TransactionHistoryTEST</div> <!-- chronological-class-name -->
+              <div class="configuration-suite before">
+                <span class="method-name">InitializeParameters(null, null, null, null, null, null, null, null, null, null, null, null)</span>
                 <span class="method-start">0 ms</span>
+              </div> <!-- configuration-suite before -->
+              <div class="configuration-method before">
+                <span class="method-name">startMethod(public void testRun.TransactionHistoryTEST.TC061_scenarios_DmtTab() throws java.lang.InterruptedExce...)</span>
+                <span class="method-start">312 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">TC061_scenarios_DmtTab</span>
+                <span class="method-start">8064 ms</span>
               </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">endMethod([TestResult name=TC061_scenarios_DmtTab status=SUCCESS method=TransactionHistoryTEST.TC061_scenarios...)</span>
+                <span class="method-start">2128183 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-suite after">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">dumpParameters</span>
+                <span class="method-start">2133939 ms</span>
+              </div> <!-- configuration-suite after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
       </div> <!-- main-panel-root -->

@@ -3,11 +3,15 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="API.PayOut">
+      <class name="testRun.TransactionHistoryTEST">
         <methods>
-          <include name="verifyPayout"/>
+          <include name="endMethod"/>
+          <include name="TC061_scenarios_DmtTab"/>
+          <include name="startMethod"/>
+          <include name="dumpParameters"/>
+          <include name="InitializeParameters"/>
         </methods>
-      </class> <!-- API.PayOut -->
+      </class> <!-- testRun.TransactionHistoryTEST -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
