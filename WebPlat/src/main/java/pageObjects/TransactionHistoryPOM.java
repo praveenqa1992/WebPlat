@@ -14,6 +14,7 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 import common.commonFunc;
+import groovyjarjarpicocli.CommandLine.Help.Column;
 //import net.bytebuddy.agent.builder.AgentBuilder.Default.BootstrapInjectionStrategy.Enabled;
 import net.bytebuddy.implementation.bytecode.ByteCodeAppender.Size;
 
@@ -25,8 +26,6 @@ public class TransactionHistoryPOM extends commonFunc {
 	public ExtentTest logger;
 	public WebElement Element;
 
-	
-	
 	@FindBy(xpath = "//div[@class='app-content my-3 my-md-0']")
 	public WebElement page;
 
@@ -178,8 +177,6 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//table[@class='p-datepicker-calendar ng-tns-c46-11']//tbody//span")
 	public List<WebElement> datesOfToCalender;
 
-
-
 //dropdown #####################################################################################################################
 
 	@FindBy(xpath = "//div[@class='col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12']")
@@ -254,7 +251,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	@FindBy(xpath = "//input[@class='p-dropdown-filter p-inputtext p-component']")
 	public WebElement operatorDropdownInputField;
-	
+
 	@FindBy(xpath = "//button[text()='Search']")
 	public WebElement searchButton;
 
@@ -272,10 +269,8 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr[1]/td")
 	public List<WebElement> txnTable_columnsInFirstRow;
 
-
 //More info. side menu bar #################################################################################################
-	
-	
+
 //modify....static x path of 1st txn	
 	@FindBy(xpath = "//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr[1]/td[10]/a/i")
 	public WebElement txnMoreInfo_Icon;
@@ -297,13 +292,13 @@ public class TransactionHistoryPOM extends commonFunc {
 //read above comment....	
 	@FindBy(xpath = "//div[@class='offcanvas reportmodule offcanvas-end show']//button")
 	public WebElement txnMoreInfo_Close;
-	
+
 	@FindBy(xpath = "//div[@id='offcanvasRight']")
 	public WebElement moreinfoSideBar;
 
 	@FindBy(xpath = "//div[@class='ng-star-inserted']/a")
 	public WebElement printButton_moreInfoSideBar_aepsSuccessTxn;
-	
+
 	@FindBy(xpath = "//button[@class='btn btn-primary trigg-btn px-2 fs-13 c-pointer ng-star-inserted']")
 	public WebElement raiseComplaintButton_moreInfoSideBar_bbpsPendingTxn;
 
@@ -387,18 +382,15 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//div[@class='p-paginator-first pr-0 p-paginator p-component ng-star-inserted']/button")
 	public List<WebElement> paginationsAllButtons;
 
-	
-
-	
 	@FindBy(xpath = "")
 	public WebElement da;
-	
+
 	@FindBy(xpath = "")
 	public WebElement sa;
-	
+
 	@FindBy(xpath = "")
 	public WebElement aa;
-	
+
 	@FindBy(xpath = "")
 	public WebElement aaaa;
 
@@ -504,7 +496,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 //dropdowns ###############################
-	
+
 	public Boolean isCategoryTabDisplayed() {
 
 		Boolean catTabDisp;
@@ -526,7 +518,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 		return catTabDisp;
 	}
-	
+
 	public void click_categoryDropdown() throws InterruptedException {
 
 		waitForElementToAppear(categoryDropdown, driver, logger);
@@ -556,7 +548,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	public void selectCategoryFromDropdown(String categoryToSelect) {
 
-		logger.log(LogStatus.INFO, "navigating through category dropdown ");
+		logger.log(LogStatus.INFO, "Selecting category from the dropdown.");
 
 		for (WebElement categoryOne : categoryDropList) {
 
@@ -566,9 +558,9 @@ public class TransactionHistoryPOM extends commonFunc {
 				logger.log(LogStatus.INFO, "click category -" + categoryOne.getText());
 				click(categoryOne, driver, logger);
 				break;
-			} else {
+			} else 
+			{
 				logger.log(LogStatus.INFO, "category not found-" + categoryToSelect);
-
 			}
 		}
 	}
@@ -584,8 +576,7 @@ public class TransactionHistoryPOM extends commonFunc {
 				logger.log(LogStatus.INFO, "click service -" + serviceOne.getText());
 				click(serviceOne, driver, logger);
 				break;
-			} else 
-			{
+			} else {
 				logger.log(LogStatus.INFO, "service not found-" + serviceToSelect);
 			}
 		}
@@ -602,15 +593,14 @@ public class TransactionHistoryPOM extends commonFunc {
 				logger.log(LogStatus.INFO, "click operator -" + operatorOne.getText());
 				click(operatorOne, driver, logger);
 				break;
-			} else 
-			{
+			} else {
 				logger.log(LogStatus.INFO, "operator not found-" + operatorToSelect);
 			}
 		}
 	}
 
 // CALENDAR methods START #####################################################################################################
-	
+
 	public void selectFromDate2(String stringDate, String monthString, String stringYear) {
 
 		logger.log(LogStatus.INFO, "selecting a date from date calendar");
@@ -821,7 +811,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		return calendarFromMonth;
 	}
 
-	public String getFromCalendarSelectedYear() {
+	public String getFromCalendar_Year() {
 
 		logger.log(LogStatus.INFO, "getting selected year from date calendar");
 
@@ -894,7 +884,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		return calendarToMonth;
 	}
 
-	public String getToCalendarSelectedYear() {
+	public String getToCalendar_Year() {
 
 		logger.log(LogStatus.INFO, "getting selected year to date calendar");
 
@@ -937,8 +927,7 @@ public class TransactionHistoryPOM extends commonFunc {
 			}
 		}
 	}
-	
-	
+
 	// incomplete----------------
 	public void changeDateIfTableHasNoData() throws InterruptedException {
 
@@ -969,10 +958,8 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 // CALENDAR methods END #####################################################################################################
-	
 
 //3.ALL TRANSACTION TABLE methods START ##################################################################################
-
 
 	public int getTxnTable_columnNumbersHEAD() {
 		waitForPageLoaded(driver, logger);
@@ -992,52 +979,78 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	}
 
-	
 //incomplete..............	
-	public void checkTxnStatus() {
+	public void getTxnStatus() {
 
-		int totalColumns = getTxnTable_columnNumbersHEAD();
+		Boolean dataInTable = validateALLTxnReportTableHasData();
 
-		for (int colWE = 0; colWE <= (totalColumns - 1); colWE++) {
+		if (dataInTable) 
+		{
+			logger.log(LogStatus.INFO, "Getting transaction status");
 
-			String colName = txnTable_columnsHEAD.get(colWE).getText().trim();
+			// columns in the table
+			int totalColumns = getTxnTable_columnNumbersHEAD();
 
-			if (colName.equalsIgnoreCase("Status")) {
-				// here colWE has the INDEX no. of the status column...we can pass the static
-				// number as we know the column number
+			for (int colWE = 0; colWE <= (totalColumns - 1); colWE++) {
+
+				//get Column names
+				String colName = txnTable_columnsHEAD.get(colWE).getText().trim();
+				
+
+				if (colName.equalsIgnoreCase("Status")) 
+				{
+					// here colWE has the INDEX no. of the status column...we can pass the static
+					// number as we know the column number
+
+					// navigate through each row
+					int tableRowsIndex = txnTable_rows.size() - 1;
+
+					for (int tableRows = 0; tableRows <= tableRowsIndex; tableRows++) {
+
+						// enter td/column number gaving column name as 'Status' i.e.
+
+						WebElement txnStatus = driver.findElement(By.xpath(
+								"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
+										+ tableRows + "]/td[" + colWE + "]"));
+						String aString = txnStatus.getText().trim();
+						System.out.println("status =" + aString);
+
+					} // span
+
+					// return aa;
+
+				}
 
 			}
 
-		}
+		} else {
+			logger.log(LogStatus.INFO, "Telecom table has no data");
 
-		String colName = txnTable_columnsHEAD.get(1).getText();
+		}
 
 	}
 
-	
 	public boolean validateALLTxnReportTableHasData() {
 
-//	      waitForPageLoaded(driver, logger);
-
-//		int tableRowNos = txnTable_rowNumbers.size(); ...removed from first if...if needed add it...if not then remove after validation
+	      waitForPageLoaded(driver, logger);
 		int tableColumnsInFirstRow = txnTable_columnsInFirstRow.size();
 
 		Boolean tableHasData;
 
 		if (tableColumnsInFirstRow > 1) {
 
-			logger.log(LogStatus.INFO, "All Transactions Report table has data");
+			logger.log(LogStatus.INFO, "Table has data");
 			tableHasData = true;
 
 		} else {
 
-			logger.log(LogStatus.INFO, "All Transactions Report table has no data");
+			logger.log(LogStatus.INFO, "Table has no data");
 			tableHasData = false;
 		}
 
 		return tableHasData;
 	}
-	
+
 	public String getTxnTable_messageIfNoTableData() {
 
 		logger.log(LogStatus.INFO, "Capturing message displayed if table has no data.");
@@ -1050,15 +1063,14 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 		return txnTableFirstRowFirstCol_Text;
 	}
-	
-	
+
 	public String getTxnService(int rowNum) {
 		WebElement txn_service = driver
 				.findElement(By.xpath("//table[@id='pr_id_13-table']/tbody/tr[" + rowNum + "]/td[3]/span[1]"));
 		String serviceOfTxn = txn_service.getText();
 		return serviceOfTxn;
 	}
-	
+
 	public String getTxnCategory(int rowNum) {
 		WebElement txn_category = driver
 				.findElement(By.xpath("//table[@id='pr_id_13-table']/tbody/tr[" + rowNum + "]/td[3]/span[2]"));
@@ -1073,12 +1085,10 @@ public class TransactionHistoryPOM extends commonFunc {
 		return operatorOfTxn;
 	}
 
-	
 //3.ALL TRANSACTION TABLE methods END ##################################################################################
-	
 
 //4.MORE INFO side bar methods START ##################################################################################
-	
+
 	public void OpenMoreInfoOfTxnPopup(int txnNo) throws InterruptedException {
 
 		logger.log(LogStatus.INFO, "Open 'More info.' side bar of the transaction");
@@ -1098,8 +1108,7 @@ public class TransactionHistoryPOM extends commonFunc {
 			logger.log(LogStatus.INFO, "Click more info (meatball) icon OPEN");
 			click(moreInfoIcon, driver, logger);
 			Thread.sleep(2000);
-		} else 
-		{
+		} else {
 			logger.log(LogStatus.INFO,
 					"Unable to open 'More info.' side bar.</br>'All Transactions Report' table has no data");
 		}
@@ -1138,7 +1147,7 @@ public class TransactionHistoryPOM extends commonFunc {
 //		}
 
 // new logic ........
-		
+
 		int moreInfoHeaderButtonsNo = moreInfo_headersButtonsList_dmt.size();
 
 		int moreInfoHeaderLastButtonIndex = (moreInfoHeaderButtonsNo - 1);
@@ -1259,30 +1268,27 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 		return headerHasOneButton;
 	}
-	
-	
+
 	public Boolean isMoreInfoSideBarDisplayed() throws InterruptedException {
-		
+
 		Boolean isMoreInfoSideBarDisplayed;
-		
+
 		Boolean moreInfoSideMenuIsOpen = isPresentAndDisplayed(moreinfoSideBar, driver, logger);
 		Thread.sleep(1000);
 
-		if(moreInfoSideMenuIsOpen) 
-		{
+		if (moreInfoSideMenuIsOpen) {
 			logger.log(LogStatus.INFO, "More Info side bar is displayed/open.");
 			highlightElement(moreinfoSideBar, "Red", driver, logger);
-			isMoreInfoSideBarDisplayed=true;
-		}
-		else {
+			isMoreInfoSideBarDisplayed = true;
+		} else {
 			logger.log(LogStatus.INFO, "More Info side bar is not displayed/open.");
-			isMoreInfoSideBarDisplayed=false;
+			isMoreInfoSideBarDisplayed = false;
 		}
-		
-		return isMoreInfoSideBarDisplayed;	
+
+		return isMoreInfoSideBarDisplayed;
 	}
 
-	//i think no use of this method
+	// i think no use of this method
 //	public Boolean isMoreInfoOfTxnPopup_Displayed(int txnNo) throws InterruptedException {
 //
 //		Boolean tableHasData = validateALLTxnReportTableHasData();
@@ -1313,8 +1319,6 @@ public class TransactionHistoryPOM extends commonFunc {
 //		return flag;
 //	}
 
-	
-	
 	public int getMoreInfoTable_paramNameListSize() {
 		int num = moreInfoTable_paramNameList.size();
 		return num;
@@ -1324,6 +1328,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		int num = moreInfoTable_paramValueList.size();
 		return num;
 	}
+
 	public String getMoreInfoTable_paramName(int paramNo) {
 		return moreInfoTable_paramNameList.get(paramNo).getText();
 	}
@@ -1333,7 +1338,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 //AEPS tab...............................
-	
+
 	public void click_printButton_aepsMoreInfoSideBar() {
 
 		waitForElementToAppear(printButton_moreInfoSideBar_aepsSuccessTxn, driver, logger);
@@ -1347,9 +1352,8 @@ public class TransactionHistoryPOM extends commonFunc {
 			logger.log(LogStatus.INFO, "Failed click print button at AEPS transaction more info side bar");
 		}
 	}
-		
+
 //4.MORE INFO side bar methods END ##################################################################################
-	
 
 //5.PAGINATION methods START ########################################################################################
 
@@ -1469,7 +1473,7 @@ public class TransactionHistoryPOM extends commonFunc {
 				logger.log(LogStatus.INFO, "table data < page size selected");
 				logger.log(LogStatus.INFO,
 						"table Data Count -" + tableDataCount + "</br>page Size Selected -" + pageDataSizeSelected);
-				
+
 //FOR AASERTION++++++if table has less data than page data size....how to know the VALID data count++++++++++++++++++++++++++++++++++++++++++++++...................?????????????????????????????????????	
 
 //				// table data count
@@ -1493,8 +1497,8 @@ public class TransactionHistoryPOM extends commonFunc {
 //				return flag;
 
 			}
-		} 
-		
+		}
+
 		else
 // if table has no data
 		{
@@ -1557,11 +1561,11 @@ public class TransactionHistoryPOM extends commonFunc {
 							+ "last no.from table -" + lastNumFromtable + "\nlast no.in message - " + lastNum
 							+ "total in message -" + totalTxns);
 			// assert - first number is matching or not
-			Boolean firstNumIsmatching = compareString(firstNumFromTable, firstNum, false);
+			Boolean firstNumIsmatching = compareString(firstNumFromTable, firstNum, false, logger);
 			softAssert("validate-first number of record according to PAGE BOTTOM MESSAGE\n", firstNumFromTable,
 					firstNum, firstNumIsmatching, logger);
 			// assert - last number is matching or not
-			Boolean lastNumIsmatching = compareString(lastNumFromtable, lastNum, false);
+			Boolean lastNumIsmatching = compareString(lastNumFromtable, lastNum, false, logger);
 			softAssert("validate-last number of record according to PAGE BOTTOM MESSAGE\n", lastNumFromtable, lastNum,
 					lastNumIsmatching, logger);
 		} else
@@ -1575,9 +1579,10 @@ public class TransactionHistoryPOM extends commonFunc {
 	public String get_perPageDataSize() {
 		String dataPerPageNo = null;
 		try {
-
-			logger.log(LogStatus.INFO, "fetch data per page number");
+			logger.log(LogStatus.INFO, "Fetch data per page number");
 			dataPerPageNo = page_dataPerPageNumber.getText();
+			logger.log(LogStatus.INFO, "Fetched data per page number -"+dataPerPageNo);
+
 			return dataPerPageNo;
 
 		} catch (Exception e) {
@@ -1715,7 +1720,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	public void changeCount_DataPerPage(int dataPerPage) {
 // ASSUMPTION - page sizes are -10,25,50
 //below method used data sizes from the dropdown...if needed use same logic to fetch PAGE DATA SIZES
-		
+
 		waitForElementToAppear(pageSizeDropdown, driver, logger);
 		scrollToWebElement(pageSizeDropdown, driver);
 //navigate and click on page size dropdown		

@@ -33,7 +33,7 @@ public class softAssertTesting extends testbase{
 String actualTitle = driver.getTitle();
 String expectedTitle = "Dashboard";
 
-boolean result = commonfunc.compareString(actualTitle, expectedTitle,false);
+boolean result = commonfunc.compareString(actualTitle, expectedTitle,false, logger);
 
 commonfunc.softAssert("Verify dashboard page title -", actualTitle, expectedTitle, result, logger);
 /**********************************************************************************************************************************/		
@@ -44,7 +44,7 @@ commonfunc.softAssert("Verify dashboard page title -", actualTitle, expectedTitl
 logger.log(LogStatus.INFO, "fail assertion ");
 
 String expectedTitle1 = "Dashboard1";
-boolean result1 = commonfunc.compareString(actualTitle,expectedTitle1,false);
+boolean result1 = commonfunc.compareString(actualTitle,expectedTitle1,false, logger);
 commonfunc.softAssert("Verify dashboard page title (fail intentionally)-", actualTitle, expectedTitle1, result1, logger);
 /**********************************************************************************************************************************/
 
@@ -72,7 +72,7 @@ logger.log(LogStatus.INFO, "Step 2: logged in successfully ");
 	String actualTitle = driver.getTitle();
 	String expectedTitle = "Dashboard";
 
-	boolean result = commonfunc.compareString(actualTitle, expectedTitle,false);
+	boolean result = commonfunc.compareString(actualTitle, expectedTitle,false, logger);
 
 	commonfunc.softAssert("Verify dashboard page title -", actualTitle, expectedTitle, result, logger);
 	/**********************************************************************************************************************************/		
@@ -83,7 +83,7 @@ logger.log(LogStatus.INFO, "Step 2: logged in successfully ");
 	logger.log(LogStatus.INFO, "fail assertion ");
 
 	String expectedTitle1 = "Dashboard1";
-	boolean result1 = commonfunc.compareString(actualTitle,expectedTitle1,false);
+	boolean result1 = commonfunc.compareString(actualTitle,expectedTitle1,false, logger);
 	commonfunc.softAssert("Verify dashboard page title (fail intentionally)-", actualTitle, expectedTitle1, result1, logger);
 	/**********************************************************************************************************************************/
 

@@ -205,21 +205,38 @@ public class commonFunc {
 		}
 	}
 
-	public boolean compareString(String actual, String expected, boolean ignorecase) {
+	public Boolean compareString(String actual, String expected, boolean ignorecase, ExtentTest logger) {
 		
-				
+		logger.log(LogStatus.INFO, "Comparing String");	
 		
-		if (Boolean.TRUE.equals(ignorecase)) {
-			if (expected.trim().equalsIgnoreCase(actual.trim())) {
+		if (Boolean.TRUE.equals(ignorecase)) 
+		{
+			logger.log(LogStatus.INFO, "Ignore case -"+ignorecase);
+			if (expected.trim().equalsIgnoreCase(actual.trim())) 
+			{
+				logger.log(LogStatus.INFO, "Expected -"+expected.trim()+"</br>Actual -"+actual.trim());
+
 				return true;
-			} else {
+			} else 
+			{
+				
+				logger.log(LogStatus.INFO, "Expected 1 -"+expected.trim()+"</br>Actual 1 -"+actual.trim());
 				return false;
 			}
 
-		} else {
-			if (expected.trim().equals(actual.trim())) {
+		} else 
+		{		
+			logger.log(LogStatus.INFO, "Ignore case -"+ignorecase);
+			if (expected.trim().equals( actual.trim() ) ) 
+			{
+				logger.log(LogStatus.INFO, "Expected -"+expected.trim()+"</br>Actual -"+actual.trim());
+
 				return true;
-			} else {
+			} else 
+			{
+				
+				logger.log(LogStatus.INFO, "Expected 2 -"+expected.trim()+"</br>Actual 2 -"+actual.trim());
+
 				return false;
 			}
 		}
@@ -325,6 +342,14 @@ public class commonFunc {
 	public String getCurrentDateAndTimeInFormat() {			
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy hh:mm:ss"); 
+		String formattedDate = sdf. format(date); 
+        return formattedDate;
+        
+	}
+	
+	public String getCurrentDateAndTimeInFormat(String dateTimeFormat) {			
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat(dateTimeFormat); 
 		String formattedDate = sdf. format(date); 
         return formattedDate;
         

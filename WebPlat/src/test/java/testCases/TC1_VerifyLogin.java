@@ -53,14 +53,14 @@ public class TC1_VerifyLogin extends testbase {
 			
 			if (verify.equals(expectedTitle)) {
 				
-				result = comm.compareString(verify,expectedTitle, false);
+				result = comm.compareString(verify,expectedTitle, false, logger);
 				comm.softAssert("Step 2: Logged in successfully ", verify,expectedTitle, result, logger);
 				
 				break;
 				
 			}else {
 				
-				result = comm.compareString(verify,expectedTitle, false);
+				result = comm.compareString(verify,expectedTitle, false, logger);
 				comm.softAssert("Attempt "+i+ ": Logged In failed ", verify,expectedTitle, result, logger);
 			}
 			
