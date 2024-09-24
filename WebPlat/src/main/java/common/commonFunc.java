@@ -123,12 +123,12 @@ public class commonFunc {
 		 
 		 if(Boolean.TRUE.equals(result))
 		 {
-			 logger.log(LogStatus.PASS, stepname,"Actual value : " + result + "Expected value :  True");
+			 logger.log(LogStatus.PASS, stepname,"Actual value : " + result + "</br>Expected value :  True");
 			 
 		 }
 		 else 
 		 {
-			 logger.log(LogStatus.FAIL, stepname,"Actual value : " + result + "Expected value :  True");
+			 logger.log(LogStatus.FAIL, stepname,"Actual value : " + result + "</br>Expected value :  True");
 		}
 		 
 	 }
@@ -138,12 +138,12 @@ public class commonFunc {
 		 
 		 if(Boolean.FALSE.equals(result))
 		 {
-			 logger.log(LogStatus.PASS, stepname,"Actual value : " + result + "\nExpected value :  False");
+			 logger.log(LogStatus.PASS, stepname,"Actual value : " + result + "</br>Expected value :  False");
 			 
 		 }
 		 else 
 		 {
-			 logger.log(LogStatus.FAIL, stepname,"Actual value : " + result + "\nExpected value :  False");
+			 logger.log(LogStatus.FAIL, stepname,"Actual value : " + result + "</br>Expected value :  False");
 		}
 		 
 	 }
@@ -156,12 +156,12 @@ public class commonFunc {
 		 
 		 if(Boolean.TRUE.equals(result))
 		 {
-			 logger.log(LogStatus.PASS, stepname,"Actual value : " + result + "\nExpected value :  True");
+			 logger.log(LogStatus.PASS, stepname,"Actual value : " + result + "</br>Expected value :  True");
 			 
 		 }
 		 else 
 		 {
-			 logger.log(LogStatus.FAIL, stepname,"Actual value : " + result + "\nExpected value :  True");
+			 logger.log(LogStatus.FAIL, stepname,"Actual value : " + result + "</br>Expected value :  True");
 			 Assert.fail();
 		}
 		 
@@ -172,12 +172,12 @@ public class commonFunc {
 		 
 		 if(Boolean.FALSE.equals(result))
 		 {
-			 logger.log(LogStatus.PASS, stepname,"Actual value : " + result + "\nExpected value :  False");
+			 logger.log(LogStatus.PASS, stepname,"Actual value : " + result + "</br>Expected value :  False");
 			 
 		 }
 		 else 
 		 {
-			 logger.log(LogStatus.FAIL, stepname,"Actual value : " + result + "\nExpected value :  False");
+			 logger.log(LogStatus.FAIL, stepname,"Actual value : " + result + "</br>Expected value :  False");
 			 Assert.fail();
 		}
 		 
@@ -187,20 +187,20 @@ public class commonFunc {
 		public void softAssert(String stepname, String actual, String expected, boolean result, ExtentTest logger) {
 		if (Boolean.TRUE.equals(result)) {
 			logger.log(LogStatus.PASS, stepname,
-					"Expected value : " + expected + "</br>is equal to</br>actual value : " + actual);
+					"Actual value : " + actual + "</br>is equal to</br>Expected value : " + expected);
 		} else {
 			logger.log(LogStatus.FAIL, stepname,
-					"Expected value : " + expected + "</br>is not equal to</br>actual value : " + actual);
+					"Actual value : " + actual + "</br>is equal to</br>Expected value : " + expected);
 		}
 	}
 
 	public void hardAssert(String stepname, String actual, String expected, boolean result, ExtentTest logger) {
 		if (Boolean.TRUE.equals(result)) {
 			logger.log(LogStatus.PASS, stepname,
-					"Expected value : " + expected + "</br>is equal to</br>actual value : " + actual);
+					"Actual value : " + actual + "</br>is equal to</br>Expected value : " + expected);
 		} else {
 			logger.log(LogStatus.FAIL, stepname,
-					"Expected value : " + expected + "</br>is not equal to</br>actual value : " + actual);
+					"Actual value : " + actual + "</br>is equal to</br>Expected value : " + expected);
 			Assert.fail();
 		}
 	}
@@ -214,13 +214,13 @@ public class commonFunc {
 			logger.log(LogStatus.INFO, "Ignore case -"+ignorecase);
 			if (expected.trim().equalsIgnoreCase(actual.trim())) 
 			{
-				logger.log(LogStatus.INFO, "Expected -"+expected.trim()+"</br>Actual -"+actual.trim());
+				logger.log(LogStatus.INFO, "Actual -"+actual.trim()+"</br>Expected -"+expected.trim());
 
 				return true;
 			} else 
 			{
 				
-				logger.log(LogStatus.INFO, "Expected 1 -"+expected.trim()+"</br>Actual 1 -"+actual.trim());
+				logger.log(LogStatus.INFO, "Actual -"+actual.trim()+"</br>Expected -"+expected.trim());
 				return false;
 			}
 
@@ -229,13 +229,13 @@ public class commonFunc {
 			logger.log(LogStatus.INFO, "Ignore case -"+ignorecase);
 			if (expected.trim().equals( actual.trim() ) ) 
 			{
-				logger.log(LogStatus.INFO, "Expected -"+expected.trim()+"</br>Actual -"+actual.trim());
+				logger.log(LogStatus.INFO, "Actual -"+actual.trim()+"</br>Expected -"+expected.trim());
 
 				return true;
 			} else 
 			{
 				
-				logger.log(LogStatus.INFO, "Expected 2 -"+expected.trim()+"</br>Actual 2 -"+actual.trim());
+				logger.log(LogStatus.INFO, "Actual -"+actual.trim()+"</br>Expected -"+expected.trim());
 
 				return false;
 			}
@@ -699,7 +699,7 @@ public boolean isPresentAndDisplayed(WebElement locator,  WebDriver driver, Exte
 	}
 
 
-	public void verifyElementPresenceInsideParentElement(WebElement parentElementLocator, WebElement childElementLocator, WebDriver driver, ExtentTest logger) {
+	public void verifyElementPresenceInsideParentElement(WebElement parentElementLocator, WebElement childElementLocator, WebDriver driver, ExtentTest logger) throws IOException {
 		WebElement parentElement = null;
 
 		try {
@@ -750,6 +750,7 @@ public boolean isPresentAndDisplayed(WebElement locator,  WebDriver driver, Exte
 		{
 			((JavascriptExecutor) driver).executeScript("arguments[0].style.outline=\' dotted " + color + "\'",
 					new Object[]{element});
+
 		}
 
 	}
