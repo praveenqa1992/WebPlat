@@ -164,13 +164,15 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_reportsModule();
 		transactionHistoryPOM.click_txnHistoryModule();
 //select from date		
-		// transactionHistoryPOM.selectFromDate2("10", "August", "2024");
+		 transactionHistoryPOM.selectFromDate2("1", "January", "2024");
 //select to date	
-		// transactionHistoryPOM.selectToDate2(11, "August", 2024);
+		 transactionHistoryPOM.selectToDate2(1, "January", 2024);
 //search		
 		transactionHistoryPOM.click_searchButton();
+		
+		commonfunc.waitForPageLoaded(driver, logger);
 //validate if table has data
-		Boolean dataInTable = transactionHistoryPOM.validateALLTxnReportTableHasData();
+		boolean dataInTable = transactionHistoryPOM.validateALLTxnReportTableHasData();
 
 		if (dataInTable) {
 
@@ -181,7 +183,7 @@ public class TransactionHistoryTEST extends testbase {
 			String actualMessage = transactionHistoryPOM.getTxnTable_messageIfNoTableData();
 			commonfunc.screenshotInReport("Txn. table has no data -", driver, logger);
 			String expectedMessage = "No items found.";
-			Boolean ignoreCase = false;
+			boolean ignoreCase = false;
 
 //compare string
 			Boolean msgIsCorrect = commonfunc.compareString(actualMessage, expectedMessage, ignoreCase, logger);
@@ -489,7 +491,7 @@ public class TransactionHistoryTEST extends testbase {
 //search		
 		transactionHistoryPOM.click_searchButton();
 //assertion - page size selected and data fetched per page		
-		Boolean dataFetchedAndPageSelected = transactionHistoryPOM.isDataFetchedAccordingToPageSizeSelected();
+		boolean dataFetchedAndPageSelected = transactionHistoryPOM.isDataFetchedAccordingToPageSizeSelected();
 		commonfunc.softAssertTrue("Data Fetched And Page Size Selected isSame-", dataFetchedAndPageSelected, logger);
 
 // WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI S SCENARIO ????????????????????????????????????????????????????????????????????????
@@ -536,9 +538,9 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_reportsModule();
 		transactionHistoryPOM.click_txnHistoryModule();
 //select from date		
-		transactionHistoryPOM.selectFromDate2("01", "August", "2024");
+		transactionHistoryPOM.selectFromDate2("1", "August", "2024");
 //select to date	
-		// transactionHistoryPOM.selectToDate2(25, "August", 2024);
+		// transactionHistoryPOM.selectToDate2(25, "September", 2024);
 //search		
 		transactionHistoryPOM.click_searchButton();
 
@@ -549,13 +551,19 @@ public class TransactionHistoryTEST extends testbase {
 		Thread.sleep(3000);
 
 // capture sr no of FIRST txn.	
-		transactionHistoryPOM.getTxnSrNo(1);
+		int firstTxnIndex = 0;
+	
+		transactionHistoryPOM.getTxnSrNo(firstTxnIndex);
 		transactionHistoryPOM.screenshotInReport("Sr.No. of first txn. -", driver, logger);
 
 // capture sr no of LAST txn.		
 		String dataPerPageCountSTRING = transactionHistoryPOM.get_perPageDataSize();
 		int dataPerPageCount = Integer.parseInt(dataPerPageCountSTRING);
-		transactionHistoryPOM.getTxnSrNo(dataPerPageCount);
+	
+	int tableRows=	transactionHistoryPOM.getTxnTable_rowNumbers();
+		
+		int lastTxnIndex = (tableRows-1);
+		transactionHistoryPOM.getTxnSrNo(lastTxnIndex);
 		transactionHistoryPOM.screenshotInReport("Sr.No. of last txn. -", driver, logger);
 
 		// 2---last
@@ -564,13 +572,13 @@ public class TransactionHistoryTEST extends testbase {
 		Thread.sleep(3000);
 
 		// capture sr no of FIRST txn.
-		transactionHistoryPOM.getTxnSrNo(1);
+		transactionHistoryPOM.getTxnSrNo(firstTxnIndex);
 		transactionHistoryPOM.screenshotInReport("Sr.No. of first txn. -", driver, logger);
 
 		// capture sr no of LAST txn.
 //				String dataPerPageCountSTRING = transactionHistoryPOM.get_perPageDataSize();	
 //				int dataPerPageCount =Integer.parseInt(dataPerPageCountSTRING);
-		transactionHistoryPOM.getTxnSrNo(dataPerPageCount);
+		transactionHistoryPOM.getTxnSrNo(lastTxnIndex);
 		transactionHistoryPOM.screenshotInReport("Sr.No. of last txn. -", driver, logger);
 
 		// 2b---last
@@ -584,13 +592,13 @@ public class TransactionHistoryTEST extends testbase {
 		Thread.sleep(3000);
 
 		// capture sr no of FIRST txn.
-		transactionHistoryPOM.getTxnSrNo(1);
+		transactionHistoryPOM.getTxnSrNo(firstTxnIndex);
 		transactionHistoryPOM.screenshotInReport("Sr.No. of first txn. -", driver, logger);
 
 		// capture sr no of LAST txn.
 //						String dataPerPageCountSTRING = transactionHistoryPOM.get_perPageDataSize();	
 //						int dataPerPageCount =Integer.parseInt(dataPerPageCountSTRING);
-		transactionHistoryPOM.getTxnSrNo(dataPerPageCount);
+		transactionHistoryPOM.getTxnSrNo(lastTxnIndex);
 		transactionHistoryPOM.screenshotInReport("Sr.No. of last txn. -", driver, logger);
 
 		// 4-------first
@@ -599,13 +607,13 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.screenshotInReport("Last page button -", driver, logger);
 
 		// capture sr no of FIRST txn.
-		transactionHistoryPOM.getTxnSrNo(1);
+		transactionHistoryPOM.getTxnSrNo(firstTxnIndex);
 		transactionHistoryPOM.screenshotInReport("Sr.No. of first txn. -", driver, logger);
 
 		// capture sr no of LAST txn.
 //						String dataPerPageCountSTRING = transactionHistoryPOM.get_perPageDataSize();	
 //						int dataPerPageCount =Integer.parseInt(dataPerPageCountSTRING);
-		transactionHistoryPOM.getTxnSrNo(dataPerPageCount);
+		transactionHistoryPOM.getTxnSrNo(lastTxnIndex);
 		transactionHistoryPOM.screenshotInReport("Sr.No. of last txn. -", driver, logger);
 
 		// 4b-----first
@@ -714,18 +722,51 @@ public class TransactionHistoryTEST extends testbase {
 		Thread.sleep(2000);
 		
 		//select from date		
-				transactionHistoryPOM.selectFromDate2("10", "August", "2024");
+				transactionHistoryPOM.selectFromDate2("1", "August", "2024");
 		//select to date	
 				// transactionHistoryPOM.selectToDate2(25, "August", 2024);
 				transactionHistoryPOM.click_searchButton();
 				Thread.sleep(2000);
 
 				//open more info side bar of 1st txn.			
-				transactionHistoryPOM.getTxnStatus();//more info header buttons need combo of ...1.txn status 2.category and 3. ....get information first then handle
+				transactionHistoryPOM.validateMoreInfoSideBarHeaderButtons();//more info header buttons need combo of ...1.txn status 2.category and 3. ....get information first then handle
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	}
 	
 	
-	
+//	@Test(priority = 10, enabled = true, groups = "regression.telecomTab")
+//	public void TC010_seconsSideMenu() throws InterruptedException, IOException {
+//
+//		// TEST -
+//		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
+//		// POM -
+//		TransactionHistoryPOM transactionHistoryPOM = new TransactionHistoryPOM(driver, logger);
+//
+//		// COMMON METHOD CLASS -
+//		commonFunc commonfunc = new commonFunc();
+//
+//		// login...
+//		tC1_VerifyLogin.verifySignIn(driver, logger);
+//		Thread.sleep(5000);
+//		
+//		
+//		
+//	}
+//	
+//	
 //	@Test(priority = 10, enabled = true, groups = "regression.telecomTab")
 //	public void TC010_telecomTabHasNoCatDropdown() throws InterruptedException, IOException {
 //

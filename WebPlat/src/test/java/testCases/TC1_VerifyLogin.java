@@ -26,7 +26,7 @@ import utility.testbase;
 
 public class TC1_VerifyLogin extends testbase {
 	
-	String verify;
+	String actualTitle;
 	String expectedTitle = "Dashboard";
 	boolean result;
 	
@@ -49,19 +49,19 @@ public class TC1_VerifyLogin extends testbase {
 		
 		for (int i=1; i<=3; i++) {
 			login.signin(user, pass);
-			verify = driver.getTitle();
+			actualTitle = driver.getTitle();
 			
-			if (verify.equals(expectedTitle)) {
+			if (actualTitle.equals(expectedTitle)) {
 				
-				result = comm.compareString(verify,expectedTitle, false, logger);
-				comm.softAssert("Step 2: Logged in successfully ", verify,expectedTitle, result, logger);
+				result = comm.compareString(actualTitle,expectedTitle, false, logger);
+				comm.softAssert("Step 2: Logged in successfully ", actualTitle,expectedTitle, result, logger);
 				
 				break;
 				
 			}else {
 				
-				result = comm.compareString(verify,expectedTitle, false, logger);
-				comm.softAssert("Attempt "+i+ ": Logged In failed ", verify,expectedTitle, result, logger);
+				result = comm.compareString(actualTitle,expectedTitle, false, logger);
+				comm.softAssert("Attempt "+i+ ": Logged In failed ", actualTitle,expectedTitle, result, logger);
 			}
 			
 		}
@@ -78,8 +78,15 @@ public class TC1_VerifyLogin extends testbase {
 
 		/**********************************************************************************************************************************/
 
-//		Thread.sleep(5000);	
+		Thread.sleep(5000);	
 //		login.dialogClose();
+		
+	
+		
+		
+		
+		
+		
 		
 //		/**********************************************************************************************************************************/
 //		/*** Fail Assertion **/

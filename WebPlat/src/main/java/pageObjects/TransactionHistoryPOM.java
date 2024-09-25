@@ -33,6 +33,12 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//span[text()='Reports']")
 	public WebElement reportsModule;
 
+	@FindBy(xpath = "//div[@class='second-sidemenu']")
+	public WebElement secondSideMenu;
+
+	@FindBy(xpath = "//i[@data-name='chevrons-left']")
+	public WebElement secondSideMenu_openORClose;
+
 //	@FindBy(xpath = "//a[@class='slide-item'] [text()=' Transaction History']")
 //	public WebElement txnHistoryModule;
 
@@ -264,6 +270,9 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/thead/tr/th")
 	public List<WebElement> txnTable_columnsHEAD;
 
+	@FindBy(xpath = "//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/thead")
+	public WebElement txnTable_head;
+
 	@FindBy(xpath = "//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr")
 	public List<WebElement> txnTable_rows;
 
@@ -286,7 +295,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	public List<WebElement> moreInfoTable_paramValueList;
 
 	@FindBy(xpath = "//div[@class='offcanvas reportmodule offcanvas-end show']//child::h4")
-	public WebElement moreInfo_textAtSideBarHeaderWE;
+	public WebElement sideBarHeader_textORTitle;
 
 	// 1.dmt more info side bar =>pending,failed txn. has one button (close)
 	// only...success txn. has 3 buttons (1-Single, 2-Bulk, 3-Close)
@@ -386,18 +395,6 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//div[@class='p-paginator-first pr-0 p-paginator p-component ng-star-inserted']/button")
 	public List<WebElement> paginationsAllButtons;
 
-	@FindBy(xpath = "")
-	public WebElement da;
-
-	@FindBy(xpath = "")
-	public WebElement sa;
-
-	@FindBy(xpath = "")
-	public WebElement aa;
-
-	@FindBy(xpath = "")
-	public WebElement aaaa;
-
 //CONSTRUCTOR..........
 
 	public TransactionHistoryPOM(WebDriver driver, ExtentTest logger) {
@@ -410,10 +407,61 @@ public class TransactionHistoryPOM extends commonFunc {
 
 //1.PAGE TOP elements methods START #####################################################################################################
 
-	public void click_reportsModule() {
-		scrollUp(driver);
-		waitForElementToAppear(reportsModule, driver, logger);
-//		scrollToWebElement(reportsModule, driver);
+	public boolean secondSideMenu_isDisplayed() {
+		return secondSideMenu.isDisplayed();
+
+	}
+
+	public void secondSideMenu_hideORunhide() {
+
+		scrollToWebElement(sideBarHeader_textORTitle, driver);
+		scrollElementIntoMiddle(secondSideMenu_openORClose, driver);
+		try {
+			logger.log(LogStatus.INFO, "click secondSideMenu_openORClose");
+			secondSideMenu_hideORunhide();
+		} catch (Exception e) {
+
+			logger.log(LogStatus.INFO, "captured exception is -" + e);
+			logger.log(LogStatus.INFO, "Unable to click secondSideMenu_openORClose");
+
+		}
+	}
+
+	public void secondSideMenu_open() throws IOException {
+
+		boolean isDisp = secondSideMenu_isDisplayed();
+
+		if (isDisp) {
+			logger.log(LogStatus.INFO, "Second side menu is already displayed / open");
+			screenshotInReport("Second side menu is displayed / open -", driver, logger);
+		} else {
+			scrollElementIntoMiddle(secondSideMenu_openORClose, driver);
+			logger.log(LogStatus.INFO, "click secondSideMenu_openORClose to OPEN");
+			secondSideMenu_hideORunhide();
+		}
+	}
+
+	public void secondSideMenu_close() throws IOException {
+
+		boolean isDisp = secondSideMenu_isDisplayed();
+
+		if (isDisp) {
+			scrollElementIntoMiddle(secondSideMenu_openORClose, driver);
+			logger.log(LogStatus.INFO, "click secondSideMenu_openORClose to CLOSE");
+			click(secondSideMenu_openORClose, driver, logger);
+		} else {
+			logger.log(LogStatus.INFO, "Second side menu is not displayed / open");
+			screenshotInReport("Second side menu is not displayed -", driver, logger);
+		}
+	}
+
+	public void click_reportsModule() throws IOException, InterruptedException {
+//		scrollUp(driver);
+		Thread.sleep(2000);
+		secondSideMenu_close();
+
+		waitForPageLoaded(driver, logger);
+		scrollElementIntoMiddle(reportsModule, driver);
 		logger.log(LogStatus.INFO, "click_reportsModule");
 		click(reportsModule, driver, logger);
 
@@ -421,7 +469,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	public void click_txnHistoryModule() {
 		waitForElementToAppear(txnHistoryModule, driver, logger);
-		scrollToWebElement(txnHistoryModule, driver);
+		scrollElementIntoMiddle(txnHistoryModule, driver);
 		logger.log(LogStatus.INFO, "click_txnHistoryModule");
 		click(txnHistoryModule, driver, logger);
 		waitForPageLoaded(driver, logger);
@@ -429,18 +477,16 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 	public void click_allTxnReportTab() {
-		scrollUp(driver);
 		waitForElementToAppear(allTxnReportTab, driver, logger);
-//		scrollToWebElement(allTxnReportTab, driver);
+		scrollElementIntoMiddle(allTxnReportTab, driver);
 		logger.log(LogStatus.INFO, "click_allTxnReportTab--------");
 		click(allTxnReportTab, driver, logger);
 
 	}
 
 	public void click_telecomTab() {
-		scrollUp(driver);
 		waitForElementToAppear(telecomTab, driver, logger);
-//		scrollToWebElement(telecomTab, driver);
+		scrollElementIntoMiddle(telecomTab, driver);
 		logger.log(LogStatus.INFO, "click_telecomTab--------");
 		click(telecomTab, driver, logger);
 		waitForPageLoaded(driver, logger);
@@ -448,58 +494,49 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 	public void click_dmtTab() {
-		scrollUp(driver);
 		waitForElementToAppear(dmtTab, driver, logger);
-//		scrollToWebElement(dmtTab, driver);
+		scrollElementIntoMiddle(dmtTab, driver);
 		logger.log(LogStatus.INFO, "click_dmtTab-------");
 		click(dmtTab, driver, logger);
 
 	}
 
 	public void click_bbpsTab() {
-		scrollUp(driver);
 		waitForElementToAppear(bbpsTab, driver, logger);
-//		scrollToWebElement(bbpsTab, driver);
+		scrollElementIntoMiddle(bbpsTab, driver);
 		logger.log(LogStatus.INFO, "click_bbpsTab-------");
 		click(bbpsTab, driver, logger);
 
 	}
 
 	public void click_aepsTab() {
-		scrollUp(driver);
 		waitForElementToAppear(aepsTab, driver, logger);
-//		scrollToWebElement(aepsTab, driver);
+		scrollElementIntoMiddle(aepsTab, driver);
 		logger.log(LogStatus.INFO, "click_aepsTab-------");
 		click(aepsTab, driver, logger);
-
 	}
 
 	public void click_microAtmTab() {
-		scrollUp(driver);
 		waitForElementToAppear(microAtmTab, driver, logger);
-//		scrollToWebElement(microAtmTab, driver);
+		scrollElementIntoMiddle(microAtmTab, driver);
 		logger.log(LogStatus.INFO, "click_microAtmTab-------------");
 		click(microAtmTab, driver, logger);
-
 	}
 
 	public void click_exportFileIcon() {
-		scrollUp(driver);
 		waitForElementToAppear(exportFileIcon, driver, logger);
-		scrollToWebElement(exportFileIcon, driver);
+		scrollElementIntoMiddle(exportFileIcon, driver);
 		logger.log(LogStatus.INFO, "click_exportFileIcon----------");
 		click(exportFileIcon, driver, logger);
-
 	}
 
 	public void click_searchButton() throws InterruptedException {
-		scrollUp(driver);
 		waitForElementToAppear(searchButton, driver, logger);
-//		scrollToWebElement(searchButton, driver);
+		scrollElementIntoMiddle(searchButton, driver);
 		logger.log(LogStatus.INFO, "click_searchButton--------");
 		click(searchButton, driver, logger);
-		Thread.sleep(2000);
-
+		waitForPageLoaded(driver, logger);
+		Thread.sleep(3000);
 	}
 
 //dropdowns ###############################
@@ -509,6 +546,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		Boolean catTabDisp;
 		logger.log(LogStatus.INFO, "Verifying category tab is displayed or not");
 		try {
+			scrollElementIntoMiddle(categoryTab, driver);
 			catTabDisp = isPresentAndDisplayed(categoryTab, driver, logger);
 
 			if (catTabDisp) {
@@ -528,7 +566,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	public void click_categoryDropdown() throws InterruptedException {
 
 		waitForElementToAppear(categoryDropdown, driver, logger);
-		scrollToWebElement(categoryDropdown, driver);
+		scrollElementIntoMiddle(categoryDropdown, driver);
 		logger.log(LogStatus.INFO, "click category dropdown");
 		click(categoryDropdown, driver, logger);
 
@@ -537,7 +575,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	public void click_serviceDropdown() throws InterruptedException {
 
 		waitForElementToAppear(serviceDropdown, driver, logger);
-		scrollToWebElement(serviceDropdown, driver);
+		scrollElementIntoMiddle(serviceDropdown, driver);
 		logger.log(LogStatus.INFO, "click service dropdown");
 		click(serviceDropdown, driver, logger);
 
@@ -546,7 +584,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	public void click_operatorDropdown() throws InterruptedException {
 
 		waitForElementToAppear(operatorDropdown, driver, logger);
-		scrollToWebElement(operatorDropdown, driver);
+		scrollElementIntoMiddle(operatorDropdown, driver);
 		logger.log(LogStatus.INFO, "click operator dropdown");
 		click(operatorDropdown, driver, logger);
 
@@ -617,14 +655,233 @@ public class TransactionHistoryPOM extends commonFunc {
 
 // CALENDAR methods START #####################################################################################################
 
-	public void selectFromDate2(String stringDate, String monthString, String stringYear) {
+	public int get_count_fromCalendarEnabledDates() {
+
+		int monthDates_enabledFrom = 0;
+
+		boolean monthDateIsHighlitedFrom = isPresentAndDisplayed(fromCalender_Date_enabled_Highlited, driver, logger);
+		
+		
+//		boolean monthDateIsHighlitedFrom = fromCalender_Date_enabled_Highlited.isDisplayed();
+
+		if (Boolean.TRUE.equals(monthDateIsHighlitedFrom)) {
+			monthDates_enabledFrom = (1 + fromCalender_Dates_enabled_notHighlited.size());
+
+		} else if (Boolean.FALSE.equals(monthDateIsHighlitedFrom)) {
+			monthDates_enabledFrom = fromCalender_Dates_enabled_notHighlited.size();
+
+		}
+		return monthDates_enabledFrom;
+
+	}
+	
+	public int get_count_toCalendarEnabledDates() {
+
+		int monthDates_enabledTo = 0;
+
+		boolean monthDateIsHighlitedTo = isPresentAndDisplayed(toCalender_Date_enabled_Highlited, driver, logger);
+
+//		boolean monthDateIsHighlitedTo = toCalender_Date_enabled_Highlited.isDisplayed();
+
+		if (Boolean.TRUE.equals(monthDateIsHighlitedTo)) {
+			monthDates_enabledTo = (1 + toCalender_Dates_enabled_notHighlited.size());
+
+		} else if (Boolean.FALSE.equals(monthDateIsHighlitedTo)) {
+			monthDates_enabledTo = toCalender_Dates_enabled_notHighlited.size();
+
+		}
+		return monthDates_enabledTo;
+
+	}
+	
+	//new approach....to refer
+	
+
+//	public void selectFromDate2(String stringDate, String monthString, String stringYear) {
+//
+//		logger.log(LogStatus.INFO, "selecting a date from date calendar");
+//
+//		waitForPageLoaded(driver, logger);
+//		waitForElementToAppear(fromCalenderIcon, driver, logger);
+//		scrollElementIntoMiddle(fromCalenderIcon, driver);
+//
+//		logger.log(LogStatus.INFO, "click from calendar icon");
+//		click(fromCalenderIcon, driver, logger);
+//		logger.log(LogStatus.INFO, "selecting from month and from year");
+//
+//		String calendarMonth = fromMonth.getText();
+//		String calendarYear = fromYear.getText();
+//
+//		while (!(calendarMonth.equals(monthString) && calendarYear.equals(stringYear))) {
+//			waitForElementToAppear(fromCalenderPreviousButton, driver, logger);
+//			click(fromCalenderPreviousButton, driver, logger);
+//			calendarMonth = fromMonth.getText();
+//			calendarYear = fromYear.getText();
+//		}
+//
+//		logger.log(LogStatus.INFO, "selecting from date");
+//
+//		//navigate through enabled dates only...loop will iterate for those count only
+//	int enabledDatesCount =	get_count_fromCalendarEnabledDates();
+//	
+//	logger.log(LogStatus.INFO, "1.................enabled date count -"+enabledDatesCount);
+//
+//	
+//	String enabledDate_clicked=null;
+//	try
+//	{
+//		for (int dateIndex = 0; dateIndex < enabledDatesCount; dateIndex++) 
+//		{
+//			logger.log(LogStatus.INFO, "2.................loop index -"+dateIndex);
+//
+//			boolean dateSelected=false;
+//			
+//			//select enabled non highlited date
+//			for(WebElement enabledDatWE : fromCalender_Dates_enabled_notHighlited) 
+//			{
+//				logger.log(LogStatus.INFO, "3.................enabled date WE -"+enabledDatWE);
+//
+//			String enabledDate	= enabledDatWE.getText();
+//			
+//			logger.log(LogStatus.INFO, "4.................enabled date  -"+enabledDate);
+//
+//				
+//		    	if (enabledDate.equals(stringDate)) 
+//		    	{
+//
+//				  click(enabledDatWE, driver, logger);
+//				  dateSelected=true;
+//				   enabledDate_clicked = enabledDatWE.getText();
+//					logger.log(LogStatus.INFO, "5.................click date  -"+enabledDate_clicked);
+//
+//				  break;			
+//			   }
+//			}
+//		//select enabled highlited date	...if the flag 'dateSelected' is false (not true)
+//			if(!dateSelected)
+//			{
+//				logger.log(LogStatus.INFO, "6.................highlited date nnoo  -"+enabledDate_clicked);
+//
+//				click(fromCalender_Date_enabled_Highlited, driver, logger);
+//				enabledDate_clicked =fromCalender_Date_enabled_Highlited.getText();
+//				
+//				logger.log(LogStatus.INFO, "7.................highlited date clicked  -"+enabledDate_clicked);
+//
+//
+//			}
+//		 }//for loop close...date selection is complete
+//		
+//		
+//
+//		logger.log(LogStatus.INFO,
+//				"selected from date-" + enabledDate_clicked + "-" + calendarMonth + "-" + calendarYear);
+//		
+//	}//try block close...if encountered any exception while selecting date BELOW log will be displayed
+//	
+//	catch (Exception e) 
+//	{
+//		logger.log(LogStatus.INFO,	"Unable to select a date");
+//		logger.log(LogStatus.INFO,	"Captured exception is -"+e);
+//	
+//	}
+//	logger.log(LogStatus.INFO, "8.................end...............");
+//
+//}
+	
+	
+	
+	
+	
+//	public void selectToDate2(int date, String monthString, int year) throws InterruptedException {
+//
+//		Thread.sleep(3000);
+//		logger.log(LogStatus.INFO, "selecting a date from to calendar");
+//
+//		String stringDate = Integer.toString(date);
+//		String stringYear = Integer.toString(year);
+//
+//		waitForPageLoaded(driver, logger);
+//		waitForElementToAppear(toCalenderIcon, driver, logger);
+//		scrollElementIntoMiddle(toCalenderIcon, driver);
+//		logger.log(LogStatus.INFO, "click to calendar icon");
+//		click(toCalenderIcon, driver, logger);
+//
+//		logger.log(LogStatus.INFO, "selecting to month and to year");
+//
+//		String calendarMonth = toMonth.getText();
+//		String calendarYear = toYear.getText();
+//
+//		while (!(calendarMonth.equals(monthString) && calendarYear.equals(stringYear))) {
+//			waitForElementToAppear(toCalenderPreviousButton, driver, logger);
+//			click(toCalenderPreviousButton, driver, logger);
+//			calendarMonth = toMonth.getText();
+//			calendarYear = toYear.getText();
+//		}
+//
+////		logger.log(LogStatus.INFO, "selected to month -" + calenderMonth + "\nselected to year -" + calenderYear);
+//		logger.log(LogStatus.INFO, "selecting to date");
+//
+//		//navigate through enabled dates only...loop will iterate for those count only
+//		int enabledDatesCount =	get_count_toCalendarEnabledDates();
+//
+//		String enabledDate_clicked=null;
+//		try
+//		{
+//			for (int dateIndex = 0; dateIndex < enabledDatesCount; dateIndex++) 
+//			{
+//				
+//				boolean dateSelected=false;
+//				
+//				//select enabled non highlited date
+//				for(WebElement enabledDatWE : toCalender_Dates_enabled_notHighlited) 
+//				{
+//					
+//				String enabledDate	= enabledDatWE.getText();
+//					
+//			    	if (enabledDate.equals(stringDate)) 
+//			    	{
+//					  click(enabledDatWE, driver, logger);
+//					  dateSelected=true;
+//					   enabledDate_clicked = enabledDatWE.getText();
+//					  break;			
+//				   }
+//				}
+//			//select enabled highlited date	...if the flag 'dateSelected' is false (not true)
+//				if(!dateSelected)
+//				{
+//					click(toCalender_Date_enabled_Highlited, driver, logger);
+//					enabledDate_clicked =toCalender_Date_enabled_Highlited.getText();
+//				}
+//			 }//for loop close...date selection is complete
+//			
+//			
+//
+//			logger.log(LogStatus.INFO,
+//					"selected from date-" + enabledDate_clicked + "-" + calendarMonth + "-" + calendarYear);
+//			
+//		}//try block close...if encountered any exception while selecting date BELOW log will be displayed
+//		
+//		catch (Exception e) 
+//		{
+//			logger.log(LogStatus.INFO,	"Unable to select a date");
+//			logger.log(LogStatus.INFO,	"Captured exception is -"+e);
+//		
+//		}
+//		
+//	}
+	
+	
+//old approach....to refer
+	
+	
+	
+	public void selectFromDate2(String stringDate, String monthString, String stringYear) throws InterruptedException {
 
 		logger.log(LogStatus.INFO, "selecting a date from date calendar");
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(fromCalenderIcon, driver, logger);
-//		scrollToWebElement(fromCalenderIcon, driver);
-		scrollUp(driver);
+		scrollElementIntoMiddle(fromCalenderIcon, driver);
 
 		logger.log(LogStatus.INFO, "click from calendar icon");
 		click(fromCalenderIcon, driver, logger);
@@ -640,24 +897,20 @@ public class TransactionHistoryPOM extends commonFunc {
 			calendarYear = fromYear.getText();
 		}
 
-//		logger.log(LogStatus.INFO, "selected from month -" + calenderMonth + " and from year -" + calenderYear);
 		logger.log(LogStatus.INFO, "selecting from date");
-
 		String calendarDateValue = null;
-
 		for (int dateIndex = 0; dateIndex < 35; dateIndex++) {
-			int datenum = (dateIndex + 1);
-			calendarDateValue = datesOfFromCalender.get(datenum).getText();
-			if (calendarDateValue.equals(stringDate)) {
-				click(datesOfFromCalender.get(datenum), driver, logger);
-//				logger.log(LogStatus.INFO, "selected from date-" + calendarDateValue);
+			calendarDateValue = datesOfFromCalender.get(dateIndex).getText();
+			if (calendarDateValue.equals(stringDate)) 
+			{
+				click(datesOfFromCalender.get(dateIndex), driver, logger);				
 				break;
 			}
 		}
-		logger.log(LogStatus.INFO,
-				"selected from date-" + calendarDateValue + "-" + calendarMonth + "-" + calendarYear);
-
+		logger.log(LogStatus.INFO, "selected to date-" + calendarDateValue + "-" + calendarMonth + "-" + calendarYear);
 	}
+
+
 
 	public void selectToDate2(int date, String monthString, int year) throws InterruptedException {
 
@@ -669,7 +922,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(toCalenderIcon, driver, logger);
-		scrollUp(driver);
+		scrollElementIntoMiddle(toCalenderIcon, driver);
 		logger.log(LogStatus.INFO, "click to calendar icon");
 		click(toCalenderIcon, driver, logger);
 
@@ -690,15 +943,13 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		String calendarDateValue = null;
 
-		for (int dateIndex = 1; dateIndex <= 35; dateIndex++) {
-			int datenum = (dateIndex + 1);
-
-			calendarDateValue = datesOfToCalender.get(datenum).getText();
-			if (calendarDateValue.equals(stringDate)) {
-				click(datesOfToCalender.get(datenum), driver, logger);
+		for (int dateIndex = 0; dateIndex < 35; dateIndex++) {
+			calendarDateValue = datesOfToCalender.get(dateIndex).getText();
+			if (calendarDateValue.equals(stringDate)) 
+			{
+				click(datesOfToCalender.get(dateIndex), driver, logger);
 				break;
 			}
-
 		}
 		logger.log(LogStatus.INFO, "selected to date-" + calendarDateValue + "-" + calendarMonth + "-" + calendarYear);
 	}
@@ -782,7 +1033,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(fromCalenderIcon, driver, logger);
-//		scrollToWebElement(fromCalenderIcon, driver);
+		scrollElementIntoMiddle(fromCalenderIcon, driver);
 
 		logger.log(LogStatus.INFO, "click from calendar icon");
 		click(fromCalenderIcon, driver, logger);
@@ -800,7 +1051,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(fromCalenderIcon, driver, logger);
-//		scrollToWebElement(fromCalenderIcon, driver);
+		scrollElementIntoMiddle(fromCalenderIcon, driver);
 
 		logger.log(LogStatus.INFO, "click from calendar icon");
 		click(fromCalenderIcon, driver, logger);
@@ -818,7 +1069,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(fromCalenderIcon, driver, logger);
-//		scrollToWebElement(fromCalenderIcon, driver);
+		scrollElementIntoMiddle(fromCalenderIcon, driver);
 
 		logger.log(LogStatus.INFO, "click from calendar icon");
 		click(fromCalenderIcon, driver, logger);
@@ -836,7 +1087,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(fromCalenderIcon, driver, logger);
-//		scrollToWebElement(fromCalenderIcon, driver);
+		scrollElementIntoMiddle(fromCalenderIcon, driver);
 
 		logger.log(LogStatus.INFO, "click from calendar icon");
 		click(fromCalenderIcon, driver, logger);
@@ -855,7 +1106,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(toCalenderIcon, driver, logger);
-//		scrollToWebElement(toCalenderIcon, driver);
+		scrollElementIntoMiddle(toCalenderIcon, driver);
 
 		logger.log(LogStatus.INFO, "click to calendar icon");
 		click(toCalenderIcon, driver, logger);
@@ -873,7 +1124,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(toCalenderIcon, driver, logger);
-//		scrollToWebElement(toCalenderIcon, driver);
+		scrollElementIntoMiddle(toCalenderIcon, driver);
 
 		logger.log(LogStatus.INFO, "click to calendar icon");
 		click(toCalenderIcon, driver, logger);
@@ -891,7 +1142,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(toCalenderIcon, driver, logger);
-//		scrollToWebElement(toCalenderIcon, driver);
+		scrollElementIntoMiddle(toCalenderIcon, driver);
 
 		logger.log(LogStatus.INFO, "click to calendar icon");
 		click(toCalenderIcon, driver, logger);
@@ -909,7 +1160,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(toCalenderIcon, driver, logger);
-//		scrollToWebElement(toCalenderIcon, driver);
+		scrollElementIntoMiddle(toCalenderIcon, driver);
 
 		logger.log(LogStatus.INFO, "click to calendar icon");
 		click(toCalenderIcon, driver, logger);
@@ -952,18 +1203,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		Boolean datainTable = validateALLTxnReportTableHasData();
 
-//	if(!datainTable) 
-//	{
-//		System.out.println("Table has NO data");
-//	
-//	}
-//	else
-//	{
-//	
-//		System.out.println("Table has data");	
-//		
-//	}
-
+		scrollElementIntoMiddle(fromCalenderIcon, driver);
 		click(fromCalenderIcon, driver, logger);
 		System.out.println("clicked from cal icon");
 		Thread.sleep(2000);
@@ -982,12 +1222,14 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	public int getTxnTable_columnNumbersHEAD() {
 		waitForPageLoaded(driver, logger);
+		scrollElementIntoMiddle(txnTable_head, driver);
 		return txnTable_columnsHEAD.size();
 	}
 
 //we calculate number of columns in first row...if col=1 (table has no data)...	
 	public int getTxnTable_columnsInFirstRow() {
 		waitForPageLoaded(driver, logger);
+		scrollElementIntoMiddle(txnTable_head, driver);
 		return txnTable_columnsInFirstRow.size();
 	}
 
@@ -1117,167 +1359,348 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	}
 
-//incomplete..............	
-	public void getTxnStatus() throws InterruptedException, IOException {
+	
+	
+	
+	
+	
+//incomplete........more info......
+	
+	
+	public void validateMoreInfoSideBarHeaderButtons() throws InterruptedException, IOException {
 
 		logger.log(LogStatus.INFO, "Getting transaction status.");
 
 		Boolean dataInTable = validateALLTxnReportTableHasData();
 //if table has data
-		if (dataInTable) 
-		{
+		if (dataInTable) {
 			// navigate through column header--------
 			int totalColumns = getTxnTable_columnNumbersHEAD();
-			for (int colWEindex = 0; colWEindex < totalColumns ; colWEindex++) 
-			{
-				//get column names (index is always less by 1 than column no.)
-				int colNo = (colWEindex+1);
-			
+			for (int colWEindex = 0; colWEindex < totalColumns; colWEindex++) {
+				// get column names (index is always less by 1 than column no.)
+				int colNo = (colWEindex + 1);
+
 				String colName = txnTable_columnsHEAD.get(colWEindex).getText().trim();
 
-				if (colName.equalsIgnoreCase("Status")) 
-				{
+				if (colName.equalsIgnoreCase("Status")) {
 					// navigate through each row and get STATUS of each row/txn.--------
 					int tableRowsCount = txnTable_rows.size();
-					for (int tableRowIndex = 0; tableRowIndex < tableRowsCount; tableRowIndex++) 
-					{
+					for (int tableRowIndex = 0; tableRowIndex < tableRowsCount; tableRowIndex++) {
 
-						// row number = INCREASE and column number = STATIC of column matching entered name
+						// row number = INCREASE and column number = STATIC of column matching entered
+						// name
 
-						int rowNo = (tableRowIndex+1);
-		
-						WebElement txnStatusWE = driver.findElement(By.xpath(
-								"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
-										+ rowNo + "]/td[" + colNo + "]"));
-						String statusText = txnStatusWE.getText().trim();
-						
-						logger.log(LogStatus.INFO, "Txn. No. -"+rowNo+"-"+statusText);
+						int rowNo = (tableRowIndex + 1);
 
-					//handle according to the txn. status
-	
-						String txnStatusOne ="Successful";
-						String txnStatusTwo ="Failed";
-						String txnStatusThree ="Pending";
-					    String txnStatusFour="Processing";
-						
+//						WebElement txnStatusWE = driver.findElement(By.xpath(
+//								"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
+//										+ rowNo + "]/td[" + colNo + "]"));
+//						String statusText = txnStatusWE.getText().trim();
+
+					String categoryText	= getTxnCategory(tableRowIndex);
+					String statusText	=	getTxnStatus(tableRowIndex);
+					
+					logger.log(LogStatus.INFO, "Transaction Number ------------>" + rowNo + " - " + statusText);
+
+						// txn. status list to handle....................
+
+						String txnStatusOne = "Successful";
+						String txnStatusTwo = "Failed";
+						String txnStatusThree = "Pending";
+						String txnStatusFour = "Processing";
+
 //open more info side menu bar
-						
-					 OpenMoreInfoOfTxnPopup(rowNo);
+
+						OpenMoreInfoOfTxnPopup(tableRowIndex);
 //validate - is more info side menu bar open
-					 
+
 						boolean isMoreInfoSideMenuOpen;
 
-					 isMoreInfoSideMenuOpen = isMoreInfoSideBarDisplayed();
-						
-					if(isMoreInfoSideMenuOpen)
-					{
-						//if more info side menu is open then compare txn. status and validate scenarios accordingly.................
-						if(statusText.equalsIgnoreCase(txnStatusOne)) //successful
-						{
-							//ASSERTION - validating buttons count-----------
-						int buttonsCount =	moreInfo_headersButtonsList_dmt.size();
-						String actualButtonsCount =	String.valueOf(buttonsCount);
-						String expectedButtonsCount ="1";
-						//compare button count.......
-						boolean ignoreCase=false;
-						boolean isCountMatching	= compareString(actualButtonsCount,expectedButtonsCount,ignoreCase, logger);
-				          	softAssert("More info side menu header buttons count for '"+txnStatusOne+"' txn. is-", actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
-				          	//ASSERTION - More info side menu PRINT button displayed-----------
-					        boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
-					        softAssertTrue("More info side menu PRINT button is displayed -", isPrintButtonDisp, logger);
-    
-						}
-						else if (statusText.equalsIgnoreCase(txnStatusTwo))//failed
-						{
-							//ASSERTION - validating buttons count-----------
-							int buttonsCount =	moreInfo_headersButtonsList_dmt.size();
-							String actualButtonsCount =	String.valueOf(buttonsCount);
-							String expectedButtonsCount ="1";
-							//compare button count.......
-							boolean ignoreCase=false;
-							boolean isCountMatching	= compareString(actualButtonsCount,expectedButtonsCount,ignoreCase, logger);
-					          	softAssert("More info side menu header buttons count for '"+txnStatusTwo+"' txn. is-", actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
-							
-						//ASSERTION - More info side menu PRINT button not displayed-----------
-					        boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
-					        softAssertFalse("More info side menu PRINT button is not displayed -", isPrintButtonDisp, logger);
-							
-						}
-						else if (statusText.equalsIgnoreCase(txnStatusThree))//pending
-						{
-							
-							//ASSERTION - validating buttons count-----------
-							int buttonsCount =	moreInfo_headersButtonsList_dmt.size();
-							String actualButtonsCount =	String.valueOf(buttonsCount);
-							String expectedButtonsCount ="1";
-							//compare button count.......
-							boolean ignoreCase=false;
-							boolean isCountMatching	= compareString(actualButtonsCount,expectedButtonsCount,ignoreCase, logger);
-					          	softAssert("More info side menu header buttons count for '"+txnStatusThree+"' txn. is-", actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
-							
-					        	//ASSERTION - More info side menu PRINT button not displayed-----------
-						        boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
-						        softAssertFalse("More info side menu PRINT button is not displayed -", isPrintButtonDisp, logger);	
-						}
-						else if (statusText.equalsIgnoreCase(txnStatusFour))//processing
-						{
-							//ASSERTION - validating buttons count-----------
-							int buttonsCount =	moreInfo_headersButtonsList_dmt.size();
-							String actualButtonsCount =	String.valueOf(buttonsCount);
-							String expectedButtonsCount ="1";
-							//compare button count.......
-							boolean ignoreCase=false;
-							boolean isCountMatching	= compareString(actualButtonsCount,expectedButtonsCount,ignoreCase, logger);
-					          	softAssert("More info side menu header buttons count for '"+txnStatusFour+"' txn. is-", actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
-							
-					        	//ASSERTION - More info side menu PRINT button not displayed-----------
-						        boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
-						        softAssertFalse("More info side menu PRINT button is not displayed -", isPrintButtonDisp, logger);
-							
-							
-						}
+						isMoreInfoSideMenuOpen = isMoreInfoSideBarDisplayed();
 
-						//if got other status than the handled status....print/log this info
-						else 
-						{
-							logger.log(LogStatus.INFO, "Transaction status is not -"+txnStatusOne+"/"+txnStatusTwo+"/"+txnStatusThree);
-							logger.log(LogStatus.INFO, "Transaction status is -"+statusText);
+						if (isMoreInfoSideMenuOpen) {
+							// if more info side menu is open then compare txn. status and validate
+							// scenarios accordingly.................
+							if (categoryText.equalsIgnoreCase("Telecom") && statusText.equalsIgnoreCase(txnStatusOne)) // cat - Telecom , status - successful
+							{
+								// ASSERTION - validating buttons count-----------
+								int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+								String actualButtonsCount = String.valueOf(buttonsCount);
+								String expectedButtonsCount = "1";
+								// compare button count.......
+								boolean ignoreCase = false;
+								boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+										ignoreCase, logger);
+								softAssert(
+										"More info side menu header buttons count for '" + txnStatusOne + "' txn. is-",
+										actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+								// ASSERTION - More info side menu PRINT button displayed-----------
+								boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+								softAssertTrue("More info side menu PRINT button is displayed -", isPrintButtonDisp,
+										logger);
+
+							} else if (statusText.equalsIgnoreCase(txnStatusTwo))// failed
+							{
+								// ASSERTION - validating buttons count-----------
+								int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+								String actualButtonsCount = String.valueOf(buttonsCount);
+								String expectedButtonsCount = "1";
+								// compare button count.......
+								boolean ignoreCase = false;
+								boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+										ignoreCase, logger);
+								softAssert(
+										"More info side menu header buttons count for '" + txnStatusTwo + "' txn. is-",
+										actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+
+								// ASSERTION - More info side menu PRINT button not displayed-----------
+								boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+								softAssertFalse("More info side menu PRINT button is not displayed -",
+										isPrintButtonDisp, logger);
+
+							} else if (statusText.equalsIgnoreCase(txnStatusThree))// pending
+							{
+
+								// ASSERTION - validating buttons count-----------
+								int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+								String actualButtonsCount = String.valueOf(buttonsCount);
+								String expectedButtonsCount = "1";
+								// compare button count.......
+								boolean ignoreCase = false;
+								boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+										ignoreCase, logger);
+								softAssert(
+										"More info side menu header buttons count for '" + txnStatusThree
+												+ "' txn. is-",
+										actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+
+								// ASSERTION - More info side menu PRINT button not displayed-----------
+								boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+								softAssertFalse("More info side menu PRINT button is not displayed -",
+										isPrintButtonDisp, logger);
+							} else if (statusText.equalsIgnoreCase(txnStatusFour))// processing
+							{
+								// ASSERTION - validating buttons count-----------
+								int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+								String actualButtonsCount = String.valueOf(buttonsCount);
+								String expectedButtonsCount = "1";
+								// compare button count.......
+								boolean ignoreCase = false;
+								boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+										ignoreCase, logger);
+								softAssert(
+										"More info side menu header buttons count for '" + txnStatusFour + "' txn. is-",
+										actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+
+								// ASSERTION - More info side menu PRINT button not displayed-----------
+								boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+								softAssertFalse("More info side menu PRINT button is not displayed -",
+										isPrintButtonDisp, logger);
+
+							}
+
+							// if got other status than the handled status....print/log this info
+							else {
+								logger.log(LogStatus.INFO, "Handled transaction status are -" + txnStatusOne + "/"
+										+ txnStatusTwo + "/" + txnStatusThree + "/" + txnStatusFour);
+								logger.log(LogStatus.INFO, "Captured transaction status is -" + statusText);
+							}
+
+							// after validating all for a txn ....close the more info side bar of that txn.
+
+							Thread.sleep(2000);
+							click_close_lastButton_moreInfoSideBar();
+
 						}
-				
-						//after validating all for a txn ....close the more info side bar of that txn.
+						// if----More info side menu is open...above actions will happens and
+						// close...........one loop completed HERE
+						else {
+							logger.log(LogStatus.INFO, "More info side menu is close...");
+						}
+					} // for loop close---all conditions are tested for txn. one
+
+				} // get column names----close
+			} // column head navigation----close
+		} // if table has data----close
+
+	}	
 	
-						Thread.sleep(2000);
-						click_close_lastButton_moreInfoSideBar();
-						
-					}
-				//if----More info side menu is open...above actions will happens and close...........one loop completed HERE	
-					else 
-					{
-						logger.log(LogStatus.INFO, "More info side menu is close...");
-				    }
-				}//for loop close---all conditions are tested for txn. one
-					
-		      }//get column names----close	
-			}//column head navigation----close
-		}//if table has data----close
-
-	}
+	
+	
+	
+	
+	
+//	public void validateMoreInfoSideBarHeaderButtons() throws InterruptedException, IOException {
+//
+//		logger.log(LogStatus.INFO, "Getting transaction status.");
+//
+//		Boolean dataInTable = validateALLTxnReportTableHasData();
+////if table has data
+//		if (dataInTable) {
+//			// navigate through column header--------
+//			int totalColumns = getTxnTable_columnNumbersHEAD();
+//			for (int colWEindex = 0; colWEindex < totalColumns; colWEindex++) {
+//				// get column names (index is always less by 1 than column no.)
+//				int colNo = (colWEindex + 1);
+//
+//				String colName = txnTable_columnsHEAD.get(colWEindex).getText().trim();
+//
+//				if (colName.equalsIgnoreCase("Status")) {
+//					// navigate through each row and get STATUS of each row/txn.--------
+//					int tableRowsCount = txnTable_rows.size();
+//					for (int tableRowIndex = 0; tableRowIndex < tableRowsCount; tableRowIndex++) {
+//
+//						// row number = INCREASE and column number = STATIC of column matching entered
+//						// name
+//
+//						int rowNo = (tableRowIndex + 1);
+//
+//						WebElement txnStatusWE = driver.findElement(By.xpath(
+//								"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
+//										+ rowNo + "]/td[" + colNo + "]"));
+//						String statusText = txnStatusWE.getText().trim();
+//
+//						logger.log(LogStatus.INFO, "Transaction Number ------------>" + rowNo + " - " + statusText);
+//
+//						// txn. status list to handle....................
+//
+//						String txnStatusOne = "Successful";
+//						String txnStatusTwo = "Failed";
+//						String txnStatusThree = "Pending";
+//						String txnStatusFour = "Processing";
+//
+////open more info side menu bar
+//
+//						OpenMoreInfoOfTxnPopup(tableRowIndex);
+////validate - is more info side menu bar open
+//
+//						boolean isMoreInfoSideMenuOpen;
+//
+//						isMoreInfoSideMenuOpen = isMoreInfoSideBarDisplayed();
+//
+//						if (isMoreInfoSideMenuOpen) {
+//							// if more info side menu is open then compare txn. status and validate
+//							// scenarios accordingly.................
+//							if (statusText.equalsIgnoreCase(txnStatusOne)) // successful
+//							{
+//								// ASSERTION - validating buttons count-----------
+//								int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+//								String actualButtonsCount = String.valueOf(buttonsCount);
+//								String expectedButtonsCount = "1";
+//								// compare button count.......
+//								boolean ignoreCase = false;
+//								boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+//										ignoreCase, logger);
+//								softAssert(
+//										"More info side menu header buttons count for '" + txnStatusOne + "' txn. is-",
+//										actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+//								// ASSERTION - More info side menu PRINT button displayed-----------
+//								boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+//								softAssertTrue("More info side menu PRINT button is displayed -", isPrintButtonDisp,
+//										logger);
+//
+//							} else if (statusText.equalsIgnoreCase(txnStatusTwo))// failed
+//							{
+//								// ASSERTION - validating buttons count-----------
+//								int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+//								String actualButtonsCount = String.valueOf(buttonsCount);
+//								String expectedButtonsCount = "1";
+//								// compare button count.......
+//								boolean ignoreCase = false;
+//								boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+//										ignoreCase, logger);
+//								softAssert(
+//										"More info side menu header buttons count for '" + txnStatusTwo + "' txn. is-",
+//										actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+//
+//								// ASSERTION - More info side menu PRINT button not displayed-----------
+//								boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+//								softAssertFalse("More info side menu PRINT button is not displayed -",
+//										isPrintButtonDisp, logger);
+//
+//							} else if (statusText.equalsIgnoreCase(txnStatusThree))// pending
+//							{
+//
+//								// ASSERTION - validating buttons count-----------
+//								int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+//								String actualButtonsCount = String.valueOf(buttonsCount);
+//								String expectedButtonsCount = "1";
+//								// compare button count.......
+//								boolean ignoreCase = false;
+//								boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+//										ignoreCase, logger);
+//								softAssert(
+//										"More info side menu header buttons count for '" + txnStatusThree
+//												+ "' txn. is-",
+//										actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+//
+//								// ASSERTION - More info side menu PRINT button not displayed-----------
+//								boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+//								softAssertFalse("More info side menu PRINT button is not displayed -",
+//										isPrintButtonDisp, logger);
+//							} else if (statusText.equalsIgnoreCase(txnStatusFour))// processing
+//							{
+//								// ASSERTION - validating buttons count-----------
+//								int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+//								String actualButtonsCount = String.valueOf(buttonsCount);
+//								String expectedButtonsCount = "1";
+//								// compare button count.......
+//								boolean ignoreCase = false;
+//								boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+//										ignoreCase, logger);
+//								softAssert(
+//										"More info side menu header buttons count for '" + txnStatusFour + "' txn. is-",
+//										actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+//
+//								// ASSERTION - More info side menu PRINT button not displayed-----------
+//								boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+//								softAssertFalse("More info side menu PRINT button is not displayed -",
+//										isPrintButtonDisp, logger);
+//
+//							}
+//
+//							// if got other status than the handled status....print/log this info
+//							else {
+//								logger.log(LogStatus.INFO, "Handled transaction status are -" + txnStatusOne + "/"
+//										+ txnStatusTwo + "/" + txnStatusThree + "/" + txnStatusFour);
+//								logger.log(LogStatus.INFO, "Captured transaction status is -" + statusText);
+//							}
+//
+//							// after validating all for a txn ....close the more info side bar of that txn.
+//
+//							Thread.sleep(2000);
+//							click_close_lastButton_moreInfoSideBar();
+//
+//						}
+//						// if----More info side menu is open...above actions will happens and
+//						// close...........one loop completed HERE
+//						else {
+//							logger.log(LogStatus.INFO, "More info side menu is close...");
+//						}
+//					} // for loop close---all conditions are tested for txn. one
+//
+//				} // get column names----close
+//			} // column head navigation----close
+//		} // if table has data----close
+//
+//	}
 
 	public boolean validateALLTxnReportTableHasData() {
 
+		logger.log(LogStatus.INFO, "Validate txn. report table has data or not.");
+
 		waitForPageLoaded(driver, logger);
+//scroll to column head		
+		scrollElementIntoMiddle(txnTable_head, driver);
 		int tableColumnsInFirstRow = txnTable_columnsInFirstRow.size();
 
 		Boolean tableHasData;
 
 		if (tableColumnsInFirstRow > 1) {
 
-			logger.log(LogStatus.INFO, "Table has data");
 			tableHasData = true;
 
 		} else {
-
-			logger.log(LogStatus.INFO, "Table has no data");
 			tableHasData = false;
 		}
 
@@ -1287,10 +1710,14 @@ public class TransactionHistoryPOM extends commonFunc {
 	public String getTxnTable_messageIfNoTableData() {
 
 		logger.log(LogStatus.INFO, "Capturing message displayed if table has no data.");
+
 		int columnsNumbersInFirstRow = getTxnTable_columnsInFirstRow();
 
 		String txnTableFirstRowFirstCol_Text = null;
+		// columns in 1st row =1 means...no data ...only text message is displayed (if
+		// any)
 		if (columnsNumbersInFirstRow == 1) {
+
 			txnTableFirstRowFirstCol_Text = txnTable_columnsInFirstRow.get(0).getText();
 			logger.log(LogStatus.INFO,
 					"Captured message displayed if table has no data is -" + txnTableFirstRowFirstCol_Text);
@@ -1298,26 +1725,38 @@ public class TransactionHistoryPOM extends commonFunc {
 		return txnTableFirstRowFirstCol_Text;
 	}
 
+//write one method to get/fetch data from the column...................
+//1...sr no	
 	public String getTxnSrNo(int rowNumIndex) {
 
 		int rowNum = (rowNumIndex + 1);
+
+		// need to pass tr number but in loop we pass index number that's why get index
+		// num as method parameter and pass td number in table XPATH
 		WebElement txnTable_row = driver.findElement(By.xpath(
 				"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
 						+ rowNum + "]/td[1]"));
 
 		waitForElementToAppear(txnTable_row, driver, logger);
-		scrollToWebElement(txnTable_row, driver);
-
+		scrollElementIntoMiddle(txnTable_row, driver);
 		return txnTable_row.getText();
 
 	}
 
+//2...tid
+	public void getTxnTID(int rowNumIndex) {
+
+	}
+
+//3...inventory...cat,service,operator	
 	public String getTxnService(int rowNumIndex) {
 
 		int rowNum = (rowNumIndex + 1);
 
 		WebElement txn_service = driver
 				.findElement(By.xpath("//table[@id='pr_id_13-table']/tbody/tr[" + rowNum + "]/td[3]/span[1]"));
+		waitForElementToAppear(txn_service, driver, logger);
+		scrollElementIntoMiddle(txn_service, driver);
 		String serviceOfTxn = txn_service.getText();
 		return serviceOfTxn;
 	}
@@ -1327,6 +1766,8 @@ public class TransactionHistoryPOM extends commonFunc {
 		int rowNum = (rowNumIndex + 1);
 		WebElement txn_category = driver
 				.findElement(By.xpath("//table[@id='pr_id_13-table']/tbody/tr[" + rowNum + "]/td[3]/span[2]"));
+		waitForElementToAppear(txn_category, driver, logger);
+		scrollElementIntoMiddle(txn_category, driver);
 		String categoryOfTxn = txn_category.getText();
 		return categoryOfTxn;
 	}
@@ -1336,39 +1777,82 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		WebElement txn_operator = driver
 				.findElement(By.xpath("//table[@id='pr_id_13-table']/tbody/tr[" + rowNum + "]/td[3]/span[3]"));
+
+		waitForElementToAppear(txn_operator, driver, logger);
+		scrollElementIntoMiddle(txn_operator, driver);
 		String operatorOfTxn = txn_operator.getText();
 		return operatorOfTxn;
+	}
+
+	// 4...mob number
+	public void getTxnMobNumber(int rowNumIndex) {
+
+	}
+
+	// 5...amount
+	public void getTxnAmount(int rowNumIndex) {
+
+	}
+
+	// 6...totalAmount
+	public void getTxnTotalAmount(int rowNumIndex) {
+
+	}
+
+	// 7...status
+	public String getTxnStatus(int rowNumIndex) {
+		
+		int rowNum = (rowNumIndex + 1);
+
+		WebElement txn_status = driver
+				.findElement(By.xpath("//table[@id='pr_id_13-table']/tbody/tr[" + rowNum + "]/td[7]/span"));
+
+		waitForElementToAppear(txn_status, driver, logger);
+		scrollElementIntoMiddle(txn_status, driver);
+		String statusOfTxn = txn_status.getText();
+		return statusOfTxn;
+		
+
+	}
+
+	// 8...date
+	public void getTxnDate(int rowNumIndex) {
+
+	}
+
+	// 9...is settled value
+	public void getTxnIsSettled(int rowNumIndex) {
+
 	}
 
 //3.ALL TRANSACTION TABLE methods END ##################################################################################
 
 //4.MORE INFO side bar methods START ##################################################################################
 
-	public void OpenMoreInfoOfTxnPopup(int txnNo) throws InterruptedException, IOException {
-		
+	// 10...moreInfo
+	public void OpenMoreInfoOfTxnPopup(int txnNoIndex) throws InterruptedException, IOException {
+
+		int txnNo = (txnNoIndex + 1);
 //validate if table has data...before opening more info side menu bar-----
-		
+
 		logger.log(LogStatus.INFO, "Open 'More info.' side bar of the transaction");
 
-		Boolean tableHasData = validateALLTxnReportTableHasData();
-		
-			int colNos = getTxnTable_columnNumbersHEAD(); // last column has 'more info (meatball)' icon so last column
-															// number should be used
+		int colNos = getTxnTable_columnNumbersHEAD(); // last column has 'more info (meatball)' icon so last column
+														// number should be used
 
-			WebElement moreInfoIcon = driver.findElement(By.xpath(
-					"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
-							+ txnNo + "]/td[" + colNos + "]/a/i"));
+		WebElement moreInfoIcon = driver.findElement(By.xpath(
+				"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
+						+ txnNo + "]/td[" + colNos + "]/a/i"));
 
-			waitForPageLoaded(driver, logger);
-			waitToBeClickable(moreInfoIcon, driver);
-//			scrollToWebElement(moreInfoIcon, driver);
-			scrollElementIntoMiddle(moreInfoIcon, driver);
-			logger.log(LogStatus.INFO, "Click more info (meatball) icon OPEN");
-			click(moreInfoIcon, driver, logger);
-			highlightElement(moreInfoIcon, "Red", driver, logger);
-			screenshotInReport("More Info side menu bar is open of txn. no. -"+txnNo, driver, logger);
-			Thread.sleep(2000);
-		
+		waitForPageLoaded(driver, logger);
+		waitToBeClickable(moreInfoIcon, driver);
+		scrollElementIntoMiddle(moreInfoIcon, driver);
+		logger.log(LogStatus.INFO, "Click more info (meatball) icon OPEN");
+		click(moreInfoIcon, driver, logger);
+		highlightElement(moreInfoIcon, "Red", driver, logger);
+		screenshotInReport("More Info side menu bar is open of txn. no. -" + txnNo, driver, logger);
+		Thread.sleep(2000);
+
 	}
 
 	public void click_close_lastButton_moreInfoSideBar() throws InterruptedException {
@@ -1405,10 +1889,9 @@ public class TransactionHistoryPOM extends commonFunc {
 
 // new logic ........
 
+//		scrollElementIntoMiddle(sideBarHeader_textORTitle, driver);
 		int moreInfoHeaderButtonsNo = moreInfo_headersButtonsList_dmt.size();
-
 		int moreInfoHeaderLastButtonIndex = (moreInfoHeaderButtonsNo - 1);
-
 		try {
 			for (int a = 0; a <= moreInfoHeaderLastButtonIndex; a++) {
 
@@ -1417,7 +1900,7 @@ public class TransactionHistoryPOM extends commonFunc {
 				if (moreInfoHeaderButtonsNo == 1) {
 					logger.log(LogStatus.INFO, "More Info side bar has ONE button only");
 					logger.log(LogStatus.INFO, "Click close / 'X' button");
-
+//if button is 1 it has index 0
 					WebElement requiredButton_close = moreInfo_headersButtonsList_dmt.get(a);
 					click(requiredButton_close, driver, logger);
 				}
@@ -1426,23 +1909,24 @@ public class TransactionHistoryPOM extends commonFunc {
 					logger.log(LogStatus.INFO, "More Info side bar has MORE buttons ");
 					// ASSUMPTION / CONDITION - close button must be LAST button.........
 					// passing STATIC last index no as 'moreInfoHeaderLastButton'
+//if buttons are more than 1 navigate/click to last button
+
 					WebElement requiredButton_LAST = moreInfo_headersButtonsList_dmt.get(moreInfoHeaderLastButtonIndex);
 					logger.log(LogStatus.INFO, "Click close / 'X' (Last) button");
 					click(requiredButton_LAST, driver, logger);
 				}
 			}
 		} catch (Exception e) {
-			logger.log(LogStatus.INFO, "Failed to click the close button from more info side bar.");
+			logger.log(LogStatus.INFO,
+					"Failed to click the close button from more info side bar.</br>CLOSE button is not the last button as LOGIC applied.");
 			logger.log(LogStatus.INFO, "Captured exception is -" + e);
 		}
 	}
 
 	public void click_firstButton_moreInfoSideBar() throws InterruptedException {
-
+//		scrollElementIntoMiddle(sideBarHeader_textORTitle, driver);
 		int moreInfoHeaderButtonsNo = moreInfo_headersButtonsList_dmt.size();
-
 		int moreInfoHeaderLastButtonIndex = (moreInfoHeaderButtonsNo - 1);
-
 		String firstButtoNname = null;
 		try {
 
@@ -1461,7 +1945,6 @@ public class TransactionHistoryPOM extends commonFunc {
 				}
 			} else {
 				logger.log(LogStatus.INFO, "Click first button FAILED...button is unavailable");
-
 			}
 
 		} catch (Exception e) {
@@ -1474,23 +1957,17 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 	public void click_secondButton_moreInfoSideBar() throws InterruptedException {
-
+//		scrollElementIntoMiddle(sideBarHeader_textORTitle, driver);
 		int moreInfoHeaderButtonsNo = moreInfo_headersButtonsList_dmt.size();
-
 		int moreInfoHeaderLastButtonIndex = (moreInfoHeaderButtonsNo - 1);
-
 		String secondButtoNname = null;
-
 		try {
-
 			if (moreInfoHeaderButtonsNo > 1) {
 				for (int a = 0; a <= moreInfoHeaderLastButtonIndex; a++) {
-
 					logger.log(LogStatus.INFO, "More Info side bar has MORE buttons ");
 					// get second button name to LOG in REPORT
 					secondButtoNname = moreInfo_headersButtonsList_dmt.get(1).getText().trim();
 					logger.log(LogStatus.INFO, "First button name is -" + secondButtoNname);
-
 					// passing static index no 1...to get SECOND button only
 					WebElement requiredButton_TWO = moreInfo_headersButtonsList_dmt.get(1);
 					logger.log(LogStatus.INFO, "Click SECOND button name -" + secondButtoNname);
@@ -1509,10 +1986,11 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	}
 
-	public Boolean moreInfo_headerHasOneButton() {
+	public boolean moreInfo_headerHasOneButton() {
 
 		logger.log(LogStatus.INFO, "Validating - more info side bar has ONE button only");
-
+		waitForElementToAppear(sideBarHeader_textORTitle, driver, logger);
+//		scrollElementIntoMiddle(sideBarHeader_textORTitle, driver);
 		int moreInfoHeaderButtonsCount = moreInfo_headersButtonsList_dmt.size();
 		Boolean headerHasOneButton;
 
@@ -1524,92 +2002,6 @@ public class TransactionHistoryPOM extends commonFunc {
 			headerHasOneButton = false;
 		}
 		return headerHasOneButton;
-	}
-
-	public Boolean isMoreInfoSideBarDisplayed() throws InterruptedException, IOException {
-
-		Boolean isMoreInfoSideBarDisplayed;
-
-		Boolean moreInfoSideMenuIsOpen = isPresentAndDisplayed(moreinfoSideBar, driver, logger);
-		Thread.sleep(1000);
-
-		if (moreInfoSideMenuIsOpen) {
-			logger.log(LogStatus.INFO, "More Info side bar is displayed/open.");
-			highlightElement(moreinfoSideBar, "Red", driver, logger);
-			screenshotInReport("More Info side bar is displayed -", driver, logger);
-			isMoreInfoSideBarDisplayed = true;
-		} else {
-			logger.log(LogStatus.INFO, "More Info side bar is not displayed/open.");
-			screenshotInReport("More Info side bar is not displayed -", driver, logger);
-			isMoreInfoSideBarDisplayed = false;
-		}
-
-		return isMoreInfoSideBarDisplayed;
-	}
-
-	// i think no use of this method
-//	public Boolean isMoreInfoOfTxnPopup_Displayed(int txnNo) throws InterruptedException {
-//
-//		Boolean tableHasData = validateALLTxnReportTableHasData();
-//		Boolean flag;
-//
-//		if (tableHasData) {
-//
-//			int colNos = getTxnTable_columnNumbersHEAD(); // last column has 'more info (meatball)' icon so last column
-//															// number should be used
-////if side menu is open this (...) web element is not found
-//			WebElement moreInfoIcon = driver.findElement(By.xpath(
-//					"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
-//							+ txnNo + "]/td[" + colNos + "]/a/i"));
-//
-//			waitForPageLoaded(driver, logger);
-//			logger.log(LogStatus.INFO, "Click on more info (meatball) icon OPEN");
-//			Thread.sleep(2000);
-//			click(moreInfoIcon, driver, logger);
-//			Thread.sleep(2000);
-//			flag = true;
-//
-//		} else {
-//			logger.log(LogStatus.INFO,
-//					"validateMoreInfoOfTxn is failed.\nTABLE -> No Records Found.\nThe \"All Transactions Report\" tableHasData has no data");
-//			flag = false;
-//		}
-//
-//		return flag;
-//	}
-
-	public int getMoreInfoTable_paramNameListSize() {
-		int num = moreInfoTable_paramNameList.size();
-		return num;
-	}
-
-	public int getMoreInfoTable_paramValueListSize() {
-		int num = moreInfoTable_paramValueList.size();
-		return num;
-	}
-
-	public String getMoreInfoTable_paramName(int paramNo) {
-		return moreInfoTable_paramNameList.get(paramNo).getText();
-	}
-
-	public String getMoreInfoTable_paramValue(int paramValue) {
-		return moreInfoTable_paramValueList.get(paramValue).getText();
-	}
-
-//AEPS tab...............................
-
-	public void click_printButton_aepsMoreInfoSideBar() {
-
-		waitForElementToAppear(printButton_moreInfoSideBar, driver, logger);
-
-		try {
-
-			logger.log(LogStatus.INFO, "Click print button at AEPS transaction more info side bar");
-			click(printButton_moreInfoSideBar, driver, logger);
-		} catch (Exception e) {
-
-			logger.log(LogStatus.INFO, "Failed click print button at AEPS transaction more info side bar");
-		}
 	}
 
 	public boolean moreInfoSideMenu_isPrintButtonDisplayed() throws IOException {
@@ -1631,6 +2023,45 @@ public class TransactionHistoryPOM extends commonFunc {
 			printButtonDisp = false;
 		}
 		return printButtonDisp;
+	}
+
+	public boolean isMoreInfoSideBarDisplayed() throws InterruptedException, IOException {
+
+		boolean isMoreInfoSideBarDisplayed;
+
+		boolean moreInfoSideMenuIsOpen = isPresentAndDisplayed(moreinfoSideBar, driver, logger);
+		Thread.sleep(1000);
+
+		if (moreInfoSideMenuIsOpen) {
+			logger.log(LogStatus.INFO, "More Info side bar is displayed/open.");
+			highlightElement(moreinfoSideBar, "Red", driver, logger);
+			screenshotInReport("More Info side bar is displayed -", driver, logger);
+			isMoreInfoSideBarDisplayed = true;
+		} else {
+			logger.log(LogStatus.INFO, "More Info side bar is not displayed/open.");
+			screenshotInReport("More Info side bar is not displayed -", driver, logger);
+			isMoreInfoSideBarDisplayed = false;
+		}
+
+		return isMoreInfoSideBarDisplayed;
+	}
+
+	public int getMoreInfoTable_paramNameListSize() {
+		int num = moreInfoTable_paramNameList.size();
+		return num;
+	}
+
+	public int getMoreInfoTable_paramValueListSize() {
+		int num = moreInfoTable_paramValueList.size();
+		return num;
+	}
+
+	public String getMoreInfoTable_paramName(int paramNoIndex) {
+		return moreInfoTable_paramNameList.get(paramNoIndex).getText();
+	}
+
+	public String getMoreInfoTable_paramValue(int paramValueIndex) {
+		return moreInfoTable_paramValueList.get(paramValueIndex).getText();
 	}
 
 //4.MORE INFO side bar methods END ##################################################################################
@@ -1695,13 +2126,11 @@ public class TransactionHistoryPOM extends commonFunc {
 //			
 //		}
 //		
+
+		scrollElementIntoMiddle(paginationWebElement, driver);
 		int paginationButtons = paginationsAllButtons.size();
-
-		System.out.println("pagination buttons numbers -" + paginationButtons);
-
 		for (int a = 0; a < paginationButtons; a++) {
-
-			Boolean buttonActive = paginationsAllButtons.get(a).isEnabled();
+			boolean buttonActive = paginationsAllButtons.get(a).isEnabled();
 
 			if (buttonActive) {
 
@@ -1711,17 +2140,20 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 	}
 
+//need to update....handle a scenario-------------
 	public Boolean isDataFetchedAccordingToPageSizeSelected() throws IOException, InterruptedException {
 // WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI S SCENARIO ????????????????????????????????????????????????????????????????????????
 //FOR AASERTION++++++if table has less data than page data size....how to know the VALID data count++++++++++++++++++++++++++++++++++++++++++++++...................?????????????????????????????????????	
 
 		waitForPageLoaded(driver, logger);
-		Boolean dataInTable = validateALLTxnReportTableHasData();
+		boolean dataInTable = validateALLTxnReportTableHasData();
+// Boolean vs boolean+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
 		Boolean flag = null;
 // if table has data		
 		if (dataInTable) {
 
-			scrollToWebElement(pageSizeDropdown, driver);
+			scrollElementIntoMiddle(pageSizeDropdown, driver);
+
 			// table data count
 			int tableDataCount = getTxnTable_rowNumbers();
 			// page size selected
@@ -1732,27 +2164,37 @@ public class TransactionHistoryPOM extends commonFunc {
 			if (tableDataCount >= pageDataSizeSelected) {
 
 				logger.log(LogStatus.INFO, "table data >= page size selected");
-				logger.log(LogStatus.INFO,
-						"table Data Count -" + tableDataCount + "</br>page Size Selected -" + pageDataSizeSelected);
 
 				if (tableDataCount == pageDataSizeSelected) {
+					logger.log(LogStatus.INFO, "table data count = page size selected");
+					logger.log(LogStatus.INFO,
+							"Table Data Count -" + tableDataCount + "</br>Page Size Selected -" + pageDataSizeSelected);
 					flag = true;
 				} else {
-					// WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI
-					// S SCENARIO
-					// ????????????????????????????????????????????????????????????????????????
-
-					flag = true;
+					logger.log(LogStatus.INFO, "table data count is not matching with the page size selected");
+					logger.log(LogStatus.INFO,
+							"Table Data Count -" + tableDataCount + "</br>Page Size Selected -" + pageDataSizeSelected);
+					flag = false;
 
 				}
-				return flag;
+				// return flag;
 			}
 			// => scenario 2- table has data - data is less than page size selected
 
 			else {
-				logger.log(LogStatus.INFO, "table data < page size selected");
+
+				// WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI
+				// S SCENARIO
+				// ????????????????????????????????????????????????????????????????????????
+
+				logger.log(LogStatus.INFO,
+						"table data < page size selected.</br>FIND A WAY TO ASSERT THIS SCENARIO.....PLEASE");
+
 				logger.log(LogStatus.INFO,
 						"table Data Count -" + tableDataCount + "</br>page Size Selected -" + pageDataSizeSelected);
+
+				flag = null;
+				logger.log(LogStatus.INFO, "Returning -" + flag);
 
 //FOR AASERTION++++++if table has less data than page data size....how to know the VALID data count++++++++++++++++++++++++++++++++++++++++++++++...................?????????????????????????????????????	
 
@@ -1783,7 +2225,10 @@ public class TransactionHistoryPOM extends commonFunc {
 // if table has no data
 		{
 			logger.log(LogStatus.INFO, "Table has no data.... ");
+
 		}
+
+		// what will return if table has no data....
 		return flag;
 
 	}
@@ -1796,18 +2241,25 @@ public class TransactionHistoryPOM extends commonFunc {
 		// 1.check - table has data or not
 		Thread.sleep(2000);
 		waitForPageLoaded(driver, logger);
-		Boolean dataInTable = validateALLTxnReportTableHasData();
+		boolean dataInTable = validateALLTxnReportTableHasData();
+
+		boolean ignoreCase, firstNumIsmatching, lastNumIsmatching, totalIsmatchingInTableHasNoData;
+		String firstNum = null, lastNum = null, totalTxns = null;
 
 //1a. if table has data
 		if (dataInTable) {
 
 			// find first and last number of record according to TABLE
 
-			String firstNumFromTable = getTxnSrNo(1);
+			// pasing 0 index number to get sr no of 1st tr / data
+			String firstNumFromTable = getTxnSrNo(0);
 			screenshotInReport("Capture Sr.No. of first Txn. -", driver, logger);
 
+			// 'getTxnTable_rowNumbers' method accepts intexNumber as it's parameter
+
 			int tableRows = getTxnTable_rowNumbers();
-			String lastNumFromtable = getTxnSrNo(tableRows);
+			int tableRowIndex = (tableRows - 1);
+			String lastNumFromtable = getTxnSrNo(tableRowIndex);
 
 			screenshotInReport("Capture Sr.No. of last Txn. -", driver, logger);
 
@@ -1815,9 +2267,9 @@ public class TransactionHistoryPOM extends commonFunc {
 
 			String msgAtPageBottom = getPage_paginationDataCountingMsg();
 			String[] splittedMsg = msgAtPageBottom.split(" ");// the index number of the numbers must be same (should
-			String firstNum = null;
-			String lastNum = null;
-			String totalTxns = null;
+			firstNum = null;
+			lastNum = null;
+			totalTxns = null;
 
 			for (int a = 0; a <= (splittedMsg.length - 1); a++) {
 
@@ -1839,40 +2291,59 @@ public class TransactionHistoryPOM extends commonFunc {
 							+ "</br>last no. in table -" + lastNumFromtable + "</br>last no.in message - " + lastNum
 							+ "</br>total in message -" + totalTxns);
 
-			boolean ignoreCase = false;
+			ignoreCase = false;
 
 			// assert - first number is matching or not
-			Boolean firstNumIsmatching = compareString(firstNumFromTable, firstNum, ignoreCase, logger);
+			firstNumIsmatching = compareString(firstNumFromTable, firstNum, ignoreCase, logger);
 			softAssert("validate-first number of record according to PAGE BOTTOM MESSAGE", firstNumFromTable, firstNum,
 					firstNumIsmatching, logger);
 			// assert - last number is matching or not
-			Boolean lastNumIsmatching = compareString(lastNumFromtable, lastNum, ignoreCase, logger);
+			lastNumIsmatching = compareString(lastNumFromtable, lastNum, ignoreCase, logger);
 			softAssert("validate-last number of record according to PAGE BOTTOM MESSAGE", lastNumFromtable, lastNum,
 					lastNumIsmatching, logger);
 		} else
 // 1b-if table has no data =>
 		{
 			logger.log(LogStatus.INFO, "Table has no data");
+
+			ignoreCase = false;
+//passing static value = 0 as table has no data....can't read sr.no. of txn as table has no txn./data
+			String firstNumFromTable = "0";
+			String lastNumFromtable = "0";
+			String totalNumFromtable = "0";
+
+			// assert - first number is matching or not
+			firstNumIsmatching = compareString(firstNumFromTable, firstNum, ignoreCase, logger);
+			softAssert("validate-first number of record according to PAGE BOTTOM MESSAGE", firstNumFromTable, firstNum,
+					firstNumIsmatching, logger);
+			// assert - last number is matching or not
+			lastNumIsmatching = compareString(lastNumFromtable, lastNum, ignoreCase, logger);
+			softAssert("validate-last number of record according to PAGE BOTTOM MESSAGE", lastNumFromtable, lastNum,
+					lastNumIsmatching, logger);
+
+			// assert - total number is matching or not
+			totalIsmatchingInTableHasNoData = compareString(totalNumFromtable, totalTxns, ignoreCase, logger);
+			softAssert("validate-total number of record according to PAGE BOTTOM MESSAGE", totalNumFromtable, totalTxns,
+					totalIsmatchingInTableHasNoData, logger);
 		}
 	}
 
-//4.PAGINATION (PAGE BOTTOM) methods........................
 	public String get_perPageDataSize() {
 
 		waitForElementToAppear(page_dataPerPageNumber, driver, logger);
-		scrollDown(driver);
+		scrollElementIntoMiddle(page_dataPerPageNumber, driver);
 
 		String dataPerPageNo = null;
 		try {
-			logger.log(LogStatus.INFO, "Fetch data per page number");
+			logger.log(LogStatus.INFO, "Fetch data count per page number");
 			dataPerPageNo = page_dataPerPageNumber.getText();
-			logger.log(LogStatus.INFO, "Fetched data per page number -" + dataPerPageNo);
+			logger.log(LogStatus.INFO, "Fetched data count per page number is -" + dataPerPageNo);
 
 			return dataPerPageNo;
 
 		} catch (Exception e) {
-			logger.log(LogStatus.INFO, e);
 			logger.log(LogStatus.INFO, "Data per page dropdown has no value");
+			logger.log(LogStatus.INFO, e);
 		}
 		return dataPerPageNo;
 
@@ -1883,10 +2354,10 @@ public class TransactionHistoryPOM extends commonFunc {
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(paginationWebElement, driver, logger);
 		logger.log(LogStatus.INFO, "scroll to pagination WebElement");
-		scrollToWebElement(paginationWebElement, driver);
+		scrollElementIntoMiddle(paginationWebElement, driver);
 //FIRST PAGE button is at ZERO index, so passing static value = 0			
 		WebElement firstPageIconElement = paginationsAllButtons.get(0);
-		Boolean buttonEnabled = firstPageIconElement.isEnabled();
+		boolean buttonEnabled = firstPageIconElement.isEnabled();
 		logger.log(LogStatus.INFO, "click first page button");
 		if (buttonEnabled) {
 			logger.log(LogStatus.INFO, "first page button is enabled -" + buttonEnabled);
@@ -1902,11 +2373,11 @@ public class TransactionHistoryPOM extends commonFunc {
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(paginationWebElement, driver, logger);
 		logger.log(LogStatus.INFO, "scroll to pagination WebElement");
-		scrollToWebElement(paginationWebElement, driver);
+		scrollElementIntoMiddle(paginationWebElement, driver);
 
 //PREVIOUS PAGE button is at ONE index, so passing static value = 1			
 		WebElement prevPageIconElement = paginationsAllButtons.get(1);
-		Boolean buttonEnabled = prevPageIconElement.isEnabled();
+		boolean buttonEnabled = prevPageIconElement.isEnabled();
 		logger.log(LogStatus.INFO, "click previous page button");
 		if (buttonEnabled) {
 			logger.log(LogStatus.INFO, "previous page button is enabled -" + buttonEnabled);
@@ -1921,16 +2392,19 @@ public class TransactionHistoryPOM extends commonFunc {
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(paginationWebElement, driver, logger);
 		logger.log(LogStatus.INFO, "scroll to pagination WebElement");
-		scrollToWebElement(paginationWebElement, driver);
+//		scrollElementIntoMiddle(paginationWebElement, driver);
+		scrollDown(driver);
+
 
 		// NEXT PAGE button is at TWO index, so passing static value = 2
 		WebElement nextPageIconElement = paginationsAllButtons.get(2);
-		Boolean buttonEnabled = nextPageIconElement.isEnabled();
+		boolean buttonEnabled = nextPageIconElement.isEnabled();
 
 		logger.log(LogStatus.INFO, "click next page button");
 
 		if (buttonEnabled) {
 			logger.log(LogStatus.INFO, "next page button is enabled -" + buttonEnabled);
+			scrollElementIntoMiddle(nextPageIconElement, driver);
 			click(nextPageIconElement, driver, logger);
 		} else {
 			logger.log(LogStatus.INFO, "next page button is DISABLED");
@@ -1942,11 +2416,13 @@ public class TransactionHistoryPOM extends commonFunc {
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(paginationWebElement, driver, logger);
 		logger.log(LogStatus.INFO, "scroll to pagination WebElement");
-		scrollToWebElement(paginationWebElement, driver);
+//		scrollElementIntoMiddle(paginationWebElement, driver);
+		scrollDown(driver);
+
 
 //LAST PAGE button is at THREE index, so passing static value = 3			
 		WebElement lastPageIconElement = paginationsAllButtons.get(3);
-		Boolean buttonEnabled = lastPageIconElement.isEnabled();
+		boolean buttonEnabled = lastPageIconElement.isEnabled();
 
 		logger.log(LogStatus.INFO, "click last page button");
 
@@ -1993,10 +2469,11 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	public void click_pageSizeDropdown() {
 
-		scrollDown(driver);
 		waitForElementToAppear(pageSizeDropdown, driver, logger);
 		logger.log(LogStatus.INFO, "scroll to page size dropdown");
-		scrollToWebElement(pageSizeDropdown, driver);
+	//	scrollElementIntoMiddle(pageSizeDropdown, driver);
+		scrollDown(driver);
+
 
 		logger.log(LogStatus.INFO, "Click on page size dropdown");
 		click(pageSizeDropdown, driver, logger);
@@ -2008,7 +2485,9 @@ public class TransactionHistoryPOM extends commonFunc {
 //below method used data sizes from the dropdown...if needed use same logic to fetch PAGE DATA SIZES
 
 		waitForElementToAppear(pageSizeDropdown, driver, logger);
-		scrollToWebElement(pageSizeDropdown, driver);
+//		scrollElementIntoMiddle(pageSizeDropdown, driver);
+		scrollDown(driver);
+
 //navigate and click on page size dropdown		
 		click_pageSizeDropdown();
 
@@ -2017,15 +2496,18 @@ public class TransactionHistoryPOM extends commonFunc {
 			if (dataPerPage == 10) {
 				waitForElementToAppear(perPageDataOptions.get(0), driver, logger);
 				logger.log(LogStatus.INFO, "Selected data per page -" + dataPerPage);
+				scrollElementIntoMiddle(perPageDataOptions.get(0), driver);
 				click(perPageDataOptions.get(0), driver, logger);
 
 			} else if (dataPerPage == 25) {
 				waitForElementToAppear(perPageDataOptions.get(1), driver, logger);
 				logger.log(LogStatus.INFO, "Selected data per page -" + dataPerPage);
+				scrollElementIntoMiddle(perPageDataOptions.get(1), driver);
 				click(perPageDataOptions.get(1), driver, logger);
 			} else if (dataPerPage == 50) {
 				waitForElementToAppear(perPageDataOptions.get(2), driver, logger);
 				logger.log(LogStatus.INFO, "Selected data per page -" + dataPerPage);
+				scrollElementIntoMiddle(perPageDataOptions.get(2), driver);
 				click(perPageDataOptions.get(2), driver, logger);
 			} else {
 				logger.log(LogStatus.INFO, "Please enter a valid data size per page\n entered value is -" + dataPerPage
@@ -2044,43 +2526,55 @@ public class TransactionHistoryPOM extends commonFunc {
 	public void validate_dataPerPageWithAllPageSizes() throws InterruptedException, IOException {
 
 		logger.log(LogStatus.INFO, "validating data Per Page With All Page Sizes");
+//----------------------------------------
+
+//add ths to a method to get ' pageSizeOptionsCount'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++		
 
 		// scroll and click on page size dropdown to get numbers of the options
 		click_pageSizeDropdown();
 		// select a value from dropdown (index base so start from 0)
+		scrollElementIntoMiddle(paginationWebElement, driver);
 		int pageSizeDropdownListNumbers = perPageDataOptions.size();
 
+		Thread.sleep(2000);
+//----------------------------------------------------		
 		String currentPageDatSize;
 
 		// for loop will fetch all options available in dropdown
-		for (int a = 0; a <= (pageSizeDropdownListNumbers - 1); a++) {
-			// select data size option 1 (according to index no.)
-			scrollDown(driver);
-//			scrollToWebElement(pageSizeDropdown, driver);
-			waitForElementToAppear(perPageDataOptions.get(a), driver, logger);
-			scrollToWebElement(perPageDataOptions.get(a), driver);
-//to logger--- data size option 1 (according to index no.)
+		for (int a = 0; a < pageSizeDropdownListNumbers; a++) {
+
+			click_pageSizeDropdown();
+			// scroll to next page size as we will click on next page size in next ITERATION
+			scrollElementIntoMiddle(perPageDataOptions.get(a), driver);
+
+//			// select data size option 1 (according to index no.)
+//			waitForElementToAppear(perPageDataOptions.get(a), driver, logger);
+//		       scrollElementIntoMiddle(perPageDataOptions.get(a), driver);
+////to logger--- data size option 1 (according to index no.)
+
 			currentPageDatSize = perPageDataOptions.get(a).getText();
 			logger.log(LogStatus.INFO, "Selected data per page -" + currentPageDatSize);
 //click data size option 1 (according to index no.) 
 			click(perPageDataOptions.get(a), driver, logger);
 			logger.log(LogStatus.INFO, "clicked/selected page size =" + perPageDataOptions.get(a).getText());
-			System.out.println("selected page size  -" + perPageDataOptions.get(a).getText());
+
+			waitForPageLoaded(driver, logger);
+
 			Thread.sleep(2000);
 // m1...
 //			validate_pageSizeSelectedAndDataPerPageFetched();
 //m2...			
 			validate_tableDataAndTextMessage();
 //wait for table loading after changing the data numbers displayed on page
-			logger.log(LogStatus.INFO, "validation done (loop no. completed) -" + (a + 1));
-
-			waitForPageLoaded(driver, logger);
-			scrollToWebElement(pageSizeDropdown, driver);
-			// click page size dropdown to get data size OPTIONS for second loop (if
-			// dropdown is close the loop
-			click_pageSizeDropdown();
-			// scroll to next page size as we will click on next page size in next ITERATION
-			scrollToWebElement(perPageDataOptions.get(a), driver);
+//			logger.log(LogStatus.INFO, "validation done (loop no. completed) -" + (a + 1));
+//
+//			waitForPageLoaded(driver, logger);
+//		       scrollElementIntoMiddle(pageSizeDropdown, driver);
+//			// click page size dropdown to get data size OPTIONS for second loop (if
+//			// dropdown is close the loop
+//			click_pageSizeDropdown();
+//			// scroll to next page size as we will click on next page size in next ITERATION
+//		       scrollElementIntoMiddle(perPageDataOptions.get(a), driver);
 
 		}
 
@@ -2088,6 +2582,8 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	public String getCurentPageNumber() {
 		waitForElementToAppear(curentPageNumber, driver, logger);
+//		scrollElementIntoMiddle(curentPageNumber, driver);
+		scrollDown(driver);
 		String pageNo = curentPageNumber.getText();
 		logger.log(LogStatus.INFO, "Current page number is -" + pageNo);
 		return pageNo;
@@ -2096,18 +2592,20 @@ public class TransactionHistoryPOM extends commonFunc {
 	public String getPage_paginationDataCountingMsg() {
 
 		waitForElementToAppear(page_paginationDataCountingMsg, driver, logger);
-		scrollToWebElement(page_paginationDataCountingMsg, driver);
+//		scrollElementIntoMiddle(page_paginationDataCountingMsg, driver);
+		scrollDown(driver);
 		logger.log(LogStatus.INFO, "Pagination data counting msg. is -" + page_paginationDataCountingMsg.getText());
 		return page_paginationDataCountingMsg.getText();
 	}
 
+//incomplete............	
 	public int getPageCountToNavigateDisplayedAtPageBottom() {
 		// 1.check - table has data or not
 		waitForPageLoaded(driver, logger);
-		Boolean dataInTable = validateALLTxnReportTableHasData();
+		boolean dataInTable = validateALLTxnReportTableHasData();
 
 		waitForElementToAppear(paginationWebElement, driver, logger);
-		scrollToWebElement(paginationWebElement, driver);
+		scrollElementIntoMiddle(paginationWebElement, driver);
 
 		if (dataInTable) {
 			int pageNumbersCount = pageNumbersCountDisplayedAtPageBottom.size();
@@ -2115,8 +2613,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		} else
 		// 1b-no =>
 		{
-			System.out.println("no data in table....");
-			logger.log(LogStatus.INFO, "no data in table.... ");
+			logger.log(LogStatus.INFO, "No data in table.... ");
 		}
 		return 0;
 	}
@@ -2124,6 +2621,22 @@ public class TransactionHistoryPOM extends commonFunc {
 	public void get_perPageDataOptions(int indexNo) {
 
 		perPageDataOptions.get(indexNo);
+	}
+
+	// AEPS tab...............................
+
+	public void click_printButton_aepsMoreInfoSideBar() {
+
+		waitForElementToAppear(printButton_moreInfoSideBar, driver, logger);
+
+		try {
+
+			logger.log(LogStatus.INFO, "Click print button at AEPS transaction more info side bar");
+			click(printButton_moreInfoSideBar, driver, logger);
+		} catch (Exception e) {
+
+			logger.log(LogStatus.INFO, "Failed click print button at AEPS transaction more info side bar");
+		}
 	}
 
 //methods to reconsider...............	
