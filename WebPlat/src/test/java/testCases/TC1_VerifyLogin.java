@@ -79,7 +79,7 @@ public class TC1_VerifyLogin extends testbase {
 		/**********************************************************************************************************************************/
 
 		Thread.sleep(5000);	
-//		login.dialogClose();
+		login.dialogClose();
 		
 	
 		
