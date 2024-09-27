@@ -41,12 +41,11 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//i[@data-name='chevrons-left']")
 	public WebElement secondSideMenu_openORClose;
 
-	
 // demo 21-xpath	
 //	@FindBy(xpath = "//a[@class='slide-item ng-star-inserted'] [text()=' Transaction History']")
 //	public WebElement txnHistoryModule;
 
-//26 sept- uatdev xpath	
+// uatdev - xpath	
 	@FindBy(xpath = "//a[@class='slide-item'] [text()=' Transaction History']")
 	public WebElement txnHistoryModule;
 
@@ -65,9 +64,6 @@ public class TransactionHistoryPOM extends commonFunc {
 	public WebElement fromCalenderPreviousButton;
 	@FindBy(xpath = "//button[@class='p-ripple p-element p-datepicker-next p-link ng-tns-c46-10']")
 	public WebElement fromCalenderNextButton;
-	
-//	@FindBy(xpath = "//calendaricon[@class='p-element p-icon-wrapper ng-tns-c46-48 ng-star-inserted']")
-//	public WebElement fromCalenderIcon;
 
 //todays date
 	// 18 sept 2024
@@ -403,6 +399,48 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//div[@class='p-paginator-first pr-0 p-paginator p-component ng-star-inserted']/button")
 	public List<WebElement> paginationsAllButtons;
 
+	@FindBy(xpath = "//div[@class='success-col text-center']")
+	public WebElement raiseComplaintForm;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div/button")
+	public WebElement raiseComplaintForm_closeButton;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[2]")
+	public WebElement raiseComplaintForm_title;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[3]/div/label")
+	public WebElement raiseComplaintForm_TID_fieldLabel;
+
+	@FindBy(xpath = "//div[@class=success-col text-center']/form/div/div[3]/div/input")
+	public WebElement raiseComplaintForm_TID;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[4]/div/label")
+	public WebElement raiseComplaintForm_operatorName_fieldLabel;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[4]/div/input")
+	public WebElement raiseComplaintForm_operatorName;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[5]/div/label")
+	public WebElement raiseComplaintForm_remark_fieldeLabel;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[5]/div/textarea")
+	public WebElement raiseComplaintForm_remarkFielde;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/div//button")
+	public WebElement raiseComplaintForm_submitButton;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/div/div/div[2]/a")
+	public WebElement raiseComplaintForm_cancelButton;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[5]/div/small")
+	public WebElement raiseComplaintForm_remarkMandatoryMessageSubTag;
+
+	@FindBy(xpath = "")
+	public WebElement ww;
+
+	@FindBy(xpath = "")
+	public WebElement vww;
+
 //CONSTRUCTOR..........
 
 	public TransactionHistoryPOM(WebDriver driver, ExtentTest logger) {
@@ -544,7 +582,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		logger.log(LogStatus.INFO, "click_searchButton--------");
 		click(searchButton, driver, logger);
 		waitForPageLoaded(driver, logger);
-		Thread.sleep(3000);
+		Thread.sleep(4000);
 	}
 
 //dropdowns ###############################
@@ -570,6 +608,11 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 		return catTabDisp;
 	}
+
+//	public boolean isCategoryTabDisplayed2() throws IOException {
+//
+//		return isWebElementDisplayed(categoryTab, "Category tab is displayed -", driver, logger);
+//	}
 
 	public void click_categoryDropdown() throws InterruptedException {
 
@@ -1196,19 +1239,69 @@ public class TransactionHistoryPOM extends commonFunc {
 	// incomplete----------------
 	public void changeDateIfTableHasNoData() throws InterruptedException {
 
-		Boolean datainTable = validateALLTxnReportTableHasData();
+		System.out.println("1....................");
+		boolean datainTable;
+		 int  enabledDatesCount1;
+		
+		datainTable = validateALLTxnReportTableHasData();
+   		click(fromCalenderIcon, driver, logger);    	 		
+        enabledDatesCount1= fromCalender_Dates_enabled_notHighlited.size() ;  
+       int a= (2);
+           boolean needToIterate=true;	  
+            if (needToIterate) {
+   	 	           		if(datainTable)
+           		{
+               		System.out.println(".......table has data.............");
+           		}           		
+           		else
+                  {
+           			
+           			for(int aa=1;aa<=5;aa++)
+           				System.out.println("loop -"+aa);
+           			{
+           			
+            	   for(int enabledDatesCountIndex = a; enabledDatesCountIndex >= 0 ; enabledDatesCountIndex--)
+            	   {        
+                  		System.out.println("1...index count ---------"+enabledDatesCount1);
 
-		scrollElementIntoMiddle(fromCalenderIcon, driver);
-		click(fromCalenderIcon, driver, logger);
-		System.out.println("clicked from cal icon");
-		Thread.sleep(2000);
+             	            	click(fromCalenderIcon, driver, logger);    	   
+            		WebElement dateWE =   fromCalender_Dates_enabled_notHighlited.get(enabledDatesCountIndex);
+               		int dateAsInt =  Integer.parseInt(dateWE.getText());
+            		   click(dateWE, driver, logger); 
+            		   Thread.sleep(2000);
+             	 		WebElement searchButton2 = driver.findElement(By.xpath("//button[text()='Search']"));
+             	 		scrollElementIntoMiddle(searchButton2, driver);
+            		   click(searchButton2, driver, logger);
+            		   Thread.sleep(2000);
+            		   datainTable =  validateALLTxnReportTableHasData();
+                 		System.out.println("2...index count ---------"+enabledDatesCount1);
 
-		System.out.println("fromCalender_Date_Today-" + fromCalender_Date_Today.getText());
-		System.out.println("fromCalender_Date_enabled_Highlited-" + fromCalender_Date_enabled_Highlited.getText());
-		System.out.println(
-				"fromCalender_Dates_enabled_notHighlited-" + fromCalender_Dates_enabled_notHighlited.get(1).getText());
-//		System.out.println("fromCalender_Dates_disabled-" + fromCalender_Dates_disabled.get(1).getText());
+            		   if(dateAsInt == 1 && !datainTable)
+            		   {
+                     		System.out.println("3...index count ---------"+enabledDatesCount1);
 
+	            			   logger.log(LogStatus.INFO,"Navigating to previous month");
+	              	         	click(fromCalenderIcon, driver, logger);
+	              	         	Thread.sleep(2000);
+	               	         	click(fromCalenderPreviousButton, driver, logger);  
+	              	         	Thread.sleep(2000);
+	                	 int	enabledDatesCount2= fromCalender_Dates_enabled_notHighlited.size() ; 
+	                	 a = (enabledDatesCount2-1) ;
+	                  		System.out.println("4...index count 2---------"+enabledDatesCount2);
+	                  		System.out.println("5...index count 2-----a----"+a);
+
+            		   }
+            		   else 
+            		   {
+                     		System.out.println("----5------continue--------");
+             			   continue;
+            		   }
+            		   
+            	   }
+ 
+            	   }//close---navigate through dates of current month	
+             }
+          }// close----changeMonth=false
 	}
 
 // CALENDAR methods END #####################################################################################################
@@ -1233,6 +1326,24 @@ public class TransactionHistoryPOM extends commonFunc {
 		waitForPageLoaded(driver, logger);
 		return txnTable_rows.size();
 
+	}
+
+	public void validateMessageDisplayedIfTableHasNOData(String expectedMessage, boolean ignoreCase, ExtentTest logger)
+			throws IOException, InterruptedException {
+
+		boolean dataInTable = validateALLTxnReportTableHasData();
+		if (dataInTable) {
+			screenshotInReport("Txn. table has data -", driver, logger);
+		} else {
+			String actualMessage = getTxnTable_messageIfNoTableData();
+			screenshotInReport("Txn. table has no data 'message displayed' -", driver, logger);
+//compare string
+			boolean msgIsCorrect = compareString(actualMessage, expectedMessage, ignoreCase, logger);
+//assertion - message displayed		
+			softAssert("Message displayed if no data in Txn. table -", actualMessage, expectedMessage, msgIsCorrect,
+					logger);
+
+		}
 	}
 
 	// incomplete..............
@@ -1356,7 +1467,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	public void validateMoreInfoSideBarHeaderButtons() throws InterruptedException, IOException {
 
-		logger.log(LogStatus.INFO, "Getting transaction MORE INFO side menu buttons hanlding.");
+		logger.log(LogStatus.INFO, "Validating transaction MORE INFO side menu buttons count.");
 		boolean dataInTable = validateALLTxnReportTableHasData();
 //if table has data
 		if (dataInTable) {
@@ -1374,10 +1485,6 @@ public class TransactionHistoryPOM extends commonFunc {
 						// row number = INCREASE and column number = STATIC of column matching entered
 						// name
 						int rowNo = (tableRowIndex + 1);
-//						WebElement txnStatusWE = driver.findElement(By.xpath(
-//								"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
-//										+ rowNo + "]/td[" + colNo + "]"));
-//						String statusText = txnStatusWE.getText().trim();
 
 						// fetch category and status from table
 						String categoryTextFromTable = getTxnCategory(tableRowIndex);
@@ -1567,8 +1674,7 @@ public class TransactionHistoryPOM extends commonFunc {
 									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
 									softAssertFalse("More info side menu PRINT button is not displayed -",
 											isPrintButtonDisp, logger);
-								}
-								else {
+								} else {
 									logger.log(LogStatus.INFO, "Handled transaction status are -" + txnStatusFailed
 											+ "/" + txnStatusProcessing + "/" + txnStatusReversal);
 									logger.log(LogStatus.INFO,
@@ -1600,8 +1706,7 @@ public class TransactionHistoryPOM extends commonFunc {
 									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
 									softAssertFalse("More info side menu PRINT button is not displayed -",
 											isPrintButtonDisp, logger);
-								}
-								else if (statusTextFromTable.equalsIgnoreCase(txnStatusPending)
+								} else if (statusTextFromTable.equalsIgnoreCase(txnStatusPending)
 										|| (statusTextFromTable.equalsIgnoreCase(txnStatusProcessing))) {
 									// 1. ASSERTION - validating buttons count-----------
 									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
@@ -1670,7 +1775,406 @@ public class TransactionHistoryPOM extends commonFunc {
 
 							// after validating all for a txn ....close the more info side bar of that txn.
 
-							logger.log(LogStatus.INFO, "cat -" + categoryTextFromTable);
+							logger.log(LogStatus.INFO, "cat captured (un-handled) is -" + categoryTextFromTable);
+
+							Thread.sleep(1000);
+							click_close_lastButton_moreInfoSideBar();
+
+						}
+						// if----More info side menu is open...above actions will happens and
+						// close...........one loop completed HERE
+						else {
+							logger.log(LogStatus.INFO, "More info side menu is already closed...");
+						}
+					} // for loop close---all conditions are tested for txn. one
+
+				} // get column names----close
+			} // column head navigation----close
+		} // if table has data----close
+
+		else {
+			logger.log(LogStatus.INFO, "no table data....so no more info side menu bar.");
+
+		}
+	}
+
+	public void validateMoreInfoSideBarHeaderButtons2() throws InterruptedException, IOException {
+
+		logger.log(LogStatus.INFO, "Validating transaction MORE INFO side menu buttons count and raise ticket.");
+
+		boolean dataInTable = validateALLTxnReportTableHasData();
+//if table has data
+		if (dataInTable) {
+			// navigate through column header--------
+			int totalColumns = getTxnTable_columnNumbersHEAD();
+			for (int colWEindex = 0; colWEindex < totalColumns; colWEindex++) {
+				// get column names (index is always less by 1 than column no.)
+				int colNo = (colWEindex + 1);
+				String colName = txnTable_columnsHEAD.get(colWEindex).getText().trim();
+				if (colName.equalsIgnoreCase("Status")) {
+					// navigate through each row and get STATUS of each row/txn.--------
+					int tableRowsCount = txnTable_rows.size();
+					for (int tableRowIndex = 0; tableRowIndex < tableRowsCount; tableRowIndex++) {
+
+						// row number = INCREASE and column number = STATIC of column matching entered
+						// name
+						int rowNo = (tableRowIndex + 1);
+
+						// fetch category and status from table
+						String categoryTextFromTable = getTxnCategory(tableRowIndex);
+						String statusTextFromTable = getTxnStatus(tableRowIndex);
+						logger.log(LogStatus.INFO,
+								"Transaction Number ------------>" + rowNo + " - " + statusTextFromTable);
+						logger.log(LogStatus.INFO, "Transaction Category ------------>" + categoryTextFromTable);
+						// txn. status list to handle....................
+						String txnStatusSuccessful = "Successful";
+						String txnStatusFailed = "Failed";
+						String txnStatusPending = "Pending";
+						String txnStatusProcessing = "Processing";
+						String txnStatusReversal = "Reversal";
+//open more info side menu bar
+						OpenMoreInfoOfTxnPopup(tableRowIndex);
+//validate - is more info side menu bar open
+						boolean isMoreInfoSideMenuOpen;
+						isMoreInfoSideMenuOpen = isMoreInfoSideBarDisplayed();
+						if (isMoreInfoSideMenuOpen) {
+							// if more info side menu is open then compare txn. status and validate
+							// scenarios accordingly.................
+							categoryTextFromTable = getTxnCategory(tableRowIndex);
+							// category - telecom
+							if (categoryTextFromTable.equalsIgnoreCase("Telecom")) {
+
+								logger.log(LogStatus.INFO,
+										"Txn. status handling of the category -" + categoryTextFromTable);
+								if (statusTextFromTable.equalsIgnoreCase(txnStatusSuccessful)) // status - successful
+								{
+									// 1. ASSERTION - validating buttons count-----------
+									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+									String actualButtonsCount = String.valueOf(buttonsCount);
+									String expectedButtonsCount = "1";
+									// compare button count.......
+									boolean ignoreCase = false;
+									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+											ignoreCase, logger);
+									softAssert(
+											"More info side menu header buttons count for '" + statusTextFromTable
+													+ "' txn. is-",
+											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+									// 2. ASSERTION - More info side menu PRINT button displayed-----------
+									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+									softAssertTrue("More info side menu PRINT button is displayed -", isPrintButtonDisp,
+											logger);
+
+								} else if (statusTextFromTable.equalsIgnoreCase(txnStatusFailed)
+										|| statusTextFromTable.equalsIgnoreCase(txnStatusProcessing)
+										|| statusTextFromTable.equalsIgnoreCase(txnStatusPending))// failed
+								{
+									// ASSERTION - validating buttons count-----------
+									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+									String actualButtonsCount = String.valueOf(buttonsCount);
+									String expectedButtonsCount = "1";
+									// compare button count.......
+									boolean ignoreCase = false;
+									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+											ignoreCase, logger);
+									softAssert(
+											"More info side menu header buttons count for '" + statusTextFromTable
+													+ "' txn. is-",
+											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+									// ASSERTION - More info side menu PRINT button not displayed-----------
+									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+									softAssertFalse("More info side menu PRINT button is not displayed -",
+											isPrintButtonDisp, logger);
+								} else {
+									logger.log(LogStatus.INFO,
+											"Handled transaction status are -" + txnStatusSuccessful + "/"
+													+ txnStatusFailed + "/" + txnStatusProcessing + "/"
+													+ txnStatusPending);
+									logger.log(LogStatus.INFO,
+											"Captured transaction status is -" + statusTextFromTable);
+								}
+							}
+
+							// category - DMT
+							else if (categoryTextFromTable.equalsIgnoreCase("DMT")) {
+								logger.log(LogStatus.INFO,
+										"Txn. status handling of the category -" + categoryTextFromTable);
+								if (statusTextFromTable.equalsIgnoreCase(txnStatusSuccessful)) // status - successful
+								{
+									// 1. ASSERTION - validating buttons count-----------
+									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+									String actualButtonsCount = String.valueOf(buttonsCount);
+									String expectedButtonsCount = "3";
+									// compare button count.......
+									boolean ignoreCase = false;
+									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+											ignoreCase, logger);
+									softAssert(
+											"More info side menu header buttons count for '" + statusTextFromTable
+													+ "' txn. is-",
+											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+									// 2. ASSERTION - More info side menu PRINT button displayed-----------
+									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+									softAssertTrue("More info side menu PRINT button is displayed -", isPrintButtonDisp,
+											logger);
+								} else if (statusTextFromTable.equalsIgnoreCase(txnStatusFailed)
+										|| statusTextFromTable.equalsIgnoreCase(txnStatusProcessing)
+										|| statusTextFromTable.equalsIgnoreCase(txnStatusPending))// failed
+								{
+									// ASSERTION - validating buttons count-----------
+									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+									String actualButtonsCount = String.valueOf(buttonsCount);
+									String expectedButtonsCount = "1";
+									// compare button count.......
+									boolean ignoreCase = false;
+									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+											ignoreCase, logger);
+									softAssert(
+											"More info side menu header buttons count for '" + statusTextFromTable
+													+ "' txn. is-",
+											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+									// ASSERTION - More info side menu PRINT button not displayed-----------
+									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+									softAssertFalse("More info side menu PRINT button is not displayed -",
+											isPrintButtonDisp, logger);
+								}
+
+								else {
+									logger.log(LogStatus.INFO,
+											"Handled transaction status are -" + txnStatusSuccessful + "/"
+													+ txnStatusFailed + "/" + txnStatusProcessing + "/"
+													+ txnStatusPending);
+									logger.log(LogStatus.INFO,
+											"Captured transaction status is -" + statusTextFromTable);
+								}
+							}
+
+							// category - payin
+
+							else if (categoryTextFromTable.equalsIgnoreCase("Payin")) {
+								logger.log(LogStatus.INFO,
+										"Txn. status handling of the category -" + categoryTextFromTable);
+
+								if (statusTextFromTable.equalsIgnoreCase(txnStatusSuccessful)) // status - successful
+								{
+									// 1. ASSERTION - validating buttons count-----------
+									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+									String actualButtonsCount = String.valueOf(buttonsCount);
+									String expectedButtonsCount = "1";
+									// compare button count.......
+									boolean ignoreCase = false;
+									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+											ignoreCase, logger);
+									softAssert(
+											"More info side menu header buttons count for '" + statusTextFromTable
+													+ "' txn. is-",
+											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+
+									// 2. ASSERTION - More info side menu PRINT button displayed-----------
+									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+									softAssertFalse("More info side menu PRINT button is not displayed -",
+											isPrintButtonDisp, logger);
+								}
+
+								else {
+									logger.log(LogStatus.INFO,
+											"Handled transaction status are -" + txnStatusSuccessful);
+									logger.log(LogStatus.INFO,
+											"Captured transaction status is -" + statusTextFromTable);
+								}
+							}
+							// category - Payout
+							else if (categoryTextFromTable.equalsIgnoreCase("Payout")) {
+								logger.log(LogStatus.INFO,
+										"Txn. status handling of the category -" + categoryTextFromTable);
+								if (statusTextFromTable.equalsIgnoreCase(txnStatusFailed)
+										|| statusTextFromTable.equalsIgnoreCase(txnStatusProcessing)
+										|| statusTextFromTable.equalsIgnoreCase(txnStatusReversal)) // status -
+																									// successful
+								{
+									// 1. ASSERTION - validating buttons count-----------
+									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+									String actualButtonsCount = String.valueOf(buttonsCount);
+									String expectedButtonsCount = "1";
+									// compare button count.......
+									boolean ignoreCase = false;
+									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+											ignoreCase, logger);
+									softAssert(
+											"More info side menu header buttons count for '" + statusTextFromTable
+													+ "' txn. is-",
+											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+									// 2. ASSERTION - More info side menu PRINT button displayed-----------
+									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+									softAssertFalse("More info side menu PRINT button is not displayed -",
+											isPrintButtonDisp, logger);
+								} else {
+									logger.log(LogStatus.INFO, "Handled transaction status are -" + txnStatusFailed
+											+ "/" + txnStatusProcessing + "/" + txnStatusReversal);
+									logger.log(LogStatus.INFO,
+											"Captured transaction status is -" + statusTextFromTable);
+								}
+							}
+
+							// category - BBPS
+
+							else if (categoryTextFromTable.equalsIgnoreCase("BBPS")) {
+								logger.log(LogStatus.INFO,
+										"Txn. status handling of the category -" + categoryTextFromTable);
+
+								if (statusTextFromTable.equalsIgnoreCase(txnStatusFailed)) {
+									// 1. ASSERTION - validating buttons count-----------
+									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+									String actualButtonsCount = String.valueOf(buttonsCount);
+									String expectedButtonsCount = "1";
+									// compare button count.......
+									boolean ignoreCase = false;
+									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+											ignoreCase, logger);
+									softAssert(
+											"More info side menu header buttons count for '" + statusTextFromTable
+													+ "' txn. is-",
+											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+
+									// 2. ASSERTION - More info side menu PRINT button displayed-----------
+									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+									softAssertFalse("More info side menu PRINT button is not displayed -",
+											isPrintButtonDisp, logger);
+								} else if (statusTextFromTable.equalsIgnoreCase(txnStatusPending)
+										|| (statusTextFromTable.equalsIgnoreCase(txnStatusProcessing))) {
+									// 1. ASSERTION - validating buttons count-----------
+									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+
+									for (WebElement buttonElement : moreInfo_headersButtonsList_dmt) {
+
+										String actualButtonName = buttonElement.getText().trim();
+										String expectedButtonName = "Raise Complaint";
+
+										boolean ignoreCase = false;
+										boolean buttonNameIsMatching = compareString(actualButtonName,
+												expectedButtonName, ignoreCase, logger);
+
+										if (buttonNameIsMatching) {
+
+											click(buttonElement, driver, logger);
+											Thread.sleep(2000);
+
+											driver.switchTo().activeElement();
+
+											String tidLabel = raiseComplaintForm_TID_fieldLabel.getText();
+											logger.log(LogStatus.INFO, "Txn. id field label -" + tidLabel);
+
+											String operatorNameLabel = raiseComplaintForm_operatorName_fieldLabel
+													.getText();
+											logger.log(LogStatus.INFO,
+													"Operator name field label -" + operatorNameLabel);
+
+											String remarkLabel = raiseComplaintForm_remark_fieldeLabel.getText();
+											logger.log(LogStatus.INFO, "Raise remark field label -" + remarkLabel);
+
+											String remarkText = "I am shinde";
+											sendingKeys(raiseComplaintForm_remarkFielde, remarkText, driver);
+
+											Thread.sleep(1000);
+
+											try {
+
+												boolean isDispBoolean = isPresentAndDisplayed(
+														raiseComplaintForm_remarkMandatoryMessageSubTag, driver,
+														logger);
+
+												if (isDispBoolean) {
+													String textString = raiseComplaintForm_remarkMandatoryMessageSubTag
+															.getText();
+													logger.log(LogStatus.INFO,
+															"REMARK field is mandatory.</br> Text/message displayed if remark field is empty -"
+																	+ textString);
+												}
+											} catch (Exception e) {
+												logger.log(LogStatus.INFO,
+														"REMARK field is mandatory.</br> Remark is -" + remarkText);
+
+											}
+
+											// click(raiseComplaintForm_cancelButton, driver, logger);
+
+											// click(raiseComplaintForm_submitButton, driver, logger);
+
+											click(raiseComplaintForm_closeButton, driver, logger);
+
+											Thread.sleep(1000);
+
+										} // close----------if button name is matching
+
+									} // close -----buttons displayed actions completed
+
+									String actualButtonsCount = String.valueOf(buttonsCount);
+									String expectedButtonsCount = "2";
+									// compare button count.......
+									boolean ignoreCase = false;
+									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+											ignoreCase, logger);
+									softAssert(
+											"More info side menu header buttons count for '" + statusTextFromTable
+													+ "' txn. is-",
+											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+
+									// 2. ASSERTION - More info side menu PRINT button displayed-----------
+									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+									softAssertFalse("More info side menu PRINT button is not displayed -",
+											isPrintButtonDisp, logger);
+									// 2. ASSERTION - More info side menu PRINT button displayed-----------
+									boolean isRaiseComplaintButtonDisp = moreInfoSideMenu_isRaiseComplaintButtonDisplayed();
+									softAssertTrue("More info side menu RAISE COMPLAINT button is not displayed -",
+											isRaiseComplaintButtonDisp, logger);
+								}
+
+								else {
+									logger.log(LogStatus.INFO, "Handled transaction status are -" + txnStatusFailed
+											+ "/" + txnStatusProcessing + "/" + txnStatusPending);
+									logger.log(LogStatus.INFO,
+											"Captured transaction status is -" + statusTextFromTable);
+								}
+							}
+
+							// category - AEPS
+
+							else if (categoryTextFromTable.equalsIgnoreCase("AEPS")) {
+								logger.log(LogStatus.INFO,
+										"Txn. status handling of the category -" + categoryTextFromTable);
+
+								if (statusTextFromTable.equalsIgnoreCase(txnStatusSuccessful)) {
+									// 1. ASSERTION - validating buttons count-----------
+									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
+									String actualButtonsCount = String.valueOf(buttonsCount);
+									String expectedButtonsCount = "1";
+									// compare button count.......
+									boolean ignoreCase = false;
+									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
+											ignoreCase, logger);
+									softAssert(
+											"More info side menu header buttons count for '" + statusTextFromTable
+													+ "' txn. is-",
+											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
+
+									// 2. ASSERTION - More info side menu PRINT button displayed-----------
+									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
+									softAssertTrue("More info side menu PRINT button is displayed -", isPrintButtonDisp,
+											logger);
+								}
+
+								else {
+									logger.log(LogStatus.INFO,
+											"Handled transaction status are -" + txnStatusSuccessful);
+									logger.log(LogStatus.INFO,
+											"Captured transaction status is -" + statusTextFromTable);
+								}
+							}
+
+							// after validating all for a txn ....close the more info side bar of that txn.
+
+							logger.log(LogStatus.INFO,
+									"begore closing----showing captured category -" + categoryTextFromTable);
 
 							Thread.sleep(1000);
 							click_close_lastButton_moreInfoSideBar();
@@ -1691,9 +2195,10 @@ public class TransactionHistoryPOM extends commonFunc {
 			logger.log(LogStatus.INFO, "no table data....more info ...status...buttons,,,cat");
 
 		}
+
 	}
 
-	public void validateMoreInfoSideMenuDataAndTableData() throws InterruptedException, IOException {
+	public void validateMoreInfoSideMenuData_TableData() throws InterruptedException, IOException {
 
 		logger.log(LogStatus.INFO, "validating More Info Side Menu Data And Table Data");
 
@@ -1713,401 +2218,29 @@ public class TransactionHistoryPOM extends commonFunc {
 					// navigate through MORE INFO table
 					int moreInfoParamNos = moreInfoTable_paramNameList.size();
 					int moreInfoValueNos = moreInfoTable_paramValueList.size();
-					System.out.println("moreInfoParamNos -" + moreInfoParamNos + "-" + moreInfoValueNos);
+
+					logger.log(LogStatus.INFO,
+							"Parameter Nos. -" + moreInfoParamNos + "</br>Parameter value Nos. --" + moreInfoValueNos);
+
 					for (int moreInfoRowsIndex = 0; moreInfoRowsIndex < moreInfoParamNos; moreInfoRowsIndex++) {
+
 						int moreInfoRowsNum = (moreInfoRowsIndex + 1);
+
 						String moreInfoParam = moreInfoTable_paramNameList.get(moreInfoRowsIndex).getText();
 						String moreInfoValue = moreInfoTable_paramValueList.get(moreInfoRowsIndex).getText();
-						System.out.println(
-								"moreInfoParam - val -" + moreInfoRowsIndex + moreInfoParam + "-" + moreInfoValue);
-						logger.log(LogStatus.INFO, "moreInfo Param - val =>" + moreInfoRowsNum + "." + moreInfoParam
+
+						logger.log(LogStatus.INFO, "moreInfo--Param - val ==>" + moreInfoRowsIndex + "." + moreInfoParam
 								+ "-" + moreInfoValue);
+
 					} // close--- navigating through more info table
-					// after validating more info table data for a txn ....close the more info side bar of that txn.
+						// after validating more info table data for a txn ....close the more info side
+						// bar of that txn.
 					Thread.sleep(1000);
 					click_close_lastButton_moreInfoSideBar();
 				} // close---is more info side menu displayed
 			} // close---navigate through row of table
 		} // close---if table has data
 	}
-	
-	
-	public void tableCOLUMNvaluesvalidate () throws InterruptedException, IOException {
-		
-		
-
-		logger.log(LogStatus.INFO, "Getting transaction MORE INFO side menu buttons,,,,hanlding.");
-
-		boolean dataInTable = validateALLTxnReportTableHasData();
-//if table has data
-		if (dataInTable) {
-			// navigate through column header--------
-			int totalColumns = getTxnTable_columnNumbersHEAD();
-			for (int colWEindex = 0; colWEindex < totalColumns; colWEindex++) {
-				// get column names (index is always less by 1 than column no.)
-				int colNo = (colWEindex + 1);
-				String colName = txnTable_columnsHEAD.get(colWEindex).getText().trim();
-				if (colName.equalsIgnoreCase("Status")) {
-					// navigate through each row and get STATUS of each row/txn.--------
-					int tableRowsCount = txnTable_rows.size();
-					for (int tableRowIndex = 0; tableRowIndex < tableRowsCount; tableRowIndex++) {
-
-						// row number = INCREASE and column number = STATIC of column matching entered
-						// name
-						int rowNo = (tableRowIndex + 1);
-//						WebElement txnStatusWE = driver.findElement(By.xpath(
-//								"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
-//										+ rowNo + "]/td[" + colNo + "]"));
-//						String statusText = txnStatusWE.getText().trim();
-
-						// fetch category and status from table
-						String categoryTextFromTable = getTxnCategory(tableRowIndex);
-						String statusTextFromTable = getTxnStatus(tableRowIndex);
-						logger.log(LogStatus.INFO,
-								"Transaction Number ------------>" + rowNo + " - " + statusTextFromTable);
-						logger.log(LogStatus.INFO, "Transaction Category ------------>" + categoryTextFromTable);
-						// txn. status list to handle....................
-						String txnStatusSuccessful = "Successful";
-						String txnStatusFailed = "Failed";
-						String txnStatusPending = "Pending";
-						String txnStatusProcessing = "Processing";
-						String txnStatusReversal = "Reversal";
-//open more info side menu bar
-						OpenMoreInfoOfTxnPopup(tableRowIndex);
-//validate - is more info side menu bar open
-						boolean isMoreInfoSideMenuOpen;
-						isMoreInfoSideMenuOpen = isMoreInfoSideBarDisplayed();
-						if (isMoreInfoSideMenuOpen) {
-							// if more info side menu is open then compare txn. status and validate
-							// scenarios accordingly.................
-							categoryTextFromTable = getTxnCategory(tableRowIndex);
-							// category - telecom
-							if (categoryTextFromTable.equalsIgnoreCase("Telecom")) {
-
-								logger.log(LogStatus.INFO,
-										"Txn. status handling of the category -" + categoryTextFromTable);
-								if (statusTextFromTable.equalsIgnoreCase(txnStatusSuccessful)) // status - successful
-								{
-									// 1. ASSERTION - validating buttons count-----------
-									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
-									String actualButtonsCount = String.valueOf(buttonsCount);
-									String expectedButtonsCount = "1";
-									// compare button count.......
-									boolean ignoreCase = false;
-									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
-											ignoreCase, logger);
-									softAssert(
-											"More info side menu header buttons count for '" + statusTextFromTable
-													+ "' txn. is-",
-											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
-									// 2. ASSERTION - More info side menu PRINT button displayed-----------
-									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
-									softAssertTrue("More info side menu PRINT button is displayed -", isPrintButtonDisp,
-											logger);
-
-								} else if (statusTextFromTable.equalsIgnoreCase(txnStatusFailed)
-										|| statusTextFromTable.equalsIgnoreCase(txnStatusProcessing)
-										|| statusTextFromTable.equalsIgnoreCase(txnStatusPending))// failed
-								{
-									// ASSERTION - validating buttons count-----------
-									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
-									String actualButtonsCount = String.valueOf(buttonsCount);
-									String expectedButtonsCount = "1";
-									// compare button count.......
-									boolean ignoreCase = false;
-									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
-											ignoreCase, logger);
-									softAssert(
-											"More info side menu header buttons count for '" + statusTextFromTable
-													+ "' txn. is-",
-											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
-									// ASSERTION - More info side menu PRINT button not displayed-----------
-									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
-									softAssertFalse("More info side menu PRINT button is not displayed -",
-											isPrintButtonDisp, logger);
-								} else {
-									logger.log(LogStatus.INFO,
-											"Handled transaction status are -" + txnStatusSuccessful + "/"
-													+ txnStatusFailed + "/" + txnStatusProcessing + "/"
-													+ txnStatusPending);
-									logger.log(LogStatus.INFO,
-											"Captured transaction status is -" + statusTextFromTable);
-								}
-							}
-
-							// category - DMT
-							else if (categoryTextFromTable.equalsIgnoreCase("DMT")) {
-								logger.log(LogStatus.INFO,
-										"Txn. status handling of the category -" + categoryTextFromTable);
-								if (statusTextFromTable.equalsIgnoreCase(txnStatusSuccessful)) // status - successful
-								{
-									// 1. ASSERTION - validating buttons count-----------
-									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
-									String actualButtonsCount = String.valueOf(buttonsCount);
-									String expectedButtonsCount = "3";
-									// compare button count.......
-									boolean ignoreCase = false;
-									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
-											ignoreCase, logger);
-									softAssert(
-											"More info side menu header buttons count for '" + statusTextFromTable
-													+ "' txn. is-",
-											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
-									// 2. ASSERTION - More info side menu PRINT button displayed-----------
-									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
-									softAssertTrue("More info side menu PRINT button is displayed -", isPrintButtonDisp,
-											logger);
-								} else if (statusTextFromTable.equalsIgnoreCase(txnStatusFailed)
-										|| statusTextFromTable.equalsIgnoreCase(txnStatusProcessing)
-										|| statusTextFromTable.equalsIgnoreCase(txnStatusPending))// failed
-								{
-									// ASSERTION - validating buttons count-----------
-									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
-									String actualButtonsCount = String.valueOf(buttonsCount);
-									String expectedButtonsCount = "1";
-									// compare button count.......
-									boolean ignoreCase = false;
-									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
-											ignoreCase, logger);
-									softAssert(
-											"More info side menu header buttons count for '" + statusTextFromTable
-													+ "' txn. is-",
-											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
-									// ASSERTION - More info side menu PRINT button not displayed-----------
-									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
-									softAssertFalse("More info side menu PRINT button is not displayed -",
-											isPrintButtonDisp, logger);
-								}
-
-								else {
-									logger.log(LogStatus.INFO,
-											"Handled transaction status are -" + txnStatusSuccessful + "/"
-													+ txnStatusFailed + "/" + txnStatusProcessing + "/"
-													+ txnStatusPending);
-									logger.log(LogStatus.INFO,
-											"Captured transaction status is -" + statusTextFromTable);
-								}
-							}
-
-							// category - payin
-
-							else if (categoryTextFromTable.equalsIgnoreCase("Payin")) {
-								logger.log(LogStatus.INFO,
-										"Txn. status handling of the category -" + categoryTextFromTable);
-
-								if (statusTextFromTable.equalsIgnoreCase(txnStatusSuccessful)) // status - successful
-								{
-									// 1. ASSERTION - validating buttons count-----------
-									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
-									String actualButtonsCount = String.valueOf(buttonsCount);
-									String expectedButtonsCount = "1";
-									// compare button count.......
-									boolean ignoreCase = false;
-									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
-											ignoreCase, logger);
-									softAssert(
-											"More info side menu header buttons count for '" + statusTextFromTable
-													+ "' txn. is-",
-											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
-
-									// 2. ASSERTION - More info side menu PRINT button displayed-----------
-									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
-									softAssertFalse("More info side menu PRINT button is not displayed -",
-											isPrintButtonDisp, logger);
-								}
-
-								else {
-									logger.log(LogStatus.INFO,
-											"Handled transaction status are -" + txnStatusSuccessful);
-									logger.log(LogStatus.INFO,
-											"Captured transaction status is -" + statusTextFromTable);
-								}
-							}
-							// category - Payout
-							else if (categoryTextFromTable.equalsIgnoreCase("Payout")) {
-								logger.log(LogStatus.INFO,
-										"Txn. status handling of the category -" + categoryTextFromTable);
-								if (statusTextFromTable.equalsIgnoreCase(txnStatusFailed)
-										|| statusTextFromTable.equalsIgnoreCase(txnStatusProcessing)
-										|| statusTextFromTable.equalsIgnoreCase(txnStatusReversal)) // status -
-																									// successful
-								{
-									// 1. ASSERTION - validating buttons count-----------
-									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
-									String actualButtonsCount = String.valueOf(buttonsCount);
-									String expectedButtonsCount = "1";
-									// compare button count.......
-									boolean ignoreCase = false;
-									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
-											ignoreCase, logger);
-									softAssert(
-											"More info side menu header buttons count for '" + statusTextFromTable
-													+ "' txn. is-",
-											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
-									// 2. ASSERTION - More info side menu PRINT button displayed-----------
-									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
-									softAssertFalse("More info side menu PRINT button is not displayed -",
-											isPrintButtonDisp, logger);
-								}
-								else {
-									logger.log(LogStatus.INFO, "Handled transaction status are -" + txnStatusFailed
-											+ "/" + txnStatusProcessing + "/" + txnStatusReversal);
-									logger.log(LogStatus.INFO,
-											"Captured transaction status is -" + statusTextFromTable);
-								}
-							}
-
-							// category - BBPS
-
-							else if (categoryTextFromTable.equalsIgnoreCase("BBPS")) {
-								logger.log(LogStatus.INFO,
-										"Txn. status handling of the category -" + categoryTextFromTable);
-
-								if (statusTextFromTable.equalsIgnoreCase(txnStatusFailed)) {
-									// 1. ASSERTION - validating buttons count-----------
-									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
-									String actualButtonsCount = String.valueOf(buttonsCount);
-									String expectedButtonsCount = "1";
-									// compare button count.......
-									boolean ignoreCase = false;
-									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
-											ignoreCase, logger);
-									softAssert(
-											"More info side menu header buttons count for '" + statusTextFromTable
-													+ "' txn. is-",
-											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
-
-									// 2. ASSERTION - More info side menu PRINT button displayed-----------
-									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
-									softAssertFalse("More info side menu PRINT button is not displayed -",
-											isPrintButtonDisp, logger);
-								}
-								else if (statusTextFromTable.equalsIgnoreCase(txnStatusPending)
-										|| (statusTextFromTable.equalsIgnoreCase(txnStatusProcessing))) {
-									// 1. ASSERTION - validating buttons count-----------
-									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
-									
-									for(WebElement buttonElement :moreInfo_headersButtonsList_dmt)
-									{
-										
-									String buttonName =	buttonElement.getText();
-										
-										System.out.println("Button Nmae -"+buttonName);
-										
-										
-									}
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									String actualButtonsCount = String.valueOf(buttonsCount);
-									String expectedButtonsCount = "2";
-									// compare button count.......
-									boolean ignoreCase = false;
-									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
-											ignoreCase, logger);
-									softAssert(
-											"More info side menu header buttons count for '" + statusTextFromTable
-													+ "' txn. is-",
-											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
-
-									// 2. ASSERTION - More info side menu PRINT button displayed-----------
-									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
-									softAssertFalse("More info side menu PRINT button is not displayed -",
-											isPrintButtonDisp, logger);
-									// 2. ASSERTION - More info side menu PRINT button displayed-----------
-									boolean isRaiseComplaintButtonDisp = moreInfoSideMenu_isRaiseComplaintButtonDisplayed();
-									softAssertTrue("More info side menu RAISE COMPLAINT button is not displayed -",
-											isRaiseComplaintButtonDisp, logger);
-								}
-
-								else {
-									logger.log(LogStatus.INFO, "Handled transaction status are -" + txnStatusFailed
-											+ "/" + txnStatusProcessing + "/" + txnStatusPending);
-									logger.log(LogStatus.INFO,
-											"Captured transaction status is -" + statusTextFromTable);
-								}
-							}
-
-							// category - AEPS
-
-							else if (categoryTextFromTable.equalsIgnoreCase("AEPS")) {
-								logger.log(LogStatus.INFO,
-										"Txn. status handling of the category -" + categoryTextFromTable);
-
-								if (statusTextFromTable.equalsIgnoreCase(txnStatusSuccessful)) {
-									// 1. ASSERTION - validating buttons count-----------
-									int buttonsCount = moreInfo_headersButtonsList_dmt.size();
-									String actualButtonsCount = String.valueOf(buttonsCount);
-									String expectedButtonsCount = "1";
-									// compare button count.......
-									boolean ignoreCase = false;
-									boolean isCountMatching = compareString(actualButtonsCount, expectedButtonsCount,
-											ignoreCase, logger);
-									softAssert(
-											"More info side menu header buttons count for '" + statusTextFromTable
-													+ "' txn. is-",
-											actualButtonsCount, expectedButtonsCount, isCountMatching, logger);
-
-									// 2. ASSERTION - More info side menu PRINT button displayed-----------
-									boolean isPrintButtonDisp = moreInfoSideMenu_isPrintButtonDisplayed();
-									softAssertTrue("More info side menu PRINT button is displayed -", isPrintButtonDisp,
-											logger);
-								}
-
-								else {
-									logger.log(LogStatus.INFO,
-											"Handled transaction status are -" + txnStatusSuccessful);
-									logger.log(LogStatus.INFO,
-											"Captured transaction status is -" + statusTextFromTable);
-								}
-							}
-
-							// after validating all for a txn ....close the more info side bar of that txn.
-
-							logger.log(LogStatus.INFO, "cat -" + categoryTextFromTable);
-
-							Thread.sleep(1000);
-							click_close_lastButton_moreInfoSideBar();
-
-						}
-						// if----More info side menu is open...above actions will happens and
-						// close...........one loop completed HERE
-						else {
-							logger.log(LogStatus.INFO, "More info side menu is already closed...");
-						}
-					} // for loop close---all conditions are tested for txn. one
-
-				} // get column names----close
-			} // column head navigation----close
-		} // if table has data----close
-
-		else {
-			logger.log(LogStatus.INFO, "no table data....more info ...status...buttons,,,cat");
-
-		}
-		
-		
-		
-	}
-	
-	
-	
 
 //	public void validateMoreInfoSideBarHeaderButtons() throws InterruptedException, IOException {
 //
@@ -2264,10 +2397,11 @@ public class TransactionHistoryPOM extends commonFunc {
 //
 //	}
 
-	public boolean validateALLTxnReportTableHasData() {
+	public boolean validateALLTxnReportTableHasData() throws InterruptedException {
 
 		logger.log(LogStatus.INFO, "Validate txn. report table has data or not.");
 		waitForPageLoaded(driver, logger);
+		Thread.sleep(2000);
 //scroll to column head		
 		scrollElementIntoMiddle(txnTable_head, driver);
 		int tableColumnsInFirstRow = txnTable_columnsInFirstRow.size();
@@ -2739,27 +2873,26 @@ public class TransactionHistoryPOM extends commonFunc {
 	public boolean isDataFetchedAccordingToPageSizeSelected() throws IOException, InterruptedException {
 // WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI S SCENARIO ????????????????????????????????????????????????????????????????????????
 //FOR AASERTION++++++if table has less data than page data size....how to know the VALID data count++++++++++++++++++++++++++++++++++++++++++++++...................?????????????????????????????????????	
-		// Boolean vs boolean+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++	
+		// Boolean vs
+		// boolean+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 		logger.log(LogStatus.INFO, "Validating is Data Fetched According To PageSize Selected");
 		waitForPageLoaded(driver, logger);
 		boolean dataInTable = validateALLTxnReportTableHasData();
 		Boolean flag = null;
-		
+
 		// page size selected
 		int pageDataSizeSelected = Integer.parseInt(get_perPageDataSize());
-		
+
 // if table has data		
 		if (dataInTable) {
 			scrollElementIntoMiddle(pageSizeDropdown, driver);
 			// table data count
 			int tableRows = getTxnTable_rowNumbers();
 			// => scenario 1- table data is equal to or more than page size selected
-			if (tableRows >= pageDataSizeSelected) 
-			{
+			if (tableRows >= pageDataSizeSelected) {
 				logger.log(LogStatus.INFO, "table data >= page size selected");
-				if (tableRows == pageDataSizeSelected) 
-				{
+				if (tableRows == pageDataSizeSelected) {
 					logger.log(LogStatus.INFO, "table data = page size selected");
 					logger.log(LogStatus.INFO,
 							"Table Data  -" + tableRows + "</br>Page Size Selected -" + pageDataSizeSelected);
@@ -2771,10 +2904,8 @@ public class TransactionHistoryPOM extends commonFunc {
 					flag = false;
 				}
 				// return flag;
-			}
-			else if (tableRows < pageDataSizeSelected)
-			{
-				// => scenario 2- table has data - data is less than page size selected	
+			} else if (tableRows < pageDataSizeSelected) {
+				// => scenario 2- table has data - data is less than page size selected
 				// WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI
 				// S SCENARIO
 				// ????????????????????????????????????????????????????????????????????????
@@ -2784,12 +2915,10 @@ public class TransactionHistoryPOM extends commonFunc {
 						"table Data Count -" + tableRows + "</br>page Size Selected -" + pageDataSizeSelected);
 				flag = null;
 				logger.log(LogStatus.INFO, "Returning null flag -" + flag);
+			} else {
+
 			}
-			else 
-			{
-				
-			}
-		}//close-----table has data
+		} // close-----table has data
 
 		else
 // if table has no data
@@ -2817,7 +2946,8 @@ public class TransactionHistoryPOM extends commonFunc {
 //1a. if table has data
 		if (dataInTable) {
 
-			// Get first and last txn Sr. No. and capture screenshot in log------------------------------------
+			// Get first and last txn Sr. No. and capture screenshot in
+			// log------------------------------------
 			// pasing 0 index number to get sr no of 1st tr / data
 			int firstTxnIndex = 0;
 			String firstTxnSrNo = getTxnSrNo(firstTxnIndex);
@@ -2828,16 +2958,17 @@ public class TransactionHistoryPOM extends commonFunc {
 			String lastTxnSrNo = getTxnSrNo(tableRowIndex);
 			screenshotInReport("Capture Sr.No. of last Txn. -", driver, logger);
 
-			// find first and last number of record according to PAGE BOTTOM MESSAGE---------------------------
+			// find first and last number of record according to PAGE BOTTOM
+			// MESSAGE---------------------------
 			String msgAtPageBottom = getPage_paginationDataCountingMsg();
 			String[] splittedMsg = msgAtPageBottom.split(" ");// the index number of the numbers must be same (should
 			firstNum = null;
 			lastNum = null;
 			totalTxns = null;
 			for (int splittedMsgtextIndex = 0; splittedMsgtextIndex < splittedMsg.length; splittedMsgtextIndex++) {
-			
-				if (splittedMsgtextIndex == 0 || splittedMsgtextIndex == 2 || splittedMsgtextIndex == 4 || splittedMsgtextIndex == 6) 
-				{
+
+				if (splittedMsgtextIndex == 0 || splittedMsgtextIndex == 2 || splittedMsgtextIndex == 4
+						|| splittedMsgtextIndex == 6) {
 					continue;
 				} else {
 					if (splittedMsgtextIndex == 1) {
@@ -2851,7 +2982,7 @@ public class TransactionHistoryPOM extends commonFunc {
 			}
 			// we have first,last,total txn number
 			logger.log(LogStatus.INFO,
-					               "1 st no. in table -" + firstTxnSrNo + "</br>1 st no.in message - " + firstNum
+					"1 st no. in table -" + firstTxnSrNo + "</br>1 st no.in message - " + firstNum
 							+ "</br>last no. in table -" + lastTxnSrNo + "</br>last no.in message - " + lastNum
 							+ "</br>total in message -" + totalTxns);
 			ignoreCase = false;
@@ -2889,33 +3020,31 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 	}
 
-	
 	public void captureScreenshot_firstAndLastTxn() throws IOException, InterruptedException {
-		
+
 		boolean dataInTable = validateALLTxnReportTableHasData();
-		
-		if(dataInTable) {
-		// Get first and last txn Sr. No. and capture screenshot in log------------------------------------
-					// pasing 0 index number to get sr no of 1st tr / data
-					int firstTxnIndex = 0;
-					String firstTxnSrNo = getTxnSrNo(firstTxnIndex);
-					Thread.sleep(2000);
-					screenshotInReport("Capture Sr.No. of first Txn. -", driver, logger);
-					
-					// 'getTxnTable_rowNumbers' method accepts intexNumber as it's parameter					
-					int tableRows = getTxnTable_rowNumbers();
-					int tableRowIndex = (tableRows - 1);
-					String lastTxnSrNo = getTxnSrNo(tableRowIndex);
-					Thread.sleep(2000);
-					screenshotInReport("Capture Sr.No. of last Txn. -", driver, logger);
-		}
-		else {
-			logger.log(LogStatus.INFO, "Table has no data.");	
+
+		if (dataInTable) {
+			// Get first and last txn Sr. No. and capture screenshot in
+			// log------------------------------------
+			// pasing 0 index number to get sr no of 1st tr / data
+			int firstTxnIndex = 0;
+			String firstTxnSrNo = getTxnSrNo(firstTxnIndex);
+			Thread.sleep(2000);
+			screenshotInReport("Capture Sr.No. of first Txn. -", driver, logger);
+
+			// 'getTxnTable_rowNumbers' method accepts intexNumber as it's parameter
+			int tableRows = getTxnTable_rowNumbers();
+			int tableRowIndex = (tableRows - 1);
+			String lastTxnSrNo = getTxnSrNo(tableRowIndex);
+			Thread.sleep(2000);
+			screenshotInReport("Capture Sr.No. of last Txn. -", driver, logger);
+		} else {
+			logger.log(LogStatus.INFO, "Table has no data.");
 			screenshotInReport("Table has no data -", driver, logger);
 		}
 	}
-	
-	
+
 	public String get_perPageDataSize() {
 
 		logger.log(LogStatus.INFO, "Fetch per page data size");
@@ -3053,8 +3182,8 @@ public class TransactionHistoryPOM extends commonFunc {
 	public void click_pageSizeDropdown() {
 
 		logger.log(LogStatus.INFO, "scroll to page size dropdown");
-		 scrollElementIntoMiddle(pageSizeDropdown, driver);
-			waitForElementToAppear(pageSizeDropdown, driver, logger);
+		scrollElementIntoMiddle(pageSizeDropdown, driver);
+		waitForElementToAppear(pageSizeDropdown, driver, logger);
 //		scrollDown(driver);
 		logger.log(LogStatus.INFO, "Click page size dropdown");
 		click(pageSizeDropdown, driver, logger);
@@ -3120,12 +3249,10 @@ public class TransactionHistoryPOM extends commonFunc {
 		String dataSizeText;
 
 		// for loop will fetch all options (page sizes) available in dropdown
-		for (int pageSizeIndex = 0; pageSizeIndex < pageSizesToSelect; pageSizeIndex++) 
-		{
-			click_pageSizeDropdown();
-			Thread.sleep(1000);
+		for (int pageSizeIndex = 0; pageSizeIndex < pageSizesToSelect; pageSizeIndex++) {
+
 			// scroll to next page size as we will click on next page size in next ITERATION
-			WebElement pageSizeWE= perPageDataOptions.get(pageSizeIndex);
+			WebElement pageSizeWE = perPageDataOptions.get(pageSizeIndex);
 			dataSizeText = pageSizeWE.getText();
 			scrollElementIntoMiddle(pageSizeWE, driver);
 			Thread.sleep(1000);
@@ -3148,6 +3275,8 @@ public class TransactionHistoryPOM extends commonFunc {
 //			click_pageSizeDropdown();
 //			// scroll to next page size as we will click on next page size in next ITERATION
 //		       scrollElementIntoMiddle(perPageDataOptions.get(a), driver);
+			click_pageSizeDropdown();
+			Thread.sleep(1000);
 
 		}
 
@@ -3172,7 +3301,7 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 //incomplete............	
-	public int getPageCountToNavigateDisplayedAtPageBottom() {
+	public int getPageCountToNavigateDisplayedAtPageBottom() throws InterruptedException {
 		// 1.check - table has data or not
 		waitForPageLoaded(driver, logger);
 		boolean dataInTable = validateALLTxnReportTableHasData();
@@ -3229,7 +3358,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	}
 
-	public void moreinfoSideBAR() {
+	public void inProgressMMMTTHHOOODD() {
 
 	}
 

@@ -526,7 +526,34 @@ public boolean isPresentAndDisplayed(WebElement locator,  WebDriver driver, Exte
 			return false;
 		}
 	}
-	
+// method by shinde ........start..............................
+
+//public boolean isWebElementDisplayed(WebElement webElement,String messageToLogInReport, WebDriver driver, ExtentTest logger) throws IOException {
+//	waitForPageLoaded(driver, logger);
+//
+//	boolean isWebElementDisplayed = false;
+//	try {
+//	if(webElement.isDisplayed())
+//	{
+//		scrollElementIntoMiddle(webElement, driver);
+//		logger.log(LogStatus.INFO, messageToLogInReport);
+//		highlightElement(webElement, "Red", driver, logger);
+//		screenshotInReport(messageToLogInReport+" - TRUE", driver, logger);
+//		isWebElementDisplayed=true;
+//	}
+//	}
+//	catch (NoSuchElementException e) {
+//		
+//		logger.log(LogStatus.INFO, messageToLogInReport);
+//		screenshotInReport(messageToLogInReport+" - FALSE", driver, logger);
+//		isWebElementDisplayed=false;
+//	}
+//	
+//	return isWebElementDisplayed;
+//}
+
+//method by shinde .............end..............................
+
 	
 	public void verifyPosition(WebElement targetElement, String position, WebElement relativeElement, WebDriver driver, ExtentTest logger) {
 

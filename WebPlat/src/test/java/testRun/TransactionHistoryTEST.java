@@ -121,7 +121,7 @@ public class TransactionHistoryTEST extends testbase {
 	}
 
 	@Test(priority = 3, enabled = true, groups = "regression.allTxnReport")
-	public void ATR003_messageDisplayedIfNoDataToDateRangeSelected() throws InterruptedException, IOException {
+	public void ATR003_messageDisplayedIfTableHasNoData() throws InterruptedException, IOException {
 
 		// TEST -
 		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
@@ -135,33 +135,20 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_reportsModule();
 		transactionHistoryPOM.click_txnHistoryModule();
 //select from date		
-		 transactionHistoryPOM.selectFromDate2("1", "January", "2024");
+		 transactionHistoryPOM.selectFromDate2("26", "September", "2024");
 //select to date	
-		 transactionHistoryPOM.selectToDate2(1, "January", 2024);
+		 transactionHistoryPOM.selectToDate2(26, "September", 2024);
 //search		
 		transactionHistoryPOM.click_searchButton();
 		commonfunc.waitForPageLoaded(driver, logger);
-//validate if table has data
-		boolean dataInTable = transactionHistoryPOM.validateALLTxnReportTableHasData();
-		if (dataInTable) 
-		{
-			commonfunc.screenshotInReport("Txn. table has data -", driver, logger);
-		} 
-		else {
-			String actualMessage = transactionHistoryPOM.getTxnTable_messageIfNoTableData();
-			commonfunc.screenshotInReport("Txn. table has no data 'message displayed' -", driver, logger);
-			String expectedMessage = "No items found.";
-			boolean ignoreCase = false;
-//compare string
-			boolean msgIsCorrect = commonfunc.compareString(actualMessage, expectedMessage, ignoreCase, logger);
-//assertion - message displayed		
-			commonfunc.softAssert("Message displayed if no data in Txn. table -", actualMessage, expectedMessage,
-					msgIsCorrect, logger);
-		}
+		
+//validate message displayed if table has no data		
+		transactionHistoryPOM.validateMessageDisplayedIfTableHasNOData("No items found.", false, logger);
+	
 	}
 
 	@Test(priority = 4, enabled = true, groups = "regression.allTxnReport")
-	public void ATR004_isCategoryDropdownDisplayed() throws InterruptedException, IOException {
+	public void ATR004_isCategoryTabDisplayed() throws InterruptedException, IOException {
 
 		// TEST -
 		TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
@@ -175,13 +162,14 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_reportsModule();
 		transactionHistoryPOM.click_txnHistoryModule();
 		Thread.sleep(2000);
+		
 		boolean isCatTabDisplayed = transactionHistoryPOM.isCategoryTabDisplayed();
 //assertion - is category tab displayed	
 		commonfunc.softAssertTrue("Is category dropdown displayed -", isCatTabDisplayed, logger);
 	}
 
 	@Test(priority = 5, enabled = true, groups = "regression.allTxnReport", dependsOnMethods = {
-			"ATR004_isCategoryDropdownDisplayed" })
+			"ATR004_isCategoryTabDisplayed" })
 	public void ATR005_categoryFilterWorking() throws InterruptedException, IOException {
 
 		// TEST -
@@ -239,7 +227,7 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_reportsModule();
 		transactionHistoryPOM.click_txnHistoryModule();
 //Select date		
-		transactionHistoryPOM.selectFromDate2("10", "August", "2024");
+		transactionHistoryPOM.selectFromDate2("1", "August", "2024");
 //		transactionHistoryPOM.selectToDate2(20, "August", 2024);
 // Select category - Telecom
 		transactionHistoryPOM.click_categoryDropdown();
@@ -295,7 +283,7 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_reportsModule();
 		transactionHistoryPOM.click_txnHistoryModule();
 //select date		
-		transactionHistoryPOM.selectFromDate2("10", "August", "2024");
+		transactionHistoryPOM.selectFromDate2("1", "August", "2024");
 //transactionHistoryPOM.selectToDate2(20, "August", 2024);
 //select category - Telecom
 		transactionHistoryPOM.click_categoryDropdown();
@@ -394,8 +382,8 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_txnHistoryModule();
 		Thread.sleep(2000);
 //select date		
-		transactionHistoryPOM.selectFromDate2("10", "August", "2024");
-		transactionHistoryPOM.selectToDate2(20, "August", 2024);
+		transactionHistoryPOM.selectFromDate2("1", "August", "2024");
+	//	transactionHistoryPOM.selectToDate2(20, "August", 2024);
 //search		
 		transactionHistoryPOM.click_searchButton();
 //assertion - page size selected and data fetched per page		
@@ -419,7 +407,7 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_reportsModule();
 		transactionHistoryPOM.click_txnHistoryModule();
 //select from date		
-		transactionHistoryPOM.selectFromDate2("10", "August", "2024");
+		transactionHistoryPOM.selectFromDate2("1", "August", "2024");
 //select to date	
 		// transactionHistoryPOM.selectToDate2(25, "August", 2024);
 //search		
@@ -442,7 +430,7 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_reportsModule();
 		transactionHistoryPOM.click_txnHistoryModule();
 //select from date		
-		transactionHistoryPOM.selectFromDate2("10", "August", "2024");
+		transactionHistoryPOM.selectFromDate2("1", "August", "2024");
 //select to date	
 		// transactionHistoryPOM.selectToDate2(25, "September", 2024);
 //search		
@@ -495,13 +483,13 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_txnHistoryModule();
 		Thread.sleep(2000);
 		//select from date		
-				transactionHistoryPOM.selectFromDate2("10", "August", "2024");
+				transactionHistoryPOM.selectFromDate2("1", "August", "2024");
 		//select to date	
 				// transactionHistoryPOM.selectToDate2(10, "August", 2024);
 		//		transactionHistoryPOM.click_searchButton();
 				Thread.sleep(2000);
 				//open more info side bar of 1st txn.			
-				transactionHistoryPOM.validateMoreInfoSideMenuDataAndTableData();//more info header buttons need combo of ...1.txn status 2.category and 3. ....get information first then handle
+				transactionHistoryPOM.validateMoreInfoSideMenuData_TableData();//more info header buttons need combo of ...1.txn status 2.category and 3. ....get information first then handle
 	}
 
 	@Test(priority = 10, enabled = true, groups = "regression.telecomTab")
@@ -518,15 +506,15 @@ public class TransactionHistoryTEST extends testbase {
 		// navigate to transaction history module...
 		transactionHistoryPOM.click_reportsModule();
 		transactionHistoryPOM.click_txnHistoryModule();
-		Thread.sleep(2000);
-		//select from date		
-			//	transactionHistoryPOM.selectFromDate2("1", "August", "2024");
-		//select to date	
-				// transactionHistoryPOM.selectToDate2(25, "August", 2024);
-				transactionHistoryPOM.click_searchButton();
-				Thread.sleep(2000);
+		Thread.sleep(12000);
+//		//select from date		
+//				transactionHistoryPOM.selectFromDate2("1", "August", "2024");
+//		//select to date	
+//				// transactionHistoryPOM.selectToDate2(25, "August", 2024);
+//				transactionHistoryPOM.click_searchButton();
+//				Thread.sleep(2000);
 				//open more info side bar of 1st txn.			
-				transactionHistoryPOM.validateMoreInfoSideBarHeaderButtons();//more info header buttons need combo of ...1.txn status 2.category and 3. ....get information first then handle
+				transactionHistoryPOM.validateMoreInfoSideBarHeaderButtons2();//more info header buttons need combo of ...1.txn status 2.category and 3. ....get information first then handle
 	}
 	
 	
@@ -534,7 +522,7 @@ public class TransactionHistoryTEST extends testbase {
 	
 	
 	
-//	@Test
+	@Test
 	public void inprogressMETHODS() throws InterruptedException, IOException {
 
 		// TEST -
@@ -550,16 +538,18 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_txnHistoryModule();
 		Thread.sleep(2000);
 		//select from date		
-		transactionHistoryPOM.selectFromDate2("1", "August", "2024");
-//select to date	
-		// transactionHistoryPOM.selectToDate2(25, "August", 2024);
-//		transactionHistoryPOM.click_searchButton();
-		Thread.sleep(2000);
-		// navigate/click to telecom tab
-		transactionHistoryPOM.click_bbpsTab();
-		Thread.sleep(2000);
-			
-				transactionHistoryPOM.	tableCOLUMNvaluesvalidate();
+//		transactionHistoryPOM.selectFromDate2("1", "August", "2024");
+////select to date	
+//		// transactionHistoryPOM.selectToDate2(25, "August", 2024);
+////		transactionHistoryPOM.click_searchButton();
+//		Thread.sleep(2000);
+//		// navigate/click to telecom tab
+//	//	transactionHistoryPOM.click_bbpsTab();
+//			
+				transactionHistoryPOM.changeDateIfTableHasNoData();
+				
+				Thread.sleep(9000);
+
 	}
 	
 	
