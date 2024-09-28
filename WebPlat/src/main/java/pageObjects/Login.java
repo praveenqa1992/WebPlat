@@ -76,7 +76,7 @@ public class Login  extends commonFunc
 		click(btnSign, driver, logger);
 		
 		waitForPageLoaded(driver, logger);
-		Thread.sleep(5000);
+		Thread.sleep(10000);
 		
 //		title = driver.getTitle();
 		

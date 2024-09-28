@@ -2,6 +2,7 @@ package testRun;
 
 import java.io.IOException;
 
+import org.json.JSONException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +11,7 @@ import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.LogStatus;
 
+import API.TC001_TransactionHistoryAPI;
 import common.commonFunc;
 import pageObjects.TransactionHistoryPOM;
 import testCases.TC1_VerifyLogin;
@@ -19,6 +21,52 @@ public class TransactionHistoryTEST extends testbase {
 
 //	SoftAssert softAssert;
 
+	@Test(priority=99,enabled=true)
+	public void compareAPIvaluesWithUIvalues() throws InterruptedException, IOException, JSONException {
+		
+		//TEST -		
+				TC1_VerifyLogin tC1_VerifyLogin = new TC1_VerifyLogin();
+		//POM -
+				TransactionHistoryPOM transactionHistoryPOM = new TransactionHistoryPOM(driver, logger);
+		//COMMON METHOD CLASS -		
+				commonFunc commonfunc = new commonFunc();
+				
+				TC001_TransactionHistoryAPI transactionHistoryAPI = new TC001_TransactionHistoryAPI();
+		//login...
+				tC1_VerifyLogin.verifySignIn(driver, logger);
+		//navigate to transaction history module...
+				transactionHistoryPOM.click_reportsModule();
+				transactionHistoryPOM.click_txnHistoryModule();
+				Thread.sleep(2000);	
+				//select from date		
+				 transactionHistoryPOM.selectFromDate2("1", "August", "2024");
+		//select to date	
+			//	 transactionHistoryPOM.selectToDate2(26, "September", 2024);
+		//search		
+				transactionHistoryPOM.click_searchButton();
+				Thread.sleep(3000);	
+
+				commonfunc.waitForPageLoaded(driver, logger);
+		
+			String apiTid=	transactionHistoryAPI.transactionHistoryAPI_getTxnId().trim();
+			String apiCategoryName =	transactionHistoryAPI.transactionHistoryAPI_getCategoryName().trim();
+				
+			String uiTid=	transactionHistoryPOM.getTxnID(1);
+			String uiCategory=	transactionHistoryPOM.getTxnCategory(1);
+				
+			boolean ignoreCase=false;
+				// get and validate txn operator------------
+				boolean isTidSame = commonfunc.compareString(apiTid, uiTid,
+						ignoreCase, logger);
+				commonfunc.softAssert("Txn. id from API vs UI -", apiTid,
+						uiTid, isTidSame, logger);
+			
+
+				
+				
+	}
+	
+	
 	@Test(priority = 1, enabled = true, groups = "regression.allTxnReport")
 	public void ATR001_navigateToAllTxnReportPage() throws InterruptedException, IOException {
 
@@ -517,11 +565,7 @@ public class TransactionHistoryTEST extends testbase {
 				transactionHistoryPOM.validateMoreInfoSideBarHeaderButtons2();//more info header buttons need combo of ...1.txn status 2.category and 3. ....get information first then handle
 	}
 	
-	
-	
-	
-	
-	
+
 	@Test
 	public void inprogressMETHODS() throws InterruptedException, IOException {
 
@@ -548,7 +592,7 @@ public class TransactionHistoryTEST extends testbase {
 //			
 				transactionHistoryPOM.changeDateIfTableHasNoData();
 				
-				Thread.sleep(9000);
+				Thread.sleep(2000);
 
 	}
 	

@@ -1241,67 +1241,92 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		System.out.println("1....................");
 		boolean datainTable;
-		 int  enabledDatesCount1;
-		
+		int enabledDatesCount1;
+
 		datainTable = validateALLTxnReportTableHasData();
-   		click(fromCalenderIcon, driver, logger);    	 		
-        enabledDatesCount1= fromCalender_Dates_enabled_notHighlited.size() ;  
-       int a= (2);
-           boolean needToIterate=true;	  
-            if (needToIterate) {
-   	 	           		if(datainTable)
-           		{
-               		System.out.println(".......table has data.............");
-           		}           		
-           		else
-                  {
-           			
-           			for(int aa=1;aa<=5;aa++)
-           				System.out.println("loop -"+aa);
-           			{
-           			
-            	   for(int enabledDatesCountIndex = a; enabledDatesCountIndex >= 0 ; enabledDatesCountIndex--)
-            	   {        
-                  		System.out.println("1...index count ---------"+enabledDatesCount1);
+		click(fromCalenderIcon, driver, logger);
+		enabledDatesCount1 = fromCalender_Dates_enabled_notHighlited.size();
+ 	int a = enabledDatesCount1-1;
 
-             	            	click(fromCalenderIcon, driver, logger);    	   
-            		WebElement dateWE =   fromCalender_Dates_enabled_notHighlited.get(enabledDatesCountIndex);
-               		int dateAsInt =  Integer.parseInt(dateWE.getText());
-            		   click(dateWE, driver, logger); 
-            		   Thread.sleep(2000);
-             	 		WebElement searchButton2 = driver.findElement(By.xpath("//button[text()='Search']"));
-             	 		scrollElementIntoMiddle(searchButton2, driver);
-            		   click(searchButton2, driver, logger);
-            		   Thread.sleep(2000);
-            		   datainTable =  validateALLTxnReportTableHasData();
-                 		System.out.println("2...index count ---------"+enabledDatesCount1);
+		boolean needToIterate = true;
+		if (needToIterate) {
+			if (datainTable) {
+				System.out.println(".......table has data.............");
+			} else 
+			{
+				for (int aa = 1; aa <= 3; aa++)
+				{
+					System.out.println("loop num -" + aa);					
+					for (int enabledDatesCountIndex = a; enabledDatesCountIndex > 0; enabledDatesCountIndex--) {
+						System.out.println("1...index count ---------" + enabledDatesCountIndex);
 
-            		   if(dateAsInt == 1 && !datainTable)
-            		   {
-                     		System.out.println("3...index count ---------"+enabledDatesCount1);
+						System.out.println("value of a ---------" + a);
 
-	            			   logger.log(LogStatus.INFO,"Navigating to previous month");
-	              	         	click(fromCalenderIcon, driver, logger);
-	              	         	Thread.sleep(2000);
-	               	         	click(fromCalenderPreviousButton, driver, logger);  
-	              	         	Thread.sleep(2000);
-	                	 int	enabledDatesCount2= fromCalender_Dates_enabled_notHighlited.size() ; 
-	                	 a = (enabledDatesCount2-1) ;
-	                  		System.out.println("4...index count 2---------"+enabledDatesCount2);
-	                  		System.out.println("5...index count 2-----a----"+a);
+						click(fromCalenderIcon, driver, logger);
+					
+						if(enabledDatesCountIndex == a)
+						{
+						switch(aa)
+						{
+						case 2:  
+							Thread.sleep(1000);
+					     	click(fromCalenderPreviousButton, driver, logger);
+					    	Thread.sleep(1000); 
+					    	;break;
+						
+						case 3:
+							Thread.sleep(1000);
+					     	click(fromCalenderPreviousButton, driver, logger);
+					     	click(fromCalenderPreviousButton, driver, logger);
+					    	Thread.sleep(1000); 
+							;break;
 
-            		   }
-            		   else 
-            		   {
-                     		System.out.println("----5------continue--------");
-             			   continue;
-            		   }
-            		   
-            	   }
- 
-            	   }//close---navigate through dates of current month	
-             }
-          }// close----changeMonth=false
+						case 4:
+							Thread.sleep(1000);
+					     	click(fromCalenderPreviousButton, driver, logger);
+					     	click(fromCalenderPreviousButton, driver, logger);
+					     	click(fromCalenderPreviousButton, driver, logger);
+					    	Thread.sleep(1000); 
+							;break;
+						
+						default :  logger.log(LogStatus.INFO, "Navigate back for the mentioned number of monthes is COMPLETED.");  ;
+
+						}	
+					}
+							
+						WebElement dateWE = fromCalender_Dates_enabled_notHighlited.get(enabledDatesCountIndex);
+						int dateAsInt = Integer.parseInt(dateWE.getText());
+						click(dateWE, driver, logger);
+						Thread.sleep(2000);
+						WebElement searchButton2 = driver.findElement(By.xpath("//button[text()='Search']"));
+						scrollElementIntoMiddle(searchButton2, driver);
+						click(searchButton2, driver, logger);
+						Thread.sleep(2000);
+						datainTable = validateALLTxnReportTableHasData();
+						System.out.println("2...index count ---------" + enabledDatesCountIndex);
+
+						if (dateAsInt == 1 && !datainTable) {
+							System.out.println("3...index count ---------" + enabledDatesCountIndex);
+							logger.log(LogStatus.INFO, "Navigating to previous month");
+							click(fromCalenderIcon, driver, logger);
+							Thread.sleep(2000);
+							click(fromCalenderPreviousButton, driver, logger);
+							Thread.sleep(2000);
+							int enabledDatesCount2 = fromCalender_Dates_enabled_notHighlited.size();
+							a = (enabledDatesCount2 - 1);
+							System.out.println("4...index count 2---------" + enabledDatesCount2);
+							System.out.println("4b...value of aaa-----a----" + a);
+
+						} else {
+							System.out.println("----5------continue--------");
+							System.out.println("5...value of aaa-----a----" + a);
+
+							continue;
+						}
+					}
+				} // close---navigate through dates of current month
+			}
+		} // close----changeMonth=false
 	}
 
 // CALENDAR methods END #####################################################################################################
@@ -2452,8 +2477,20 @@ public class TransactionHistoryPOM extends commonFunc {
 	}
 
 //2...tid
-	public void getTxnTID(int rowNumIndex) {
+	public String getTxnID(int rowNumIndex) throws InterruptedException {
 
+		int rowNum = (rowNumIndex + 1);
+
+		// need to pass tr number but in loop we pass index number that's why get index
+		// num as method parameter and pass td number in table XPATH
+		WebElement txnTable_row = driver.findElement(By.xpath(
+				"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
+						+ rowNum + "]/td[2]"));
+
+		waitForElementToAppear(txnTable_row, driver, logger);
+		scrollElementIntoMiddle(txnTable_row, driver);
+		Thread.sleep(2000);
+		return txnTable_row.getText();
 	}
 
 //3...inventory...cat,service,operator	
@@ -3362,9 +3399,10 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	}
 
-	public void aaagetLastWE() {
-		System.out.println("last is displayed-");
-		System.out.println("last is enabled-");
+	public void compareAPIvaluesWithUIvalues() {
+
+		// TC001_TransactionHistoryAPI
+
 	}
 
 }
