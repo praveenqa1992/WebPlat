@@ -395,10 +395,13 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	@FindBy(xpath = "//p-paginator[@class='p-element']")
 	public WebElement paginationWebElement;
-
+	
 	@FindBy(xpath = "//div[@class='p-paginator-first pr-0 p-paginator p-component ng-star-inserted']/button")
 	public List<WebElement> paginationsAllButtons;
 
+	
+	
+	
 	@FindBy(xpath = "//div[@class='success-col text-center']")
 	public WebElement raiseComplaintForm;
 
@@ -1353,6 +1356,25 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	}
 
+	
+	public String getTxnTable_messageIfNoTableData() {
+
+		logger.log(LogStatus.INFO, "Capturing message displayed if table has no data.");
+
+		int columnsNumbersInFirstRow = getTxnTable_columnsInFirstRow();
+
+		String txnTableFirstRowFirstCol_Text = null;
+		// columns in 1st row =1 means...no data ...only text message is displayed (if
+		// any)
+		if (columnsNumbersInFirstRow == 1) {
+
+			txnTableFirstRowFirstCol_Text = txnTable_columnsInFirstRow.get(0).getText();
+			logger.log(LogStatus.INFO,
+					"Captured message displayed if table has no data is -" + txnTableFirstRowFirstCol_Text);
+		}
+		return txnTableFirstRowFirstCol_Text;
+	}
+	
 	public void validateMessageDisplayedIfTableHasNOData(String expectedMessage, boolean ignoreCase, ExtentTest logger)
 			throws IOException, InterruptedException {
 
@@ -2220,9 +2242,9 @@ public class TransactionHistoryPOM extends commonFunc {
 			logger.log(LogStatus.INFO, "no table data....more info ...status...buttons,,,cat");
 
 		}
-
 	}
 
+	
 	public void validateMoreInfoSideMenuData_TableData() throws InterruptedException, IOException {
 
 		logger.log(LogStatus.INFO, "validating More Info Side Menu Data And Table Data");
@@ -2439,23 +2461,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		return tableHasData;
 	}
 
-	public String getTxnTable_messageIfNoTableData() {
 
-		logger.log(LogStatus.INFO, "Capturing message displayed if table has no data.");
-
-		int columnsNumbersInFirstRow = getTxnTable_columnsInFirstRow();
-
-		String txnTableFirstRowFirstCol_Text = null;
-		// columns in 1st row =1 means...no data ...only text message is displayed (if
-		// any)
-		if (columnsNumbersInFirstRow == 1) {
-
-			txnTableFirstRowFirstCol_Text = txnTable_columnsInFirstRow.get(0).getText();
-			logger.log(LogStatus.INFO,
-					"Captured message displayed if table has no data is -" + txnTableFirstRowFirstCol_Text);
-		}
-		return txnTableFirstRowFirstCol_Text;
-	}
 
 //write one method to get/fetch data from the column...................
 //1...sr no	
@@ -2834,77 +2840,26 @@ public class TransactionHistoryPOM extends commonFunc {
 
 //5.PAGINATION methods START ########################################################################################
 
-//	public void getBottom_PagenumbersDisplayed(int indexNo) {
-//
-//		bottom_PagenumbersDisplayed.get(indexNo);
-//		logger.log(LogStatus.INFO, "Current page number is -" + indexNo);
-//	}
+	
+	public String get_perPageDataSize() {
 
-//incomplete
-	public void validate_noOfPagesAccordingToPageSize() throws InterruptedException {
-//
-//		int pages = getPageNumbersCountDisplayedAtPageBottom();
-//		int pageSize = getCurentPageDataSize();
-//
-//		// find first and last number of record according to TABLE DATA..........
-//		
-//		WebElement ElementFirstNo = driver.findElement(By.xpath(
-//				"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
-//						+ 1 + "]/td[1]"));
-//		String firstNumFromTable = ElementFirstNo.getText();
-//
-//		int tableRows = getTxnTable_rowNumbers();
-//		WebElement ElementLastNo = driver.findElement(By.xpath(
-//				"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
-//						+ tableRows + "]/td[1]"));
-//		String lastNumFromtable = ElementLastNo.getText();
-//
-////			 find first and last number of record according to PAGE BOTTOM MESSAGE.............
-//
-//		String msgAtPageBottom = getPage_paginationDataCountingMsg();
-//		String[] splittedMsg = msgAtPageBottom.split(" ");
-//
-//		String firstNum = null;
-//		String lastNum = null;
-//		String totalTxns = null;
-//
-//		for (int a = 0; a <= (splittedMsg.length - 1); a++) {
-//			if (a == 0 || a == 2 || a == 4 || a == 6) {
-//				continue;
-//			} else {
-//				if (a == 1) {
-//					firstNum = splittedMsg[a];
-//				} else if (a == 3) {
-//					lastNum = splittedMsg[a];
-//				} else if (a == 5) {
-//					totalTxns = splittedMsg[a];
-//				}
-//			}
-//		}
-//		System.out.println("1 st no.from table -" + firstNumFromTable + "\n1 st no.in message - " + firstNum);
-//		System.out.println("last no.from table -" + lastNumFromtable + "\nlast no.in message - " + lastNum);
-//		System.out.println("total in message - " + totalTxns);
-//
-//	   Boolean dataInTable	= validateALLTxnReportTableHasData();
-//		if(dataInTable) 
-//		{
-//			
-//			
-//		}
-//		
+		logger.log(LogStatus.INFO, "Fetch per page data size");
+		waitForElementToAppear(page_dataPerPageNumber, driver, logger);
+		scrollElementIntoMiddle(page_dataPerPageNumber, driver);
 
-		scrollElementIntoMiddle(paginationWebElement, driver);
-		int paginationButtons = paginationsAllButtons.size();
-		for (int a = 0; a < paginationButtons; a++) {
-			boolean buttonActive = paginationsAllButtons.get(a).isEnabled();
-
-			if (buttonActive) {
-
-			} else {
-
-			}
+		String dataPerPageNo = null;
+		try {
+			scrollDown(driver);
+			dataPerPageNo = page_dataPerPageNumber.getText();
+			logger.log(LogStatus.INFO, "Fetched per page data size -" + dataPerPageNo);
+			return dataPerPageNo;
+		} catch (Exception e) {
+			logger.log(LogStatus.INFO, "Data per page dropdown has no value");
+			logger.log(LogStatus.INFO, e);
 		}
+		return dataPerPageNo;
 	}
+	
 
 //need to update....handle a scenario-------------
 	public boolean isDataFetchedAccordingToPageSizeSelected() throws IOException, InterruptedException {
@@ -2967,6 +2922,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	}
 
+	
 //working.......fine..........
 	public void validate_tableDataAndTextMessage() throws IOException, InterruptedException {
 
@@ -3082,23 +3038,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 	}
 
-	public String get_perPageDataSize() {
-
-		logger.log(LogStatus.INFO, "Fetch per page data size");
-		waitForElementToAppear(page_dataPerPageNumber, driver, logger);
-		scrollElementIntoMiddle(page_dataPerPageNumber, driver);
-
-		String dataPerPageNo = null;
-		try {
-			dataPerPageNo = page_dataPerPageNumber.getText();
-			logger.log(LogStatus.INFO, "Fetched per page data size -" + dataPerPageNo);
-			return dataPerPageNo;
-		} catch (Exception e) {
-			logger.log(LogStatus.INFO, "Data per page dropdown has no value");
-			logger.log(LogStatus.INFO, e);
-		}
-		return dataPerPageNo;
-	}
+	
 
 	public void click_navigate_firstPageButton() {
 
@@ -3112,6 +3052,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		logger.log(LogStatus.INFO, "click first page button");
 		if (buttonEnabled) {
 			logger.log(LogStatus.INFO, "first page button is enabled -" + buttonEnabled);
+			scrollDown(driver);
 			click(firstPageIconElement, driver, logger);
 		} else {
 			logger.log(LogStatus.INFO, "first page button is DISABLED");
@@ -3132,6 +3073,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		logger.log(LogStatus.INFO, "click previous page button");
 		if (buttonEnabled) {
 			logger.log(LogStatus.INFO, "previous page button is enabled -" + buttonEnabled);
+			scrollDown(driver);
 			click(prevPageIconElement, driver, logger);
 		} else {
 			logger.log(LogStatus.INFO, "previous page button is DISABLED");
@@ -3155,6 +3097,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		if (buttonEnabled) {
 			logger.log(LogStatus.INFO, "next page button is enabled -" + buttonEnabled);
 			scrollElementIntoMiddle(nextPageIconElement, driver);
+			scrollDown(driver);
 			click(nextPageIconElement, driver, logger);
 		} else {
 			logger.log(LogStatus.INFO, "next page button is DISABLED");
@@ -3177,6 +3120,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		if (buttonEnabled) {
 			logger.log(LogStatus.INFO, "last page button is enabled -" + buttonEnabled);
+			scrollDown(driver);
 			click(lastPageIconElement, driver, logger);
 		} else {
 			logger.log(LogStatus.INFO, "last page button is DISABLED");
@@ -3395,6 +3339,78 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	}
 
+	
+//	public void getBottom_PagenumbersDisplayed(int indexNo) {
+//
+//		bottom_PagenumbersDisplayed.get(indexNo);
+//		logger.log(LogStatus.INFO, "Current page number is -" + indexNo);
+//	}
+
+//incomplete
+	public void validate_noOfPagesAccordingToPageSize() throws InterruptedException {
+//
+//		int pages = getPageNumbersCountDisplayedAtPageBottom();
+//		int pageSize = getCurentPageDataSize();
+//
+//		// find first and last number of record according to TABLE DATA..........
+//		
+//		WebElement ElementFirstNo = driver.findElement(By.xpath(
+//				"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
+//						+ 1 + "]/td[1]"));
+//		String firstNumFromTable = ElementFirstNo.getText();
+//
+//		int tableRows = getTxnTable_rowNumbers();
+//		WebElement ElementLastNo = driver.findElement(By.xpath(
+//				"//table[@class='p-datatable-table p-datatable-resizable-table p-datatable-resizable-table-fit ng-star-inserted']/tbody/tr["
+//						+ tableRows + "]/td[1]"));
+//		String lastNumFromtable = ElementLastNo.getText();
+//
+////			 find first and last number of record according to PAGE BOTTOM MESSAGE.............
+//
+//		String msgAtPageBottom = getPage_paginationDataCountingMsg();
+//		String[] splittedMsg = msgAtPageBottom.split(" ");
+//
+//		String firstNum = null;
+//		String lastNum = null;
+//		String totalTxns = null;
+//
+//		for (int a = 0; a <= (splittedMsg.length - 1); a++) {
+//			if (a == 0 || a == 2 || a == 4 || a == 6) {
+//				continue;
+//			} else {
+//				if (a == 1) {
+//					firstNum = splittedMsg[a];
+//				} else if (a == 3) {
+//					lastNum = splittedMsg[a];
+//				} else if (a == 5) {
+//					totalTxns = splittedMsg[a];
+//				}
+//			}
+//		}
+//		System.out.println("1 st no.from table -" + firstNumFromTable + "\n1 st no.in message - " + firstNum);
+//		System.out.println("last no.from table -" + lastNumFromtable + "\nlast no.in message - " + lastNum);
+//		System.out.println("total in message - " + totalTxns);
+//
+//	   Boolean dataInTable	= validateALLTxnReportTableHasData();
+//		if(dataInTable) 
+//		{
+//			
+//			
+//		}
+//		
+
+		scrollElementIntoMiddle(paginationWebElement, driver);
+		int paginationButtons = paginationsAllButtons.size();
+		for (int a = 0; a < paginationButtons; a++) {
+			boolean buttonActive = paginationsAllButtons.get(a).isEnabled();
+
+			if (buttonActive) {
+
+			} else {
+
+			}
+		}
+	}
 	public void inProgressMMMTTHHOOODD() {
 
 	}

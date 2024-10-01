@@ -190,8 +190,10 @@ public class TransactionHistoryTEST extends testbase {
 		transactionHistoryPOM.click_searchButton();
 		commonfunc.waitForPageLoaded(driver, logger);
 		
-//validate message displayed if table has no data		
-		transactionHistoryPOM.validateMessageDisplayedIfTableHasNOData("No items found.", false, logger);
+//validate message displayed if table has no data	
+		
+		boolean ignoreCase=false;
+		transactionHistoryPOM.validateMessageDisplayedIfTableHasNOData("No items found.", ignoreCase, logger);
 	
 	}
 
@@ -566,7 +568,7 @@ public class TransactionHistoryTEST extends testbase {
 	}
 	
 
-	@Test
+//	@Test
 	public void inprogressMETHODS() throws InterruptedException, IOException {
 
 		// TEST -

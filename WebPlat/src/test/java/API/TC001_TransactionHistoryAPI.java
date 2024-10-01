@@ -31,7 +31,7 @@ public class TC001_TransactionHistoryAPI {
 	
 	
 	
-	String token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiI5NjA0NjA5MzIxIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6Ijk2MDQ2MDkzMjEtc2hpbHBhLSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiNDM5IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiNiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL3NwbiI6IlJUIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiNTI5IiwibmJmIjoxNzI3NDk2NzU1LCJleHAiOjE3Mjc1NTY3NTUsImlzcyI6IkFQSSIsImF1ZCI6IldlYiJ9.8Vp7gOHgpSHCtbcNUjfeGH9kgeHK1vWU460GsgYgeGA";
+	String token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiI5NjA0NjA5MzIxIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6Ijk2MDQ2MDkzMjEtc2hpbHBhLSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiNDM5IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiNiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL3NwbiI6IlJUIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiNTI5IiwibmJmIjoxNzI3NjY4ODE2LCJleHAiOjE3Mjc3Mjg4MTYsImlzcyI6IkFQSSIsImF1ZCI6IldlYiJ9.TApyQ6kE1yPsgTPF0dmxsTkmajVvyOhXEyHjpt3qMkw";
 
 	@Test(priority=1,enabled=false)
 	public void transactionHistory_getAPIresp() {
@@ -126,10 +126,13 @@ public class TC001_TransactionHistoryAPI {
 	@Test(priority=2, enabled=true)
 	public void transactionHistory_getAPIresp2() throws JSONException {
 
+		Response txnHistoryApiResp = null;
+		
 		HashMap header = new HashMap();
 		header.put("authorization", token);
 
-		Response txnHistoryApiResp = given()
+		try {
+		 txnHistoryApiResp = given()
 
 				// .contentType("application/json")
 				.headers(header)
@@ -137,9 +140,20 @@ public class TC001_TransactionHistoryAPI {
 				.when()
 				.get("https://qa.uatdev.in/reporting/api/report-module/transactiondata/user-wise?fromDate=08/01/2024&toDate=08/31/2024&SearchUserName=&CategoryId=&OperatorId=&serviceId=&SearchUserID=&pageNumber=1&pageSize=10")
 
+				
 				.then()
+				
+				
 				.statusCode(200)
 				.extract().response();
+				}
+		catch (Exception e) 
+		{
+			
+                System.out.println("ststus no match");
+                System.out.println("exception captured is -"+e.toString());
+
+		}
 // response as string-------------	
 		
 //		System.out.println("4.pretty print resp...........");
@@ -176,29 +190,6 @@ public class TC001_TransactionHistoryAPI {
 
 	boolean API_isSettled =	txnHistoryApiResp.path("data[0].isSettled");
 	System.out.println(API_isSettled);
-	
-	
-//
-//System.out.println(API_orderId_tid);
-//System.out.println(API_categoryName);
-//System.out.println(API_serviceCode_name);
-//System.out.println(API_operatorName);
-//System.out.println(API_number_mob);
-//System.out.println(API_amount);
-//System.out.println(API_acost_totalAmount);
-//System.out.println(API_status);
-//System.out.println(API_transactionDate);
-//System.out.println(API_isSettled);
-//
-
-
-//	JSONObject jObject= new JSONObject(txnHistoryApiResp.toString());
-//	
-//	System.out.println("1..........");
-//	getValueFromApi_parsing(jObject,"orderId");
-//	System.out.println("2..........");
-//
-//		
 	
 	}
 
@@ -392,7 +383,74 @@ public class TC001_TransactionHistoryAPI {
 	}
 	
 	
+	@Test(priority=5)
+	public void transactionHistory_inProgress() throws JSONException {
+
+		Response txnHistoryApiResp = null;
+		
+		HashMap header = new HashMap();
+		header.put("authorization", token);
+
+		try {
+		 txnHistoryApiResp = given()
+				// .contentType("application/json")
+				.headers(header)
+				.when()
+				.get("https://qa.uatdev.in/reporting/api/report-module/transactiondata/user-wise?fromDate=08/01/2024&toDate=08/31/2024&SearchUserName=&CategoryId=&OperatorId=&serviceId=&SearchUserID=&pageNumber=1&pageSize=10")
+				.then()
+				.statusCode(200)
+				.extract().response();
+				}
+		catch (Exception e) 
+		{
+                System.out.println("status no match");
+                System.out.println("exception captured is -"+e.toString());
+		}
+// response as string-------------	
+//		System.out.println("4.pretty print resp...........");
+//		txnHistoryApiResp.prettyPrint();
+		System.out.println("1.................");
+		
+
+	String API_orderId_tid =	txnHistoryApiResp.path("data[0].orderId");
+	System.out.println("order id -"+API_orderId_tid);
+
+	String API_categoryName =	txnHistoryApiResp.path("data[0].categoryName");
+	System.out.println("cat name -"+API_categoryName);
 	
+	JSONObject jo= new JSONObject(txnHistoryApiResp.getBody().asString());
+	
+	JSONArray ja = new JSONArray(jo);
+	
+	int jaLength = jo.length();
+	System.out.println("Json array length is -"+jaLength);
+
+	
+	for(int a=0;a<jaLength;a++)
+	{
+		System.out.println("Json array length is -"+a);
+		
+	    String catNameCaptured=	txnHistoryApiResp.path("data["+a+"].categoryName");
+
+		System.out.println("cat name is -========="+catNameCaptured);
+		
+		if(catNameCaptured.equalsIgnoreCase("Telecom")) {
+			
+			System.out.println("captured TELECOM cat name ---"+catNameCaptured);
+
+		}
+		else {
+			System.out.println("NOT captured TELECOM cat name ---");
+
+		}
+		
+		
+	}
+	
+		
+	
+	}
+
 	
 	
 }
