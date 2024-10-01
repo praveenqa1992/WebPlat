@@ -307,8 +307,8 @@ public class TransactionHistoryPOM extends commonFunc {
 	@FindBy(xpath = "//div[@class='offcanvas reportmodule offcanvas-end show']//button")
 	public List<WebElement> moreInfo_headersButtonsList_dmt;
 //read above comment....	
-	@FindBy(xpath = "//div[@class='offcanvas reportmodule offcanvas-end show']//button")
-	public WebElement txnMoreInfo_Close;
+//	@FindBy(xpath = "//div[@class='offcanvas reportmodule offcanvas-end show']//button")
+//	public WebElement txnMoreInfo_Close;
 
 	@FindBy(xpath = "//div[@id='offcanvasRight']")
 	public WebElement moreinfoSideBar;
@@ -318,6 +318,46 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	@FindBy(xpath = "//button[@class='btn btn-primary trigg-btn px-2 fs-13 c-pointer ng-star-inserted']")
 	public WebElement raiseComplaintButton_moreInfoSideBar;
+	
+	
+	
+	@FindBy(xpath = "//div[@class='success-col text-center']")
+	public WebElement raiseComplaintForm;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div/button")
+	public WebElement raiseComplaintForm_closeButton;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[2]")
+	public WebElement raiseComplaintForm_title;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[3]/div/label")
+	public WebElement raiseComplaintForm_TID_fieldLabel;
+
+	@FindBy(xpath = "//div[@class=success-col text-center']/form/div/div[3]/div/input")
+	public WebElement raiseComplaintForm_TID;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[4]/div/label")
+	public WebElement raiseComplaintForm_operatorName_fieldLabel;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[4]/div/input")
+	public WebElement raiseComplaintForm_operatorName;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[5]/div/label")
+	public WebElement raiseComplaintForm_remark_fieldeLabel;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[5]/div/textarea")
+	public WebElement raiseComplaintForm_remarkFielde;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/div//button")
+	public WebElement raiseComplaintForm_submitButton;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/div/div/div[2]/a")
+	public WebElement raiseComplaintForm_cancelButton;
+
+	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[5]/div/small")
+	public WebElement raiseComplaintForm_remarkMandatoryMessageSubTag;
+
+	
 
 //page bottom elements #################################################################################################
 
@@ -395,49 +435,11 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	@FindBy(xpath = "//p-paginator[@class='p-element']")
 	public WebElement paginationWebElement;
-	
+
 	@FindBy(xpath = "//div[@class='p-paginator-first pr-0 p-paginator p-component ng-star-inserted']/button")
 	public List<WebElement> paginationsAllButtons;
 
 	
-	
-	
-	@FindBy(xpath = "//div[@class='success-col text-center']")
-	public WebElement raiseComplaintForm;
-
-	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div/button")
-	public WebElement raiseComplaintForm_closeButton;
-
-	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[2]")
-	public WebElement raiseComplaintForm_title;
-
-	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[3]/div/label")
-	public WebElement raiseComplaintForm_TID_fieldLabel;
-
-	@FindBy(xpath = "//div[@class=success-col text-center']/form/div/div[3]/div/input")
-	public WebElement raiseComplaintForm_TID;
-
-	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[4]/div/label")
-	public WebElement raiseComplaintForm_operatorName_fieldLabel;
-
-	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[4]/div/input")
-	public WebElement raiseComplaintForm_operatorName;
-
-	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[5]/div/label")
-	public WebElement raiseComplaintForm_remark_fieldeLabel;
-
-	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[5]/div/textarea")
-	public WebElement raiseComplaintForm_remarkFielde;
-
-	@FindBy(xpath = "//div[@class='success-col text-center']/div//button")
-	public WebElement raiseComplaintForm_submitButton;
-
-	@FindBy(xpath = "//div[@class='success-col text-center']/div/div/div[2]/a")
-	public WebElement raiseComplaintForm_cancelButton;
-
-	@FindBy(xpath = "//div[@class='success-col text-center']/form/div/div[5]/div/small")
-	public WebElement raiseComplaintForm_remarkMandatoryMessageSubTag;
-
 	@FindBy(xpath = "")
 	public WebElement ww;
 
@@ -1249,54 +1251,56 @@ public class TransactionHistoryPOM extends commonFunc {
 		datainTable = validateALLTxnReportTableHasData();
 		click(fromCalenderIcon, driver, logger);
 		enabledDatesCount1 = fromCalender_Dates_enabled_notHighlited.size();
- 	int a = enabledDatesCount1-1;
+		int a = enabledDatesCount1 - 1;
 
 		boolean needToIterate = true;
 		if (needToIterate) {
 			if (datainTable) {
 				System.out.println(".......table has data.............");
-			} else 
-			{
-				for (int aa = 1; aa <= 3; aa++)
-				{
-					System.out.println("loop num -" + aa);					
+			} else {
+				for (int aa = 1; aa <= 3; aa++) {
+					System.out.println("loop num -" + aa);
 					for (int enabledDatesCountIndex = a; enabledDatesCountIndex > 0; enabledDatesCountIndex--) {
 						System.out.println("1...index count ---------" + enabledDatesCountIndex);
 
 						System.out.println("value of a ---------" + a);
 
 						click(fromCalenderIcon, driver, logger);
-					
-						if(enabledDatesCountIndex == a)
-						{
-						switch(aa)
-						{
-						case 2:  
-							Thread.sleep(1000);
-					     	click(fromCalenderPreviousButton, driver, logger);
-					    	Thread.sleep(1000); 
-					    	;break;
-						
-						case 3:
-							Thread.sleep(1000);
-					     	click(fromCalenderPreviousButton, driver, logger);
-					     	click(fromCalenderPreviousButton, driver, logger);
-					    	Thread.sleep(1000); 
-							;break;
 
-						case 4:
-							Thread.sleep(1000);
-					     	click(fromCalenderPreviousButton, driver, logger);
-					     	click(fromCalenderPreviousButton, driver, logger);
-					     	click(fromCalenderPreviousButton, driver, logger);
-					    	Thread.sleep(1000); 
-							;break;
-						
-						default :  logger.log(LogStatus.INFO, "Navigate back for the mentioned number of monthes is COMPLETED.");  ;
+						if (enabledDatesCountIndex == a) {
+							switch (aa) {
+							case 2:
+								Thread.sleep(1000);
+								click(fromCalenderPreviousButton, driver, logger);
+								Thread.sleep(1000);
+								;
+								break;
 
-						}	
-					}
-							
+							case 3:
+								Thread.sleep(1000);
+								click(fromCalenderPreviousButton, driver, logger);
+								click(fromCalenderPreviousButton, driver, logger);
+								Thread.sleep(1000);
+								;
+								break;
+
+							case 4:
+								Thread.sleep(1000);
+								click(fromCalenderPreviousButton, driver, logger);
+								click(fromCalenderPreviousButton, driver, logger);
+								click(fromCalenderPreviousButton, driver, logger);
+								Thread.sleep(1000);
+								;
+								break;
+
+							default:
+								logger.log(LogStatus.INFO,
+										"Navigate back for the mentioned number of monthes is COMPLETED.");
+								;
+
+							}
+						}
+
 						WebElement dateWE = fromCalender_Dates_enabled_notHighlited.get(enabledDatesCountIndex);
 						int dateAsInt = Integer.parseInt(dateWE.getText());
 						click(dateWE, driver, logger);
@@ -1356,7 +1360,6 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	}
 
-	
 	public String getTxnTable_messageIfNoTableData() {
 
 		logger.log(LogStatus.INFO, "Capturing message displayed if table has no data.");
@@ -1374,7 +1377,7 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 		return txnTableFirstRowFirstCol_Text;
 	}
-	
+
 	public void validateMessageDisplayedIfTableHasNOData(String expectedMessage, boolean ignoreCase, ExtentTest logger)
 			throws IOException, InterruptedException {
 
@@ -1844,7 +1847,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		}
 	}
-
+// working......fine......
 	public void validateMoreInfoSideBarHeaderButtons2() throws InterruptedException, IOException {
 
 		logger.log(LogStatus.INFO, "Validating transaction MORE INFO side menu buttons count and raise ticket.");
@@ -2120,7 +2123,7 @@ public class TransactionHistoryPOM extends commonFunc {
 											logger.log(LogStatus.INFO, "Raise remark field label -" + remarkLabel);
 
 											String remarkText = "I am shinde";
-											sendingKeys(raiseComplaintForm_remarkFielde, remarkText, driver);
+											sendingKeys(raiseComplaintForm_remarkFielde, remarkText, driver, logger);
 
 											Thread.sleep(1000);
 
@@ -2244,7 +2247,6 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 	}
 
-	
 	public void validateMoreInfoSideMenuData_TableData() throws InterruptedException, IOException {
 
 		logger.log(LogStatus.INFO, "validating More Info Side Menu Data And Table Data");
@@ -2460,8 +2462,6 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 		return tableHasData;
 	}
-
-
 
 //write one method to get/fetch data from the column...................
 //1...sr no	
@@ -2840,7 +2840,6 @@ public class TransactionHistoryPOM extends commonFunc {
 
 //5.PAGINATION methods START ########################################################################################
 
-	
 	public String get_perPageDataSize() {
 
 		logger.log(LogStatus.INFO, "Fetch per page data size");
@@ -2859,7 +2858,6 @@ public class TransactionHistoryPOM extends commonFunc {
 		}
 		return dataPerPageNo;
 	}
-	
 
 //need to update....handle a scenario-------------
 	public boolean isDataFetchedAccordingToPageSizeSelected() throws IOException, InterruptedException {
@@ -2922,7 +2920,6 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	}
 
-	
 //working.......fine..........
 	public void validate_tableDataAndTextMessage() throws IOException, InterruptedException {
 
@@ -3037,8 +3034,6 @@ public class TransactionHistoryPOM extends commonFunc {
 			screenshotInReport("Table has no data -", driver, logger);
 		}
 	}
-
-	
 
 	public void click_navigate_firstPageButton() {
 
@@ -3235,7 +3230,7 @@ public class TransactionHistoryPOM extends commonFunc {
 			// scroll to next page size as we will click on next page size in next ITERATION
 			WebElement pageSizeWE = perPageDataOptions.get(pageSizeIndex);
 			dataSizeText = pageSizeWE.getText();
-			scrollElementIntoMiddle(pageSizeWE, driver);
+			scrollToWebElement(pageSizeWE, driver);
 			Thread.sleep(1000);
 //click data size option 1 (according to index no.) 
 			click(pageSizeWE, driver, logger);
@@ -3339,7 +3334,6 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	}
 
-	
 //	public void getBottom_PagenumbersDisplayed(int indexNo) {
 //
 //		bottom_PagenumbersDisplayed.get(indexNo);
@@ -3411,6 +3405,7 @@ public class TransactionHistoryPOM extends commonFunc {
 			}
 		}
 	}
+
 	public void inProgressMMMTTHHOOODD() {
 
 	}

@@ -256,8 +256,11 @@ public class commonFunc {
 //		
 //	}
 
-	public void sendingKeys(WebElement we, String text, WebDriver driver) {
-		if (checkPresenceOfElement(we, driver)) {
+	public void sendingKeys(WebElement we, String text, WebDriver driver,ExtentTest logger) {
+		waitForElementToAppear(we, driver, logger);
+		scrollElementIntoMiddle(we, driver);
+		if (checkPresenceOfElement(we, driver)) 
+		{
 			we.click();
 			we.clear();
 			we.sendKeys(text);
@@ -970,12 +973,14 @@ public boolean isPresentAndDisplayed(WebElement locator,  WebDriver driver, Exte
 
 		try {
 
-			if (locator.isDisplayed()) {
+			if (locator.isDisplayed()) 
+			{
 				this.highlightElement(locator, verificationHighlightColorYellow, driver, logger);
 				logger.log(LogStatus.PASS, "b " + logger.addScreenCapture(capture(driver)));
 				locator.click();
 
-			} else {
+			} else 
+			{
 				logger.log(LogStatus.INFO, " Element found in the DOM but not displayed :  " + logger.addScreenCapture(capture(driver)));
 			}
 

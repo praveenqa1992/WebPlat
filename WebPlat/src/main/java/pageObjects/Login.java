@@ -71,8 +71,8 @@ public class Login  extends commonFunc
 	public void signin(String user, String pass) throws InterruptedException {
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(username, driver, logger);
-		sendingKeys(username, user, driver);
-		sendingKeys(password, pass, driver);
+		sendingKeys(username, user, driver,logger);
+		sendingKeys(password, pass, driver,logger);
 		click(btnSign, driver, logger);
 		
 		waitForPageLoaded(driver, logger);

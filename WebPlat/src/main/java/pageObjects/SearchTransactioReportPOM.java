@@ -60,7 +60,7 @@ public class SearchTransactioReportPOM extends commonFunc{
 	
 	public void enterText_searchInputField(String searchParameter) {
 		waitForElementToAppear(searchInputField, driver, logger);
-		sendingKeys(searchInputField, searchParameter, driver);
+		sendingKeys(searchInputField, searchParameter, driver,logger);
 		logger.log(LogStatus.INFO, "search input field value -"+searchParameter);
 		}
 	
