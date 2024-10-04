@@ -88,8 +88,8 @@ public class Login  extends commonFunc
 	
 	public void dialogClose() throws InterruptedException {
 		waitForPageLoaded(driver, logger);
-		waitForElementToAppear(closeDialogBox, driver, logger);
-		
+	//	waitForElementToAppear(closeDialogBox, driver, logger);
+		waitFor_VisibilityOfWE(10000, 500, closeDialogBox, driver);
 		click(closeDialogBox, driver, logger);
 		Thread.sleep(2000);	
 	}

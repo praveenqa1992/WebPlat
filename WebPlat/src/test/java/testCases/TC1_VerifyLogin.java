@@ -78,7 +78,7 @@ public class TC1_VerifyLogin extends testbase {
 
 		/**********************************************************************************************************************************/
 
-		Thread.sleep(5000);	
+//		Thread.sleep(5000);	
 		login.dialogClose();
 		
 	
@@ -94,19 +94,28 @@ public class TC1_VerifyLogin extends testbase {
 //		comm.softAssert("Verify dashboard page title (fail intentionally)-",  actualTitle,expectedTitle1, result1,
 //				logger);
 //		/**********************************************************************************************************************************/
-//
-//		
+
+		
 //		logger.log(LogStatus.INFO, "Step 4: HARD assert ");
-//		String expectedTitle2 = "Dashboard1";
+//		String expectedTitle2 = "Dashboard2";
 //
-//		boolean result2 = comm.compareString(expectedTitle1, actualTitle, false);
+//		boolean result2 = comm.compareString(expectedTitle2, actualTitle, false, logger);
 //
 //		comm.hardAssert("Verify dashboard page title (fail intentionally)-", actualTitle, expectedTitle2, result2,
 //				logger);
+				
+		logger.log(LogStatus.INFO, "Step 5: HARD assert ");
+		String expectedTitle = "Dashboard";
+
+		boolean result = comm.compareString(expectedTitle, actualTitle, false, logger);
+
+		comm.hardAssert("Verify dashboard page title (fail intentionally)-", actualTitle, expectedTitle, result,
+				logger);
+			
 //		
 //		logger.log(LogStatus.INFO, "Step 5: again soft assert ");
 //
-//		boolean result3 = comm.compareString(actualTitle,expectedTitle,  false);
+//		boolean result3 = comm.compareString(actualTitle,expectedTitle,  false, logger);
 //
 //		comm.softAssert("Verify dashboard page title -", actualTitle,expectedTitle,  result3, logger);
 

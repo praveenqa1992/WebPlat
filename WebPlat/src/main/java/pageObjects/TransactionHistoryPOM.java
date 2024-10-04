@@ -465,7 +465,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	public void secondSideMenu_hideORunhide() {
 
-		scrollToWebElement(sideBarHeader_textORTitle, driver);
+		scrollToWebElement(sideBarHeader_textORTitle, driver, logger);
 		scrollElementIntoMiddle(secondSideMenu_openORClose, driver);
 		try {
 			logger.log(LogStatus.INFO, "click secondSideMenu_openORClose");
@@ -1054,7 +1054,7 @@ public class TransactionHistoryPOM extends commonFunc {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(fromCalenderIcon, driver, logger);
-		scrollToWebElement(fromCalenderIcon, driver);
+		scrollToWebElement(fromCalenderIcon, driver, logger);
 
 		logger.log(LogStatus.INFO, "click from calendar icon");
 		click(fromCalenderIcon, driver, logger);
@@ -2514,8 +2514,8 @@ public class TransactionHistoryPOM extends commonFunc {
 		return serviceOfTxn;
 	}
 
+	
 	public String getTxnCategory(int rowNumIndex) {
-
 		int rowNum = (rowNumIndex + 1);
 		WebElement txn_category = driver
 				.findElement(By.xpath("//table[@id='pr_id_13-table']/tbody/tr[" + rowNum + "]/td[3]/span[2]"));
@@ -2528,15 +2528,12 @@ public class TransactionHistoryPOM extends commonFunc {
 
 	public String getTxnOperator(int rowNumIndex) {
 		int rowNum = (rowNumIndex + 1);
-
 		WebElement txn_operator = driver
 				.findElement(By.xpath("//table[@id='pr_id_13-table']/tbody/tr[" + rowNum + "]/td[3]/span[3]"));
-
 		waitForElementToAppear(txn_operator, driver, logger);
 		scrollElementIntoMiddle(txn_operator, driver);
 		String txnOperatorInTablePair = txn_operator.getText();
 		String operatorOfTxn = txnOperatorInTablePair.replace("Operator: ", "");
-
 		return operatorOfTxn;
 	}
 
@@ -2559,15 +2556,12 @@ public class TransactionHistoryPOM extends commonFunc {
 	public String getTxnStatus(int rowNumIndex) {
 
 		int rowNum = (rowNumIndex + 1);
-
 		WebElement txn_status = driver
 				.findElement(By.xpath("//table[@id='pr_id_13-table']/tbody/tr[" + rowNum + "]/td[7]/span"));
-
 		waitForElementToAppear(txn_status, driver, logger);
 		scrollElementIntoMiddle(txn_status, driver);
 		String statusOfTxn = txn_status.getText();
 		return statusOfTxn;
-
 	}
 
 	// 8...date
@@ -2602,13 +2596,11 @@ public class TransactionHistoryPOM extends commonFunc {
 		click(moreInfoIcon, driver, logger);
 		highlightElement(moreInfoIcon, "Red", driver, logger);
 		Thread.sleep(2000);
-
 	}
 
 	public void click_close_lastButton_moreInfoSideBar() throws InterruptedException {
 
-//logic if more info has ONE button only i.e. close-----------------OLD LOGIC----------------------------------
-//		
+//logic if more info has ONE button only i.e. close-----------------OLD LOGIC----------------------------------4		
 //		Boolean moreInfoPopupOpen = isMoreInfoOfTxnPopup_Appeared(dataNum);
 //		if (moreInfoPopupOpen) {
 //			logger.log(LogStatus.INFO, "17--------------------");
@@ -3219,22 +3211,22 @@ public class TransactionHistoryPOM extends commonFunc {
 		click_pageSizeDropdown();
 		// select a value from dropdown (index base so start from 0)
 		scrollElementIntoMiddle(pageSizeDropdown, driver);
-		Thread.sleep(1000);
-		int pageSizesToSelect = perPageDataOptions.size();
+		Thread.sleep(500);
+	//	int pageSizesToSelect = perPageDataOptions.size();
 //----------------------------------------------------		
 		String dataSizeText;
 
 		// for loop will fetch all options (page sizes) available in dropdown
-		for (int pageSizeIndex = 0; pageSizeIndex < pageSizesToSelect; pageSizeIndex++) {
+		for (int pageSizeIndex = 0; pageSizeIndex < (perPageDataOptions.size()); pageSizeIndex++) {
 
 			// scroll to next page size as we will click on next page size in next ITERATION
 			WebElement pageSizeWE = perPageDataOptions.get(pageSizeIndex);
 			dataSizeText = pageSizeWE.getText();
-			scrollToWebElement(pageSizeWE, driver);
+			scrollToWebElement(pageSizeWE, driver, logger);
 			Thread.sleep(1000);
 //click data size option 1 (according to index no.) 
 			click(pageSizeWE, driver, logger);
-			logger.log(LogStatus.INFO, "clicked/selected page size is -" + dataSizeText);
+			logger.log(LogStatus.INFO, "clicked/selected page size is -" + pageSizeWE.getText());
 			waitForPageLoaded(driver, logger);
 			Thread.sleep(5000);
 // m1...
@@ -3252,7 +3244,7 @@ public class TransactionHistoryPOM extends commonFunc {
 //			// scroll to next page size as we will click on next page size in next ITERATION
 //		       scrollElementIntoMiddle(perPageDataOptions.get(a), driver);
 			click_pageSizeDropdown();
-			Thread.sleep(1000);
+			Thread.sleep(500);
 
 		}
 

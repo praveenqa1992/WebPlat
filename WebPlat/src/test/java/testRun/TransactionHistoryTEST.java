@@ -60,9 +60,7 @@ public class TransactionHistoryTEST extends testbase {
 						ignoreCase, logger);
 				commonfunc.softAssert("Txn. id from API vs UI -", apiTid,
 						uiTid, isTidSame, logger);
-			
-
-				
+					
 				
 	}
 	
