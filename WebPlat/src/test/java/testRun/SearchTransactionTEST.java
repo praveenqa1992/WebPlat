@@ -468,7 +468,7 @@ public class SearchTransactionTEST extends testbase {
 		searchTransactionPOM.enterText_filterValue("1999999999");//
 		searchTransactionPOM.click_searchButton();
 		Thread.sleep(10000);
-		searchTransactionPOM.validate_totalPagesCountTextMessage();
+		searchTransactionPOM.validate_totalPagesGeneratedAccordingToTableDataText();
 		
 		
 		Thread.sleep(2000);
@@ -476,7 +476,7 @@ public class SearchTransactionTEST extends testbase {
 		logger.log(LogStatus.INFO, "1...category ===> Telecom - Failed");
 		searchTransactionPOM.enterText_filterValue("DMORDERS47075293");//
 		searchTransactionPOM.click_searchButton();
-		searchTransactionPOM.validate_totalPagesCountTextMessage();
+		searchTransactionPOM.validate_totalPagesGeneratedAccordingToTableDataText();
 
 	}
 
