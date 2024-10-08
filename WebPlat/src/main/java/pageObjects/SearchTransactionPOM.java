@@ -114,9 +114,14 @@ public class SearchTransactionPOM extends commonFunc {
 	@FindBy(xpath = "//span[@class='p-paginator-current ng-star-inserted']")
 	public WebElement page_paginationDataCountingMsg;
 
+	
+	
+	@FindBy(xpath = "//span[@class='p-paginator-pages ng-star-inserted']")
+	public WebElement bottom_PagenumbersDisplayed_parentWE;
+	
 	@FindBy(xpath = "//span[@class='p-paginator-pages ng-star-inserted']//child::button")
 	public List<WebElement> bottom_PagenumbersDisplayed;
-
+	
 	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-page p-paginator-element p-link p-highlight ng-star-inserted']")
 	public WebElement curentPageNumber;
 
@@ -126,6 +131,9 @@ public class SearchTransactionPOM extends commonFunc {
 	@FindBy(xpath = "//span[@class='p-element p-dropdown-label p-inputtext ng-star-inserted']//following::div[@class='p-dropdown-trigger']")
 	public WebElement pageSizeDropdown;
 
+	@FindBy(xpath = "//p-dropdown[@class='p-element p-inputwrapper p-inputwrapper-filled ng-untouched ng-pristine ng-star-inserted']")
+	public WebElement pageSizeDropdownEnabled;
+
 	@FindBy(xpath = "//div[@class='p-dropdown-items-wrapper']/ul/p-dropdownitem/li")
 	public List<WebElement> perPageDataOptions;
 
@@ -134,6 +142,9 @@ public class SearchTransactionPOM extends commonFunc {
 
 	@FindBy(xpath = "//div[@class='p-paginator-bottom p-paginator p-component ng-star-inserted']/button")
 	public List<WebElement> paginationsAllButtons;
+	
+	@FindBy(xpath = "//button[@class='p-ripple p-element p-paginator-page p-paginator-element p-link p-highlight ng-star-inserted']")
+	public WebElement highlitedPageNumber;
 
 	// 5. constructor ###########################################################
 
@@ -149,6 +160,7 @@ public class SearchTransactionPOM extends commonFunc {
 		logger.log(LogStatus.INFO, "validate secondSideMenu_isDisplayed");
 		return secondSideMenu.isDisplayed();
 	}
+
 	public void secondSideMenu_close() throws IOException {
 		boolean isDisp = secondSideMenu_isDisplayed();
 		if (isDisp) {
@@ -216,6 +228,8 @@ public class SearchTransactionPOM extends commonFunc {
 		logger.log(LogStatus.INFO, "Selecting option/filter from the dropdown.");
 
 		logger.log(LogStatus.INFO, "click filterDropdown");
+		Thread.sleep(1000);
+
 		click(filterDropdown, driver, logger);
 		Thread.sleep(1000);
 		Select select = new Select(filterDropdown_selectWE);
@@ -422,7 +436,8 @@ public class SearchTransactionPOM extends commonFunc {
 			for (int tableRowIndex = 0; tableRowIndex < tableRows; tableRowIndex++) {
 				// fetch data from TABLE column---to compare with MORE INFO table data
 				// open more info side menu bar
-				moreInfo_openSideMenu(tableRows);
+				moreInfo_openSideMenu(tableRowIndex);
+
 //validate - is more info side menu bar open
 				boolean isMoreInfoSideMenuOpen;
 				isMoreInfoSideMenuOpen = moreInfo_isSideBarDisplayed();
@@ -599,6 +614,26 @@ public class SearchTransactionPOM extends commonFunc {
 		return isMoreInfoSideBarDisplayed;
 	}
 
+	public String moreInfo_getParameterValue(String paramToGetVlaue) throws InterruptedException, IOException {
+
+		boolean isDisp = moreInfo_isSideBarDisplayed();
+		String paramValueString;
+
+		if (isDisp) {
+
+			paramValueString = get_parameterValue_validateMoreInfoSideMenu(paramToGetVlaue);
+			logger.log(LogStatus.INFO, "parameter (entered) - value is -" + paramToGetVlaue + "-" + paramValueString);
+			return paramValueString;
+
+		} else {
+			logger.log(LogStatus.INFO, "More info popup is not open/displayed");
+			paramValueString = null;
+//		return paramValueString;
+		}
+
+		return paramValueString;
+	}
+
 	public void moreInfo_close_lastButton() throws InterruptedException {
 
 		// new logic ........
@@ -755,7 +790,7 @@ public class SearchTransactionPOM extends commonFunc {
 		click(pageSizeDropdown, driver, logger);
 	}
 
-	public boolean selectPageSize (int dataPerPage) {
+	public boolean selectPageSize(int dataPerPage) {
 // ASSUMPTION - page sizes are -10,20,30
 //below method used data sizes from the dropdown...if needed use same logic to fetch PAGE DATA SIZES
 
@@ -827,18 +862,18 @@ public class SearchTransactionPOM extends commonFunc {
 		Thread.sleep(500);
 //----------------------------------------------------		
 		String dataSizeText;
-		
+
 		for (int pageSizeIndex = 0; pageSizeIndex < (perPageDataOptions.size()); pageSizeIndex++) {
 
 			logger.log(LogStatus.INFO, "loop index ----------------" + pageSizeIndex);
-			
+
 			WebElement pageSizeWE = perPageDataOptions.get(pageSizeIndex);
-			logger.log(LogStatus.INFO, "(opt) web element ----"+pageSizeWE);
-			
+			logger.log(LogStatus.INFO, "(opt) web element ----" + pageSizeWE);
+
 //		List<WebElement>	 perPageDataOptions = driver.findElements(By.xpath("//div[@class='p-dropdown-items-wrapper']/ul/p-dropdownitem/li")); // Adjust the selector as needed
 //			    pageSizeWE = perPageDataOptions.get(pageSizeIndex);
 //			
-			
+
 			scrollToWebElement(pageSizeWE, driver, logger); // ------------was below get text...2
 			dataSizeText = pageSizeWE.getText();
 			logger.log(LogStatus.INFO, "option text is ----" + dataSizeText);
@@ -852,73 +887,76 @@ public class SearchTransactionPOM extends commonFunc {
 
 			click_pageSizeDropdown();
 			Thread.sleep(500);
-			
+
 			logger.log(LogStatus.INFO, "loop end...");
 		}
 	}
 
-	//need to update....handle a scenario-------------
-		public boolean isDataFetchedAccordingToPageSizeSelected() throws IOException, InterruptedException {
-	// WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI S SCENARIO ????????????????????????????????????????????????????????????????????????
-	//FOR AASERTION++++++if table has less data than page data size....how to know the VALID data count++++++++++++++++++++++++++++++++++++++++++++++...................?????????????????????????????????????	
-			// Boolean vs
-			// boolean+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	// need to update....handle a scenario-------------
+	public boolean isDataFetchedAccordingToPageSizeSelected() throws IOException, InterruptedException {
+		// WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI
+		// S SCENARIO
+		// ????????????????????????????????????????????????????????????????????????
+		// FOR AASERTION++++++if table has less data than page data size....how to know
+		// the VALID data
+		// count++++++++++++++++++++++++++++++++++++++++++++++...................?????????????????????????????????????
+		// Boolean vs
+		// boolean+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-			logger.log(LogStatus.INFO, "Validating is Data Fetched According To PageSize Selected");
-			waitForPageLoaded(driver, logger);
-			boolean dataInTable = validateSearchTxnReportTableHasData();
-			Boolean flag = null;
+		logger.log(LogStatus.INFO, "Validating is Data Fetched According To PageSize Selected");
+		waitForPageLoaded(driver, logger);
+		boolean dataInTable = validateSearchTxnReportTableHasData();
+		Boolean flag = null;
 
-			// page size selected
-			int pageDataSizeSelected = Integer.parseInt(get_perPageDataSize());
+		// page size selected
+		int pageDataSizeSelected = Integer.parseInt(get_perPageDataSize());
 
-	// if table has data		
-			if (dataInTable) {
-				scrollElementIntoMiddle(pageSizeDropdown, driver);
-				// table data count
-				int tableRows = getTable_rowNumbers();
-				// => scenario 1- table data is equal to or more than page size selected
-				if (tableRows >= pageDataSizeSelected) {
-					logger.log(LogStatus.INFO, "table data >= page size selected");
-					if (tableRows == pageDataSizeSelected) {
-						logger.log(LogStatus.INFO, "table data = page size selected");
-						logger.log(LogStatus.INFO,
-								"Table Data  -" + tableRows + "</br>Page Size Selected -" + pageDataSizeSelected);
-						flag = true;
-					} else {
-						logger.log(LogStatus.INFO, "table data count and page size selected has MISMATCH");
-						logger.log(LogStatus.INFO,
-								"Table Data Count -" + tableRows + "</br>Page Size Selected -" + pageDataSizeSelected);
-						flag = false;
-					}
-					// return flag;
-				} else if (tableRows < pageDataSizeSelected) {
-					// => scenario 2- table has data - data is less than page size selected
-					// WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI
-					// S SCENARIO
-					// ????????????????????????????????????????????????????????????????????????
+		// if table has data
+		if (dataInTable) {
+			scrollElementIntoMiddle(pageSizeDropdown, driver);
+			// table data count
+			int tableRows = getTable_rowNumbers();
+			// => scenario 1- table data is equal to or more than page size selected
+			if (tableRows >= pageDataSizeSelected) {
+				logger.log(LogStatus.INFO, "table data >= page size selected");
+				if (tableRows == pageDataSizeSelected) {
+					logger.log(LogStatus.INFO, "table data = page size selected");
 					logger.log(LogStatus.INFO,
-							"table data < page size selected.</br>FIND A WAY TO ASSERT THIS SCENARIO.....PLEASE");
-					logger.log(LogStatus.INFO,
-							"table Data Count -" + tableRows + "</br>page Size Selected -" + pageDataSizeSelected);
-					flag = null;
-					logger.log(LogStatus.INFO, "Returning null flag -" + flag);
+							"Table Data  -" + tableRows + "</br>Page Size Selected -" + pageDataSizeSelected);
+					flag = true;
 				} else {
-
+					logger.log(LogStatus.INFO, "table data count and page size selected has MISMATCH");
+					logger.log(LogStatus.INFO,
+							"Table Data Count -" + tableRows + "</br>Page Size Selected -" + pageDataSizeSelected);
+					flag = false;
 				}
-			} // close-----table has data
+				// return flag;
+			} else if (tableRows < pageDataSizeSelected) {
+				// => scenario 2- table has data - data is less than page size selected
+				// WHAT IF DATA COUNT IS LESS THAN PAGE SIZE SELECTED---HANDLE ASSERTION FOR THI
+				// S SCENARIO
+				// ????????????????????????????????????????????????????????????????????????
+				logger.log(LogStatus.INFO,
+						"table data < page size selected.</br>FIND A WAY TO ASSERT THIS SCENARIO.....PLEASE");
+				logger.log(LogStatus.INFO,
+						"table Data Count -" + tableRows + "</br>page Size Selected -" + pageDataSizeSelected);
+				flag = null;
+				logger.log(LogStatus.INFO, "Returning null flag -" + flag);
+			} else {
 
-			else
-	// if table has no data
-			{
-				logger.log(LogStatus.INFO, "Table has no data.</br>Page Size Selected is -" + pageDataSizeSelected);
-				// what will return if table has no data....for ASSERTION
 			}
-			return flag;
+		} // close-----table has data
 
+		else
+		// if table has no data
+		{
+			logger.log(LogStatus.INFO, "Table has no data.</br>Page Size Selected is -" + pageDataSizeSelected);
+			// what will return if table has no data....for ASSERTION
 		}
-	
-	
+		return flag;
+
+	}
+
 	public void validate_dataPerPageooooooooooooo() throws InterruptedException, IOException {
 
 		logger.log(LogStatus.INFO, "Validating first and last transaction data Per Page.");
@@ -1025,6 +1063,15 @@ public class SearchTransactionPOM extends commonFunc {
 		return isButtonEnabled;
 	}
 
+	public boolean isEnabled_pageSizeDropdown() {
+		waitForPageLoaded(driver, logger);
+		waitForElementToAppear(paginationWebElement, driver, logger);
+//LAST PAGE button is at THREE index, so passing static value = 3			
+		boolean isDropdownEnabled = pageSizeDropdownEnabled.isEnabled();
+		logger.log(LogStatus.INFO, "navigate to next page button enabled -" + isDropdownEnabled);
+		return isDropdownEnabled;
+	}
+
 	public void click_navigate_firstPageButton() {
 
 		waitForPageLoaded(driver, logger);
@@ -1037,7 +1084,8 @@ public class SearchTransactionPOM extends commonFunc {
 		logger.log(LogStatus.INFO, "click first page button");
 		if (buttonEnabled) {
 			logger.log(LogStatus.INFO, "first page button is enabled -" + buttonEnabled);
-			scrollDown(driver);
+//			scrollDown(driver);
+			scrollElementIntoMiddle(firstPageIconElement, driver);
 			click(firstPageIconElement, driver, logger);
 		} else {
 			logger.log(LogStatus.INFO, "first page button is enabled -" + buttonEnabled + " i.e. DISABLED");
@@ -1056,7 +1104,8 @@ public class SearchTransactionPOM extends commonFunc {
 		logger.log(LogStatus.INFO, "click previous page button");
 		if (buttonEnabled) {
 			logger.log(LogStatus.INFO, "previous page button is enabled -" + buttonEnabled);
-			scrollDown(driver);
+//			scrollDown(driver);
+			scrollElementIntoMiddle(prevPageIconElement, driver);
 			click(prevPageIconElement, driver, logger);
 		} else {
 			logger.log(LogStatus.INFO, "first page button is enabled -" + buttonEnabled + " i.e. DISABLED");
@@ -1068,8 +1117,8 @@ public class SearchTransactionPOM extends commonFunc {
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(paginationWebElement, driver, logger);
 		logger.log(LogStatus.INFO, "scroll to pagination WebElement");
-//		scrollElementIntoMiddle(paginationWebElement, driver);
-		scrollDown(driver);
+		scrollElementIntoMiddle(paginationWebElement, driver);
+//		scrollDown(driver);
 		// NEXT PAGE button is at TWO index, so passing static value = 2
 		WebElement nextPageIconElement = paginationsAllButtons.get(2);
 		boolean buttonEnabled = nextPageIconElement.isEnabled();
@@ -1077,34 +1126,36 @@ public class SearchTransactionPOM extends commonFunc {
 		if (buttonEnabled) {
 			logger.log(LogStatus.INFO, "next page button is enabled -" + buttonEnabled);
 			scrollElementIntoMiddle(nextPageIconElement, driver);
-			scrollDown(driver);
+//			scrollDown(driver);
 			click(nextPageIconElement, driver, logger);
 		} else {
 			logger.log(LogStatus.INFO, "first page button is enabled -" + buttonEnabled + " i.e. DISABLED");
 		}
 	}
 
-	public void click_navigate_lastPageButton() {
+	public void click_navigate_lastPageButton() throws InterruptedException {
 
 		waitForPageLoaded(driver, logger);
 		waitForElementToAppear(paginationWebElement, driver, logger);
 		logger.log(LogStatus.INFO, "scroll to pagination WebElement");
-//		scrollElementIntoMiddle(paginationWebElement, driver);
-		scrollDown(driver);
+		scrollElementIntoMiddle(paginationWebElement, driver);
+//		scrollDown(driver);
 //LAST PAGE button is at THREE index, so passing static value = 3			
 		WebElement lastPageIconElement = paginationsAllButtons.get(3);
 		boolean buttonEnabled = lastPageIconElement.isEnabled();
 		logger.log(LogStatus.INFO, "click last page button");
 		if (buttonEnabled) {
 			logger.log(LogStatus.INFO, "last page button is enabled -" + buttonEnabled);
-			scrollDown(driver);
+//			scrollDown(driver);
+			scrollElementIntoMiddle(lastPageIconElement, driver);
+			Thread.sleep(2000);
 			click(lastPageIconElement, driver, logger);
 		} else {
 			logger.log(LogStatus.INFO, "first page button is enabled -" + buttonEnabled + " i.e. DISABLED");
 		}
 	}
 
-	public void validate_totalPagesCountTextMessage() throws IOException, InterruptedException {
+	public void validate_totalPagesGeneratedAccordingToTableDataText() throws IOException, InterruptedException {
 
 		logger.log(LogStatus.INFO, "validating - tableData And TextMessage");
 
@@ -1119,7 +1170,6 @@ public class SearchTransactionPOM extends commonFunc {
 
 		// 1a. if table has data
 		if (dataInTable) {
-
 			// Passing 0 index number to get sr no of 1st tr / data
 			int firstTxnIndex = 0;
 			String firstTxnSrNo = getTxnSrNo(firstTxnIndex);
@@ -1154,11 +1204,11 @@ public class SearchTransactionPOM extends commonFunc {
 					"1 st no. in table -" + firstTxnSrNo + "</br>last no. in table -" + lastTxnSrNo
 							+ "</br>Current Page Size is - " + currentPageDataSizeSelectedIs
 							+ "</br>Total pages count according to the message is -" + totalPagesMessage);
-			
+
 //			// total pages count according to message (INT)
 //			int totalPagesInt = Integer.parseInt(totalPagesMessage);
 //			
-		//validate if table data > page size (table has more pages or not)	
+			// validate if table data > page size (table has more pages or not)
 			boolean isLastPageEnabled = isEnabled_lastPageButton();
 
 			// 1----if table data > page size (table has more pages)
@@ -1170,8 +1220,8 @@ public class SearchTransactionPOM extends commonFunc {
 				click_navigate_lastPageButton();
 				waitForPageLoaded(driver, logger);
 				// get last page txn. id---for MATH
-			String	lastTxnSrNo_lastTxn = getTxnSrNo(tableRowIndex);
-			int	lastTxnSrNoTableInt_lastTxn = Integer.parseInt(lastTxnSrNo_lastTxn);
+				String lastTxnSrNo_lastTxn = getTxnSrNo(tableRowIndex);
+				int lastTxnSrNoTableInt_lastTxn = Integer.parseInt(lastTxnSrNo_lastTxn);
 
 				// calculate total pages count...
 				int expectedPageNos = lastTxnSrNoTableInt_lastTxn / currentPageDataSizeSelectedIsInt;
@@ -1188,7 +1238,7 @@ public class SearchTransactionPOM extends commonFunc {
 				// math
 
 				// validate - total page count as per MATH and MESSAGE....
-				//convert to string to COMPARE
+				// convert to string to COMPARE
 				expectedTotalPagesCount_inMessageString = String.valueOf(expectedTotalPagesCount_inMessageINT);
 
 				ignoreCase = false;
@@ -1226,5 +1276,96 @@ public class SearchTransactionPOM extends commonFunc {
 
 		}
 	}
+
+	
+	public boolean isPagesCountMatchingAccordingToTheTableData() throws IOException, InterruptedException {
+
+		logger.log(LogStatus.INFO, "Validate - pagesCount According To The TableData");
+
+		// 1.check - table has data or not
+		waitForPageLoaded(driver, logger);
+		boolean dataInTable = validateSearchTxnReportTableHasData();
+
+		int expectedTotalPagesCount_inMessage_int = 0;
+		
+		boolean pageCountMatching;
+		int pagesCountAtPagination;
+		String expectedTotalPagesCount_inMessage;
+		String perPageDataSizeSelectedString; // data size selected from dropdown
+		int perPageDataSizeSelectedInt; // data size selected from dropdown...converted to int for math
+		String highlitedPageNumString = null;
+		
+		// 1a. if table has data
+		if (dataInTable) {
+			pagesCountAtPagination = bottom_PagenumbersDisplayed.size();		 
+//current page size------------
+			 perPageDataSizeSelectedString = get_perPageDataSize();
+			 perPageDataSizeSelectedInt = Integer.parseInt(perPageDataSizeSelectedString);
+
+			boolean isLastPageEnabled = isEnabled_lastPageButton();
+
+			// 1----if table data > page size (table has more pages)
+			// if last page is enabled...then navigate to last page
+			if (isLastPageEnabled) {
+				logger.log(LogStatus.INFO, "isLastPageEnabled -" + isLastPageEnabled);
+				// navigate to last page...to get last txn. number--------------------------
+				click_navigate_lastPageButton();
+				waitForPageLoaded(driver, logger);
+				int tableRows = getTable_rowNumbers();
+				int tableRowIndexOfLastRow = (tableRows - 1);
+				String srNo_lastTxn = getTxnSrNo(tableRowIndexOfLastRow);
+				int srNo_lastTxn_int = Integer.parseInt(srNo_lastTxn);
+				
+				// calculate total pages count...
+				int expectedPageNos = srNo_lastTxn_int / perPageDataSizeSelectedInt; 
+				int needExtraPageThan_expectedPageNos = srNo_lastTxn_int % perPageDataSizeSelectedInt;
+				
+				if (needExtraPageThan_expectedPageNos == 0) 
+				{
+					expectedTotalPagesCount_inMessage_int = expectedPageNos;
+				} 
+				else if (needExtraPageThan_expectedPageNos != 0) 
+				{
+					expectedTotalPagesCount_inMessage_int = (expectedPageNos + 1);
+				} 
+				else 
+				{
+					logger.log(LogStatus.INFO, "Check----calculate total pages count.</br>Entered else block of 'isLastPageEnabled' . ");
+					pageCountMatching=false;
+				}
+		    	 expectedTotalPagesCount_inMessage = String.valueOf(expectedTotalPagesCount_inMessage_int);
+                 highlitedPageNumString = highlitedPageNumber.getText();	
+                pageCountMatching = compareString(highlitedPageNumString, expectedTotalPagesCount_inMessage, false, logger);	
+			}
+			// validate 2......- total page count for SINGLE PAGE ------- table data <= per
+			// page data size
+			else {
+				logger.log(LogStatus.INFO, "isLastPageEnabled2 (i.e. disabled) -" + isLastPageEnabled);
+				expectedTotalPagesCount_inMessage = "1";
+		    	pageCountMatching = compareString(highlitedPageNumString, expectedTotalPagesCount_inMessage,
+						false, logger);
+			}
+
+		} else
+		// 1b-if table has no data ===>
+		{	
+			pagesCountAtPagination =	bottom_PagenumbersDisplayed.size();
+			logger.log(LogStatus.INFO, "Table has no data.</br>Pages count is -" + pagesCountAtPagination);
+			if(pagesCountAtPagination == 0)
+			{
+				pageCountMatching=true;
+				logger.log(LogStatus.INFO, "pageCountMatching -"+pageCountMatching);
+
+			}
+			else 
+			{
+				pageCountMatching=false;
+				logger.log(LogStatus.INFO, "pageCountMatching -"+pageCountMatching);
+			}
+		}
+		return pageCountMatching;
+	}
+	
+	
 
 }
